@@ -15,6 +15,8 @@
   flex: 0.7;
   display: flex;
   flex-direction: column;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .sb-header {
   border-radius: 20px;
@@ -23,6 +25,8 @@
   display: flex;
   justify-content: space-between;
   background-color: white;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .sb-search {
@@ -32,6 +36,8 @@
   background-color: white;
   display: flex;
   align-items: center;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .search-box {
@@ -49,17 +55,22 @@
   padding: 10px 5px;
   background-color: white;
   flex: 1;
+  overflow: scroll;
+  scrollbar-width: none;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .con-container {
   display: grid;
   grid-template-columns: 32px auto auto;
   grid-template-rows: 1fr 1fr;
-  background-color: #f4f5f8;
+  background-color: white;
   border-radius: 20px;
   padding: 10px;
   margin: 5px;
   column-gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
 .con-icon {
@@ -102,9 +113,15 @@
 }
 
 .chatArea-messages {
-  background-color: aquamarine;
+  background-color: white;
+  border-radius: 20px;
+  margin: 5px;
   flex: 1;
   overflow: scroll;
+  scrollbar-width: none;
+  padding: 10px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .chatArea-input-area {
@@ -114,6 +131,8 @@
   justify-content: space-between;
   background-color: white;
   padding: 10px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .chatArea-header {
@@ -124,6 +143,8 @@
   border-radius: 20px;
   margin: 5px;
   background-color: white;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
 .chatArea-header-icon {
@@ -227,4 +248,135 @@
 .other-message-username {
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+.welcome-container {
+  flex: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  border-radius: 20px;
+  border-bottom: 5px solid yellow;
+}
+
+.welcome-logo {
+  height: 120px;
+  width: 120px;
+}
+
+.welcome-text {
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.createGroup-container {
+  align-self: center;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  margin: 10px;
+  flex: 0.7;
+}
+
+.login-container {
+  width: 90vw;
+  height: 90vh;
+  background-color: #f4f5f8;
+  border-radius: 20px;
+  display: flex;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.image-container {
+  flex: 0.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  flex: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.login-form {
+  width: 50%;
+}
+
+.onlineUsers-container {
+  flex: 0.7;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  scrollbar-width: none;
+  padding: 5px 10px;
+}
+
+.onlineUsers-header-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin: 5px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.onlineUsers-header-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.onlineUsers-header-title {
+  font-size: 1rem;
+  font-weight: bold;
+  flex: 1;
+}
+
+.onlineUsers-search-container {
+  display: flex;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.onlineUser-container {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  gap: 10px;
+}
+
+.onlineUser-container-icon {
+  font-size: 2rem;
+  width: 32px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-align: center;
+  align-self: center;
 }
