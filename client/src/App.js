@@ -2,12 +2,26 @@ import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Login from "./Components/Login";
+import Welcome from "./Components/Welcome";
+import ChatArea from "./Components/ChatArea";
+import OnlineUsers from "./Components/OnlineUsers";
+import OnlineGroups from "./Components/OnlineGroups";
+import CreateGroup from "./Components/CreateGroup";
+import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   return (
     <div className="App">
-      <MainContainer />
-      {/* <Login /> */}
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="app" element={<MainContainer />}>
+          <Route path="welcome" element={<Welcome />} />
+          <Route path="chat" element={<ChatArea />} />
+          <Route path="users" element={<OnlineUsers />} />
+          <Route path="groups" element={<OnlineGroups />} />
+          <Route path="create-group" element={<CreateGroup />} />
+        </Route>
+      </Routes>
     </div>
   );
 };
