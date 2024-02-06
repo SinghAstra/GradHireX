@@ -65,7 +65,7 @@ const Sidebar = () => {
       </div>
       <div className="sb-conversation">
         {conversations.map((conversation) => (
-          <ConversationItem props={conversation} />
+          <ConversationItem props={conversation} key={conversation.name} />
         ))}
       </div>
     </div>

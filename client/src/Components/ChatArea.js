@@ -2,6 +2,9 @@ import React from "react";
 import "./styles.css";
 import { IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import SendIcon from "@mui/icons-material/Send";
+import SelfMessage from "./SelfMessage";
+import OtherMessage from "./OtherMessage";
 
 const ChatArea = () => {
   return (
@@ -16,8 +19,26 @@ const ChatArea = () => {
           </IconButton>
         </div>
       </div>
-      <div className="chatArea-messages">Chat Area Messages</div>
-      <div className="chatArea-input-area">ChatArea Input Area</div>
+      <div className="chatArea-messages">
+        <SelfMessage />
+        <OtherMessage />
+        <SelfMessage />
+        <OtherMessage />
+        <SelfMessage />
+        <OtherMessage />
+        <SelfMessage />
+        <OtherMessage />
+        <SelfMessage />
+        <OtherMessage />
+        <SelfMessage />
+        <OtherMessage />
+      </div>
+      <div className="chatArea-input-area">
+        <input className="search-box" placeholder="Type Your Message here..." />
+        <IconButton>
+          <SendIcon />
+        </IconButton>
+      </div>
     </div>
   );
 };
