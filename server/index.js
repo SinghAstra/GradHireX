@@ -6,16 +6,16 @@ const { default: mongoose } = require("mongoose");
 require("dotenv").config();
 // const userRoutes = require("./routes/user");
 
-// const CONNECTION_URL = process.env.CONNECTION_URL;
+const CONNECTION_URL = process.env.CONNECTION_URL;
 
-// mongoose
-//   .connect(CONNECTION_URL)
-//   .then(() => {
-//     console.log("Connected to the Database Successfully");
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
+mongoose
+  .connect(CONNECTION_URL)
+  .then(() => {
+    console.log("Connected to the Database Successfully");
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
