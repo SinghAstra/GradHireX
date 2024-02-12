@@ -91,7 +91,7 @@ const Sidebar = () => {
             <AccountCircle />
           </IconButton>
         </div>
-        <div>
+        <div className="sb-header-navigation">
           <Link to="/app/users">
             <IconButton className={"icon" + (lightTheme ? "" : " dark")}>
               <PersonAdd />
