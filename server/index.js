@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 require("dotenv").config();
-// const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/userRoutes");
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
 
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // app.use("/post", postRoutes);
-// app.use("/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Chat Server is Running.");
