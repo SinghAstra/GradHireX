@@ -2,6 +2,7 @@ import { Search } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const OnlineUsers = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -28,46 +29,86 @@ const OnlineUsers = () => {
           placeholder="search"
         />
       </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
-      <div className={"onlineUser-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineUser-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineUser-container-icon">T</div>
         <p className="onlineUser-container-username">Test User</p>
-      </div>
+      </motion.div>
     </div>
   );
 };

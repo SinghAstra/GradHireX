@@ -1,11 +1,16 @@
 import React from "react";
 import "./styles.css";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const ConversationItem = ({ props }) => {
   const lightTheme = useSelector((state) => state.theme);
   return (
-    <div className={"con-container" + (lightTheme ? "" : " dark")}>
+    <motion.div
+      className={"con-container" + (lightTheme ? "" : " dark")}
+      whileHover={{ scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
+    >
       <div className="con-icon">{props.name[0]}</div>
       <div className={"con-title" + (lightTheme ? "" : " dark")}>
         {props.name}
@@ -14,7 +19,7 @@ const ConversationItem = ({ props }) => {
       <div className={"con-timeStamp" + (lightTheme ? "" : " dark")}>
         {props.timeStamp}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

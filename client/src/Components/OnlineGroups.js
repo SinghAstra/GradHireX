@@ -3,6 +3,7 @@ import { Search } from "@mui/icons-material";
 import React from "react";
 import "./styles.css";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const OnlineGroups = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -33,58 +34,78 @@ const OnlineGroups = () => {
           placeholder="search"
         />
       </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
+      </motion.div>
+      <motion.div
+        className={"onlineGroup-container" + (lightTheme ? "" : " dark")}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+      >
         <div className="onlineGroup-container-icon">T</div>
         <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
-        <div className="onlineGroup-container-icon">T</div>
-        <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
-        <div className="onlineGroup-container-icon">T</div>
-        <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
-        <div className="onlineGroup-container-icon">T</div>
-        <p className="onlineGroup-container-username">Test Group</p>
-      </div>
-      <div className={"onlineGroup-container" + (lightTheme ? "" : " dark")}>
-        <div className="onlineGroup-container-icon">T</div>
-        <p className="onlineGroup-container-username">Test Group</p>
-      </div>
+      </motion.div>
     </div>
   );
 };
