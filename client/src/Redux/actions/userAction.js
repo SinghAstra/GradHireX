@@ -1,6 +1,7 @@
 // import { AUTH, LOG_OUT } from "./actionTypes";
 import { logInApi, registerApi } from "../API";
 import { AUTH } from "./actionTypes";
+import { showNotification } from "./notificationAction";
 // import { showNotification } from "./notifications";
 
 // Action creator for user sign-in
@@ -16,11 +17,12 @@ export const logIn = (name, password, navigate) => {
         payload: { username: data.name, email: data.email, token: data.token },
       });
 
+      dispatch(showNotification(`Welcome back, ${data.name}!`, "success"));
       // Navigate to the desired page after successful sign-in
       navigate("/app/welcome");
     } catch (error) {
       // Handle errors by showing an error notification
-      //   dispatch(showNotification(error.response.data.message, "error"));
+      dispatch(showNotification(error.response.data.message, "error"));
     }
   };
 };
@@ -38,6 +40,9 @@ export const register = (name, email, password, navigate) => {
         type: AUTH,
         payload: { username: data.name, email: data.email, token: data.token },
       });
+
+      dispatch(showNotification(data.message, "success"));
+
       // Navigate to the desired page after successful sign-up
       navigate("/app/welcome");
     } catch (error) {
@@ -47,7 +52,7 @@ export const register = (name, email, password, navigate) => {
         error.response.data.message
       );
       // Handle errors by showing an error notification
-      //   dispatch(showNotification(error.response.data.message, "error"));
+      dispatch(showNotification(error.response.data.message, "error"));
     }
   };
 };

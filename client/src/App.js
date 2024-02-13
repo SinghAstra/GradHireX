@@ -8,17 +8,24 @@ import OnlineUsers from "./Components/OnlineUsers";
 import OnlineGroups from "./Components/OnlineGroups";
 import CreateGroup from "./Components/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { hideNotification } from "./Redux/actions/notificationAction";
+import Notification from "./Components/Notification";
 
 const App = () => {
   const user = useSelector((state) => state.user);
+  const { open, message, severity } = useSelector(
+    (state) => state.notification
+  );
+  const dispatch = useDispatch();
+  const handleCloseNotification = () => {
+    dispatch(hideNotification());
+  };
   return (
     <div className="App">
       <Routes>
         {/* Routes for authenticated users */}
-        {user && (
-          <Route path="/" element={<Navigate to="/app/welcome" replace />} />
-        )}
+        {user && <Route path="/" element={<Navigate to="/app/welcome" />} />}
         {user && (
           <Route path="app" element={<MainContainer />}>
             <Route path="welcome" element={<Welcome />} />
@@ -33,8 +40,16 @@ const App = () => {
         {!user && <Route path="/" element={<Auth />} />}
 
         {/* Redirect to login for unauthorized sub-routes */}
-        {!user && <Route path="app" element={<Navigate to="/" replace />} />}
+        {!user && <Route path="*" element={<Navigate to="/" />} />}
       </Routes>
+      <Notification
+        open={open}
+        onClose={() => {
+          handleCloseNotification();
+        }}
+        message={message}
+        severity={severity}
+      />
     </div>
   );
 };
