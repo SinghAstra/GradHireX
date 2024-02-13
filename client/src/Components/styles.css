@@ -282,9 +282,11 @@
   flex: 0.7;
 }
 
-.login-container {
+.auth-container {
+  margin: 1em;
+  padding: 1em;
   width: 90vw;
-  height: 90vh;
+  min-height: 90vh;
   background-color: #f4f5f8;
   border-radius: 20px;
   display: flex;
@@ -298,7 +300,7 @@
   align-items: center;
 }
 
-.login-box {
+.auth-box {
   flex: 0.7;
   display: flex;
   justify-content: center;
@@ -308,7 +310,7 @@
   text-align: center;
 }
 
-.login-form {
+.auth-form {
   width: 50%;
 }
 
@@ -434,4 +436,8 @@
     width: 100vw;
     margin: 0.25em;
   }
+}
+
+.bt-auth-link {
+  text-align: right;
 }

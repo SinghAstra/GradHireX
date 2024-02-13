@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
-import Login from "./Components/Login";
+import Auth from "./Components/Auth";
 import Welcome from "./Components/Welcome";
 import ChatArea from "./Components/ChatArea";
 import OnlineUsers from "./Components/OnlineUsers";
@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Auth />} />
         <Route path="app" element={<MainContainer />}>
           <Route path="welcome" element={<Welcome />} />
           <Route path="chat" element={<ChatArea />} />
