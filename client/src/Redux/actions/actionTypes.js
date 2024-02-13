@@ -1,4 +1,6 @@
 export const TOGGLE_THEME = "TOGGLE_THEME";
 export const HIDE_NOTIFICATION = "HIDE_NOTIFICATION";
 export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
+export const START_LOADING = "START_LOADING";
+export const END_LOADING = "END_LOADING";
 export const AUTH = "AUTH";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Auth from "./Components/Auth";
@@ -11,6 +11,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "./Redux/actions/notificationAction";
 import Notification from "./Components/Notification";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -21,6 +22,7 @@ const App = () => {
   const handleCloseNotification = () => {
     dispatch(hideNotification());
   };
+  const loading = useSelector((state) => state.loading);
   return (
     <div className="App">
       <Routes>
@@ -50,6 +52,12 @@ const App = () => {
         message={message}
         severity={severity}
       />
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

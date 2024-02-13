@@ -1,6 +1,6 @@
 // import { AUTH, LOG_OUT } from "./actionTypes";
 import { logInApi, registerApi } from "../API";
-import { AUTH } from "./actionTypes";
+import { AUTH, END_LOADING, START_LOADING } from "./actionTypes";
 import { showNotification } from "./notificationAction";
 // import { showNotification } from "./notifications";
 
@@ -8,6 +8,7 @@ import { showNotification } from "./notificationAction";
 export const logIn = (name, password, navigate) => {
   return async function (dispatch) {
     try {
+      dispatch({ type: START_LOADING });
       // Call the sign-in API
       const { data } = await logInApi(name, password);
 
@@ -17,12 +18,16 @@ export const logIn = (name, password, navigate) => {
         payload: { username: data.name, email: data.email, token: data.token },
       });
 
+      dispatch({ type: END_LOADING });
+
       dispatch(showNotification(`Welcome back, ${data.name}!`, "success"));
       // Navigate to the desired page after successful sign-in
       navigate("/app/welcome");
     } catch (error) {
       // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
+
+      dispatch({ type: END_LOADING });
     }
   };
 };
@@ -31,6 +36,8 @@ export const logIn = (name, password, navigate) => {
 export const register = (name, email, password, navigate) => {
   return async function (dispatch) {
     try {
+      dispatch({ type: START_LOADING });
+
       // Call the sign-up API
       const { data } = await registerApi(name, email, password);
 
@@ -40,6 +47,8 @@ export const register = (name, email, password, navigate) => {
         type: AUTH,
         payload: { username: data.name, email: data.email, token: data.token },
       });
+
+      dispatch({ type: END_LOADING });
 
       dispatch(showNotification(data.message, "success"));
 
@@ -53,6 +62,8 @@ export const register = (name, email, password, navigate) => {
       );
       // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
+
+      dispatch({ type: END_LOADING });
     }
   };
 };
