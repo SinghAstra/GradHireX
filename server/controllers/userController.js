@@ -106,5 +106,22 @@ const registerController = async (req, res) => {
   }
 };
 
+const fetchAllUsers = async (req, res) => {
+  try {
+    const query = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+    const users = await User.find(query).find({ _id: { $ne: req.user._id } });
+    res.json(users);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 // Export the functions for use in other modules
-module.exports = { logInController, registerController };
+module.exports = { logInController, registerController, fetchAllUsers };
