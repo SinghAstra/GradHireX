@@ -12,7 +12,7 @@ import {
 } from "@mui/icons-material";
 import ConversationItem from "./ConversationItem";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleThemeAction } from "../Redux/actions/theme";
+import { toggleThemeAction } from "../Redux/actions/themeAction";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {

@@ -4,6 +4,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import "./styles.css";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logIn, register } from "../Redux/actions/userAction";
 
 const initialValues = {
   username: "",
@@ -31,6 +34,8 @@ const logInValidationSchema = Yup.object().shape({
 const Auth = () => {
   const [isRegister, setIsRegister] = useState(false);
   const toggleRegister = () => setIsRegister(!isRegister);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Function to handle form submission
   const onSubmit = (values, { setSubmitting }) => {
@@ -39,12 +44,12 @@ const Auth = () => {
     // Dispatch appropriate action based on sign up or sign in
     if (isRegister) {
       console.log("isRegister values is ", values);
-      // dispatch(signUp(values, navigate));
+      dispatch(
+        register(values.username, values.email, values.password, navigate)
+      );
     } else {
       console.log("isLogIn values is ", values);
-      // dispatch(
-      //   signIn({ email: values.email, password: values.password }, navigate)
-      // );
+      dispatch(logIn(values.username, values.password, navigate));
     }
   };
 
