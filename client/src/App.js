@@ -31,7 +31,7 @@ const App = () => {
         {user && (
           <Route path="app" element={<MainContainer />}>
             <Route path="welcome" element={<Welcome />} />
-            <Route path="chat" element={<ChatArea />} />
+            <Route path="chat/:id" element={<ChatArea />} />
             <Route path="users" element={<Users />} />
             <Route path="groups" element={<OnlineGroups />} />
             <Route path="create-group" element={<CreateGroup />} />

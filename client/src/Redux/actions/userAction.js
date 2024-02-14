@@ -20,7 +20,12 @@ export const logIn = (name, password, navigate) => {
 
       dispatch({
         type: AUTH,
-        payload: { username: data.name, email: data.email, token: data.token },
+        payload: {
+          _id: data.id,
+          username: data.name,
+          email: data.email,
+          token: data.token,
+        },
       });
 
       dispatch(showNotification(`Welcome back, ${data.name}!`, "success"));
@@ -46,7 +51,12 @@ export const register = (name, email, password, navigate) => {
 
       dispatch({
         type: AUTH,
-        payload: { username: data.name, email: data.email, token: data.token },
+        payload: {
+          _id: data.id,
+          username: data.name,
+          email: data.email,
+          token: data.token,
+        },
       });
 
       dispatch(showNotification(data.message, "success"));
