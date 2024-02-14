@@ -78,4 +78,19 @@ const fetchChats = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error." });
   }
 };
-module.exports = { accessChat, fetchChats };
+
+/**
+ * Fetches all group chats.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object[]} Array of group chat objects.
+ */
+const fetchGroups = async (req, res) => {
+  try {
+    const groupChats = await Chat.where("isGroupChat").equals(true);
+    res.json(groupChats);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+module.exports = { accessChat, fetchChats, fetchGroups };
