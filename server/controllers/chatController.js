@@ -183,10 +183,55 @@ const exitGroupChat = async (req, res) => {
   }
 };
 
+/**
+ * Adds the current user to a group chat.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The updated chat object or a success message.
+ */
+const addSelfToGroupChat = async (req, res) => {
+  try {
+    const { chatId } = req.body;
+
+    // Check if chatId is provided
+    if (!chatId) {
+      return res.status(400).json({ message: "Chat ID is required." });
+    }
+
+    // Find the chat
+    const chat = await Chat.findById(chatId);
+    if (!chat) {
+      return res.status(404).json({ message: "Chat not found." });
+    }
+
+    // Check if user is already in the group
+    if (chat.users.includes(req.user._id)) {
+      return res
+        .status(403)
+        .json({ message: "You are already a member of this group." });
+    }
+
+    // Add user to the group
+    chat.users.push(req.user._id);
+
+    // Save the updated chat
+    await chat.save();
+
+    // Return updated chat
+    const updatedChat = await Chat.findById(chatId)
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+    res.json({ updatedChat, message: "You have been added to the group." });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
 module.exports = {
   accessChat,
   fetchChats,
   fetchGroups,
   createGroupChat,
   exitGroupChat,
+  addSelfToGroupChat,
 };

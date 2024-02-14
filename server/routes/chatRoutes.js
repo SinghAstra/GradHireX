@@ -7,12 +7,14 @@ const {
   fetchGroups,
   createGroupChat,
   exitGroupChat,
+  addSelfToGroupChat,
 } = require("../controllers/chatController");
 
 router.post("/", authMiddleware, accessChat);
 router.get("/", authMiddleware, fetchChats);
 router.get("/groups", authMiddleware, fetchGroups);
 router.post("/create-group", authMiddleware, createGroupChat);
+router.put("/join-group", authMiddleware, addSelfToGroupChat);
 router.put("/exit-group", authMiddleware, exitGroupChat);
 
 module.exports = router;
