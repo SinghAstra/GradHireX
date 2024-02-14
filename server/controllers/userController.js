@@ -106,6 +106,12 @@ const registerController = async (req, res) => {
   }
 };
 
+/**
+ * Fetches all users matching the search query.
+ * @param {Object} req - The request object containing the search query.
+ * @param {Object} res - The response object.
+ * @returns {Object[]} An array of user objects.
+ */
 const fetchAllUsers = async (req, res) => {
   try {
     const query = req.query.search
