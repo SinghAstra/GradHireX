@@ -22,3 +22,5 @@ export const registerApi = (name, email, password) =>
 
 export const fetchUsersApi = (searchQuery) =>
   API.get(`/user/fetchAllUser?search=${searchQuery}`);
+
+export const createChatApi = (userId) => API.post("/chat", { userId });

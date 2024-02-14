@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { fetchUsers } from "../Redux/actions/userAction";
+import { createChatAction } from "../Redux/actions/chatActions";
 
 const Users = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -14,6 +15,10 @@ const Users = () => {
   useEffect(() => {
     dispatch(fetchUsers(searchQuery));
   }, [dispatch, searchQuery]);
+
+  const createChat = (userId) => {
+    dispatch(createChatAction(userId));
+  };
   return (
     <div className="users-container">
       <div className={"users-header-container" + (lightTheme ? "" : " dark")}>
@@ -41,6 +46,7 @@ const Users = () => {
           className="user-container"
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.98 }}
+          onClick={() => createChat(user._id)}
         >
           <div className="user-container-icon">{user.name[0]}</div>
           <p className="user-container-username">{user.name}</p>
