@@ -131,4 +131,62 @@ const createGroupChat = async (req, res) => {
   }
 };
 
-module.exports = { accessChat, fetchChats, fetchGroups, createGroupChat };
+/**
+ * Removes a user from a group chat. If the user is the group admin, the entire group chat is deleted.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The updated chat object or a success message.
+ */
+const exitGroupChat = async (req, res) => {
+  try {
+    const { chatId } = req.body;
+
+    // Check if chatId is provided
+    if (!chatId) {
+      return res.status(400).json({ message: "Chat ID is required." });
+    }
+
+    // Find the chat
+    const chat = await Chat.findById(chatId);
+    if (!chat) {
+      return res.status(404).json({ message: "Chat not found." });
+    }
+
+    // Check if user is in the group
+    if (!chat.users.includes(req.user._id)) {
+      return res
+        .status(403)
+        .json({ message: "You are not a member of this group." });
+    }
+
+    // If user is the group admin, delete the group
+    if (chat.groupAdmin.toString() === req.user._id.toString()) {
+      await Chat.findByIdAndDelete(chatId);
+      return res.json({ message: "Group chat deleted." });
+    }
+
+    // Remove user from the group
+    chat.users = chat.users.filter(
+      (user) => user.toString() !== req.user._id.toString()
+    );
+
+    // Save the updated chat
+    await chat.save();
+
+    // Return updated chat
+    const updatedChat = await Chat.findById(chatId)
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+    res.json({ updatedChat, message: "You have exited the group." });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
+module.exports = {
+  accessChat,
+  fetchChats,
+  fetchGroups,
+  createGroupChat,
+  exitGroupChat,
+};
