@@ -93,4 +93,42 @@ const fetchGroups = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-module.exports = { accessChat, fetchChats, fetchGroups };
+
+/**
+ * Creates a new group chat.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The created group chat object.
+ */
+const createGroupChat = async (req, res) => {
+  try {
+    let { name, users } = req.body;
+    if (!name || !users) {
+      res.status(400).json({ message: "Data is insufficient." });
+    }
+
+    // Parse users if needed
+    users = Array.isArray(users) ? users : JSON.parse(users);
+    // Add current user ID to the users array
+    users.push(req.user._id);
+    try {
+      const groupChat = await Chat.create({
+        chatName: name,
+        isGroupChat: true,
+        groupAdmin: req.user._id,
+        users,
+      });
+      const fullGroupChat = await Chat.findById(groupChat._id)
+        .populate("users", "-password")
+        .populate("groupAdmin", "-password");
+
+      res.json(fullGroupChat);
+    } catch (error) {
+      res.status(500).json({ message: "Error While Creating Group Chat" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { accessChat, fetchChats, fetchGroups, createGroupChat };
