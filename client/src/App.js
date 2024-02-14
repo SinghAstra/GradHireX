@@ -4,7 +4,7 @@ import MainContainer from "./Components/MainContainer";
 import Auth from "./Components/Auth";
 import Welcome from "./Components/Welcome";
 import ChatArea from "./Components/ChatArea";
-import OnlineUsers from "./Components/OnlineUsers";
+import Users from "./Components/Users";
 import OnlineGroups from "./Components/OnlineGroups";
 import CreateGroup from "./Components/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -14,7 +14,7 @@ import Notification from "./Components/Notification";
 import { Backdrop, CircularProgress } from "@mui/material";
 
 const App = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.currentUser);
   const { open, message, severity } = useSelector(
     (state) => state.notification
   );
@@ -32,7 +32,7 @@ const App = () => {
           <Route path="app" element={<MainContainer />}>
             <Route path="welcome" element={<Welcome />} />
             <Route path="chat" element={<ChatArea />} />
-            <Route path="users" element={<OnlineUsers />} />
+            <Route path="users" element={<Users />} />
             <Route path="groups" element={<OnlineGroups />} />
             <Route path="create-group" element={<CreateGroup />} />
           </Route>

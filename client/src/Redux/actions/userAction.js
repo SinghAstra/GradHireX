@@ -1,6 +1,12 @@
 // import { AUTH, LOG_OUT } from "./actionTypes";
-import { logInApi, registerApi } from "../API";
-import { AUTH, END_LOADING, START_LOADING } from "./actionTypes";
+import { fetchUsersApi, logInApi, registerApi } from "../API";
+import {
+  AUTH,
+  END_LOADING,
+  FETCH_USERS_FAILURE,
+  FETCH_USERS_SUCCESS,
+  START_LOADING,
+} from "./actionTypes";
 import { showNotification } from "./notificationAction";
 // import { showNotification } from "./notifications";
 
@@ -12,13 +18,10 @@ export const logIn = (name, password, navigate) => {
       // Call the sign-in API
       const { data } = await logInApi(name, password);
 
-      console.log("data --logIn is ", data);
       dispatch({
         type: AUTH,
         payload: { username: data.name, email: data.email, token: data.token },
       });
-
-      dispatch({ type: END_LOADING });
 
       dispatch(showNotification(`Welcome back, ${data.name}!`, "success"));
       // Navigate to the desired page after successful sign-in
@@ -26,7 +29,7 @@ export const logIn = (name, password, navigate) => {
     } catch (error) {
       // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
-
+    } finally {
       dispatch({ type: END_LOADING });
     }
   };
@@ -41,31 +44,35 @@ export const register = (name, email, password, navigate) => {
       // Call the sign-up API
       const { data } = await registerApi(name, email, password);
 
-      console.log("data --register is ", data);
-
       dispatch({
         type: AUTH,
         payload: { username: data.name, email: data.email, token: data.token },
       });
-
-      dispatch({ type: END_LOADING });
 
       dispatch(showNotification(data.message, "success"));
 
       // Navigate to the desired page after successful sign-up
       navigate("/app/welcome");
     } catch (error) {
-      console.log("error is ", error);
-      console.log(
-        "error.response.data.message is ",
-        error.response.data.message
-      );
       // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
-
+    } finally {
       dispatch({ type: END_LOADING });
     }
   };
+};
+
+export const fetchUsers = (searchQuery) => async (dispatch) => {
+  try {
+    dispatch({ type: START_LOADING });
+    const { data } = await fetchUsersApi(searchQuery);
+    dispatch({ type: FETCH_USERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: FETCH_USERS_FAILURE });
+    dispatch(showNotification(error.message, "error"));
+  } finally {
+    dispatch({ type: END_LOADING });
+  }
 };
 
 // // Action creator for user log-out

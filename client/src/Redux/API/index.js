@@ -19,3 +19,6 @@ export const logInApi = (name, password) =>
 
 export const registerApi = (name, email, password) =>
   API.post(`/user/register`, { name, email, password });
+
+export const fetchUsersApi = (searchQuery) =>
+  API.get(`/user/fetchAllUser?search=${searchQuery}`);

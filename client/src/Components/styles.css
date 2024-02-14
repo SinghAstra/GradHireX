@@ -314,7 +314,7 @@
   width: 50%;
 }
 
-.onlineUsers-container,
+.users-container,
 .OnlineGroups-container {
   flex: 0.7;
   border-top-right-radius: 20px;
@@ -326,7 +326,7 @@
   padding: 5px 10px;
 }
 
-.onlineUsers-header-container,
+.users-header-container,
 .OnlineGroups-header-container {
   display: flex;
   align-items: center;
@@ -339,20 +339,20 @@
     rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
-.onlineUsers-header-icon,
+.users-header-icon,
 .OnlineGroups-header-icon {
   width: 32px;
   height: 32px;
 }
 
-.onlineUsers-header-title,
+.users-header-title,
 .OnlineGroups-header-title {
   font-size: 1rem;
   font-weight: bold;
   flex: 1;
 }
 
-.onlineUsers-search-container,
+.users-search-container,
 .OnlineGroups-search-container {
   display: flex;
   margin: 5px;
@@ -363,7 +363,7 @@
     rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
-.onlineUser-container,
+.user-container,
 .onlineGroup-container {
   display: flex;
   align-items: center;
@@ -375,7 +375,7 @@
   gap: 10px;
 }
 
-.onlineUser-container-icon,
+.user-container-icon,
 .onlineGroup-container-icon {
   font-size: 2rem;
   width: 32px;
@@ -425,7 +425,7 @@
     flex: 0;
   }
   .chatArea-container,
-  .onlineUsers-container,
+  .users-container,
   .OnlineGroups-container,
   .createGroup-container {
     flex: 1;
