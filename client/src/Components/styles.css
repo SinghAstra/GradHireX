@@ -316,7 +316,7 @@
 }
 
 .users-container,
-.OnlineGroups-container {
+.groups-container {
   flex: 0.7;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -329,7 +329,7 @@
 
 .users-header-container,
 .createGroup-header-container,
-.OnlineGroups-header-container {
+.groups-header-container {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -342,20 +342,21 @@
 }
 
 .users-header-icon,
-.OnlineGroups-header-icon {
+.groups-header-icon,
+.create-group-header-icon {
   width: 32px;
   height: 32px;
 }
 
 .users-header-title,
-.OnlineGroups-header-title {
+.groups-header-title {
   font-size: 1rem;
   font-weight: bold;
   flex: 1;
 }
 
 .users-search-container,
-.OnlineGroups-search-container {
+.groups-search-container {
   display: flex;
   margin: 5px;
   padding: 5px 10px;
@@ -366,7 +367,7 @@
 }
 
 .user-container,
-.onlineGroup-container {
+.group-container {
   display: flex;
   align-items: center;
   padding: 5px 10px;
@@ -378,7 +379,7 @@
 }
 
 .user-container-icon,
-.onlineGroup-container-icon {
+.group-container-icon {
   font-size: 2rem;
   width: 32px;
   border-radius: 50%;
@@ -428,7 +429,7 @@
   }
   .chatArea-container,
   .users-container,
-  .OnlineGroups-container,
+  .groups-container,
   .createGroup-container {
     flex: 1;
   }

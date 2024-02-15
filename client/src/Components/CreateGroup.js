@@ -71,8 +71,8 @@ const CreateGroup = () => {
             <div className="cg-header-label">
               <img
                 src="/chat.png"
-                className="OnlineGroups-header-icon"
-                alt="OnlineGroups-header-icon"
+                className="create-group-header-icon"
+                alt="createGroups-header-icon"
               />
               <h3>Select Users</h3>
             </div>

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Auth from "./Components/Auth";
 import Welcome from "./Components/Welcome";
 import ChatArea from "./Components/ChatArea";
 import Users from "./Components/Users";
-import OnlineGroups from "./Components/OnlineGroups";
+import Groups from "./Components/Groups";
 import CreateGroup from "./Components/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="welcome" element={<Welcome />} />
             <Route path="chat/:id" element={<ChatArea />} />
             <Route path="users" element={<Users />} />
-            <Route path="groups" element={<OnlineGroups />} />
+            <Route path="groups" element={<Groups />} />
             <Route path="create-group" element={<CreateGroup />} />
           </Route>
         )}
