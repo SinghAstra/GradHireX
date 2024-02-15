@@ -29,7 +29,8 @@
     rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 }
 
-.sb-search {
+.sb-search,
+.createGroup-input {
   border-radius: 20px;
   margin: 10px;
   padding: 10px 5px;
@@ -278,7 +279,6 @@
   padding: 5px 10px;
   background-color: white;
   width: 100%;
-  display: flex;
   margin: 10px;
   flex: 0.7;
 }
@@ -328,6 +328,7 @@
 }
 
 .users-header-container,
+.createGroup-header-container,
 .OnlineGroups-header-container {
   display: flex;
   align-items: center;
@@ -441,4 +442,18 @@
 
 .bt-auth-link {
   text-align: right;
+}
+
+.cg-header-label {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.cg-header-label h3 {
+  margin-left: 0.5em;
+}
+
+.createGroup-header-container {
+  margin-bottom: 1em;
 }

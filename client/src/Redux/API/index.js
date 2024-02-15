@@ -25,4 +25,7 @@ export const fetchUsersApi = (searchQuery) =>
 
 export const createChatApi = (userId) => API.post("/chat", { userId });
 
+export const createGroupChatApi = (name, users) =>
+  API.post("/chat/create-group", { name, users });
+
 export const fetchChatsApi = () => API.get("/chat");
