@@ -1,12 +1,13 @@
 import { DoneOutlineRounded } from "@mui/icons-material";
 import { Checkbox, IconButton } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import ArrowCircleRightRoundedIcon from "@mui/icons-material/ArrowCircleRightRounded";
 import { createGroupChatAction } from "../Redux/actions/chatActions";
 import { useNavigate } from "react-router-dom";
+import { fetchUsers } from "../Redux/actions/userAction";
 
 const CreateGroup = () => {
   const [groupName, setGroupName] = useState("");
@@ -54,6 +55,11 @@ const CreateGroup = () => {
             placeholder="Enter Group Name"
             className={"search-box" + (lightTheme ? "" : " dark")}
             value={groupName}
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                handleCreateGroup();
+              }
+            }}
             onChange={(e) => setGroupName(e.target.value)}
           />
           <IconButton

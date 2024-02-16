@@ -38,3 +38,6 @@ export const exitGroupChatApi = (chatId) =>
 
 export const joinGroupChatApi = (chatId) =>
   API.put("/chat/join-group", { chatId });
+
+export const sendMessageApi = (chatId, content) =>
+  API.post("/message/", { chatId, content });

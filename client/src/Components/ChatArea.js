@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import { IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import SendIcon from "@mui/icons-material/Send";
 import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { sendMessageAction } from "../Redux/actions/messageAction";
 
 const ChatArea = () => {
   const lightTheme = useSelector((state) => state.theme);
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+  const { chatId } = useParams();
+
+  const handleMessageSent = () => {
+    if (message.trim().length > 0) {
+      dispatch(sendMessageAction(chatId, message));
+      setMessage("");
+    }
+  };
   return (
     <div className="chatArea-container">
       <div className={"chatArea-header" + (lightTheme ? "" : " dark")}>
@@ -39,8 +51,15 @@ const ChatArea = () => {
         <input
           className={"search-box" + (lightTheme ? "" : " dark")}
           placeholder="Type Your Message here..."
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleMessageSent();
+            }
+          }}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
-        <IconButton>
+        <IconButton onClick={handleMessageSent}>
           <SendIcon />
         </IconButton>
       </div>
@@ -49,4 +68,3 @@ const ChatArea = () => {
 };
 
 export default ChatArea;
-// box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;

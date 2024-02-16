@@ -20,7 +20,7 @@ const ConversationItem = ({ props }) => {
       className={"con-container" + (lightTheme ? "" : " dark")}
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
-      onClick={() => navigate(`/app/chat/${props._id}&${chatName}`)}
+      onClick={() => navigate(`/app/chat/${props._id}`)}
     >
       <div className="con-icon">{chatName[0]}</div>
       <div className={"con-title" + (lightTheme ? "" : " dark")}>

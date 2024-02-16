@@ -17,7 +17,6 @@ const Groups = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
 
-  console.log("groups is ", groups);
   useEffect(() => {
     dispatch(fetchGroupsAction(searchQuery));
   }, [dispatch, searchQuery]);
