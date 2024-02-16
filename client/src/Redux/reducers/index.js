@@ -5,6 +5,7 @@ import { notificationReducer } from "./notificationReducer";
 import { loadingReducer } from "./loadingReducer";
 import { chatReducer } from "./chatReducer";
 import { groupReducer } from "./groupReducer";
+import { messageReducer } from "./messageReducer";
 
 export const rootReducer = combineReducers({
   theme: themeReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   loading: loadingReducer,
   chat: chatReducer,
   group: groupReducer,
+  message: messageReducer,
 });

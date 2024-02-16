@@ -28,7 +28,7 @@ const ConversationItem = ({ props }) => {
       </div>
       <div className="con-lastMessage">
         {props.lastMessage === undefined
-          ? " Start a conversation !"
+          ? "Click here! Start a conversation !"
           : props.lastMessage.content}
       </div>
       <div className={"con-timeStamp" + (lightTheme ? "" : " dark")}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import { IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -7,13 +7,18 @@ import SelfMessage from "./SelfMessage";
 import OtherMessage from "./OtherMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { sendMessageAction } from "../Redux/actions/messageAction";
+import {
+  fetchMessageAction,
+  sendMessageAction,
+} from "../Redux/actions/messageAction";
 
 const ChatArea = () => {
   const lightTheme = useSelector((state) => state.theme);
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const { chatId } = useParams();
+  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const messages = useSelector((state) => state.message.messages);
 
   const handleMessageSent = () => {
     if (message.trim().length > 0) {
@@ -21,6 +26,10 @@ const ChatArea = () => {
       setMessage("");
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchMessageAction(chatId));
+  }, [chatId, dispatch]);
   return (
     <div className="chatArea-container">
       <div className={"chatArea-header" + (lightTheme ? "" : " dark")}>
@@ -34,18 +43,13 @@ const ChatArea = () => {
         </div>
       </div>
       <div className={"chatArea-messages" + (lightTheme ? "" : " dark")}>
-        <SelfMessage />
-        <OtherMessage />
-        <SelfMessage />
-        <OtherMessage />
-        <SelfMessage />
-        <OtherMessage />
-        <SelfMessage />
-        <OtherMessage />
-        <SelfMessage />
-        <OtherMessage />
-        <SelfMessage />
-        <OtherMessage />
+        {messages.map((message) => {
+          return message.sender._id === currentUserId ? (
+            <SelfMessage key={message._id} message={message.content} />
+          ) : (
+            <OtherMessage key={message._id} message={message.content} />
+          );
+        })}
       </div>
       <div className={"chatArea-input-area" + (lightTheme ? "" : " dark")}>
         <input
