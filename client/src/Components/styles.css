@@ -458,3 +458,8 @@
 .createGroup-header-container {
   margin-bottom: 1em;
 }
+
+.group-container-button {
+  flex: 1;
+  text-align: right;
+}

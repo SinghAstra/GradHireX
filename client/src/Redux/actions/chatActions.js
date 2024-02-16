@@ -30,7 +30,6 @@ export const fetchChatsAction = () => async (dispatch) => {
 export const createGroupChatAction = (name, users) => async (dispatch) => {
   try {
     const { data } = await createGroupChatApi(name, users);
-    console.log("data --createGroupChatAction ", data);
     dispatch(
       showNotification(
         `Group Chat Created Successfully - ${data.chatName}`,

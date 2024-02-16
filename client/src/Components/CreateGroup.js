@@ -41,7 +41,6 @@ const CreateGroup = () => {
   };
 
   const handleSubmit = () => {
-    console.log("userIds is ", userIds);
     // Send the group name and user IDs to the backend
     dispatch(createGroupChatAction(groupName, userIds));
     navigate("/app/welcome");
