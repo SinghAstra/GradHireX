@@ -1,4 +1,5 @@
 const Message = require("../models/messageModel");
+const Chat = require("../models/chatModel");
 
 /**
  * Fetches all messages for a specific chat.
@@ -30,15 +31,12 @@ const sendMessage = async (req, res) => {
     const senderId = req.user._id;
 
     // Create a new message
-    const message = new Message({
+    const message = await Message.create({
       content,
       sender: senderId,
       chat: chatId,
       receiver: receiverId,
     });
-
-    // Save the message
-    await message.save();
 
     // Update the lastMessage in the chat
     await Chat.findByIdAndUpdate(chatId, { lastMessage: message._id });

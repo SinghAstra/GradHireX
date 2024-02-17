@@ -23,6 +23,7 @@ const App = () => {
     dispatch(hideNotification());
   };
   const loading = useSelector((state) => state.loading);
+
   return (
     <div className="App">
       <Routes>

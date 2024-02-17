@@ -66,12 +66,7 @@ const fetchChats = async (req, res) => {
     })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
-      .populate("lastMessage", {
-        populate: {
-          path: "sender",
-          select: "-password",
-        },
-      })
+      .populate("lastMessage")
       .sort({ updatedAt: -1 });
     res.json(chats);
   } catch (error) {
@@ -87,8 +82,20 @@ const fetchChats = async (req, res) => {
  */
 const fetchGroups = async (req, res) => {
   try {
-    const groupChats = await Chat.where("isGroupChat").equals(true);
-    res.json(groupChats);
+    let filter = {};
+    if (req.query.search) {
+      filter = { chatName: { $regex: req.query.search, $options: "i" } };
+    }
+
+    const groups = await Chat.find({
+      isGroupChat: true,
+      ...filter,
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .sort({ updatedAt: -1 });
+
+    res.json(groups);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

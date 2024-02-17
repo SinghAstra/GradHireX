@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./styles.css";
 import { IconButton } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -11,6 +11,7 @@ import {
   fetchMessageAction,
   sendMessageAction,
 } from "../Redux/actions/messageAction";
+const { io } = require("socket.io-client");
 
 const ChatArea = () => {
   const lightTheme = useSelector((state) => state.theme);
@@ -19,17 +20,26 @@ const ChatArea = () => {
   const { chatId } = useParams();
   const currentUserId = useSelector((state) => state.user.currentUser._id);
   const messages = useSelector((state) => state.message.messages);
+  // const socket = useMemo(() => io("http://localhost:5000/"), []);
+  const socket = io("http://localhost:5000/");
 
   const handleMessageSent = () => {
     if (message.trim().length > 0) {
       dispatch(sendMessageAction(chatId, message));
+      socket.emit("chat message", { chatId, message });
       setMessage("");
     }
   };
 
   useEffect(() => {
     dispatch(fetchMessageAction(chatId));
-  }, [chatId, dispatch]);
+    socket.on("chat message", (msg) => {
+      dispatch(fetchMessageAction(chatId));
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, [chatId, dispatch, socket]);
   return (
     <div className="chatArea-container">
       <div className={"chatArea-header" + (lightTheme ? "" : " dark")}>
