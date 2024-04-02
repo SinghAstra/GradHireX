@@ -1,40 +1,46 @@
 import React from "react";
 import "../styles.css";
 import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import UserAvatar from "./UserAvatar";
 
-const ConversationItem = ({ props }) => {
-  const lightTheme = useSelector((state) => state.theme);
+const ConversationItem = ({ chat }) => {
   const currentUserId = useSelector((state) => state.user.currentUser._id);
   let chatName;
   const navigate = useNavigate();
-  if (props.isGroupChat) {
-    chatName = props.chatName;
+
+  if (chat.isGroupChat) {
+    chatName = chat.chatName;
   } else {
-    const otherUser = props.users.find((user) => user._id !== currentUserId);
+    const otherUser = chat.users.find((user) => user._id !== currentUserId);
     chatName = otherUser.name;
   }
+
+  let timeIn12HourFormat = "";
+  if (chat.lastMessage) {
+    const date = new Date(chat.lastMessage.createdAt);
+    timeIn12HourFormat = date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  }
   return (
-    <motion.div
-      className={"con-container" + (lightTheme ? "" : " dark")}
-      whileHover={{ scale: 1.01 }}
-      whileTap={{ scale: 0.98 }}
-      onClick={() => navigate(`/app/chat/${props._id}`)}
+    <div
+      className="w-full my-2 mx-1 flex bg-black p-2 rounded-xl gap-2 cursor-pointer"
+      onClick={() => navigate(`/app/chat/${chat._id}`)}
     >
-      <div className="con-icon">{chatName[0]}</div>
-      <div className={"con-title" + (lightTheme ? "" : " dark")}>
-        {chatName}
+      <UserAvatar chatName={chatName} />
+      <div className="flex-1 flex flex-col justify-between text-white">
+        <h1>{chatName}</h1>
+        <div className="text-neutral-500">
+          {chat.lastMessage
+            ? chat.lastMessage.content
+            : "Click here! Start a conversation !"}
+        </div>
       </div>
-      <div className="con-lastMessage">
-        {props.lastMessage === undefined
-          ? "Click here! Start a conversation !"
-          : props.lastMessage.content}
-      </div>
-      <div className={"con-timeStamp" + (lightTheme ? "" : " dark")}>
-        11:43 PM
-      </div>
-    </motion.div>
+      <div className={"text-neutral-500"}>{timeIn12HourFormat}</div>
+    </div>
   );
 };
 
