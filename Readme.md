@@ -8,7 +8,7 @@
 A real-time chat web application built with React, Redux, Node.js, and Socket.IO for WebSocket communication.
 
 <div align="center">
-  <a href="https://social-media-mern-webapp.netlify.app/"><img src="https://github.com/SinghAstra/Chat-WebApp/blob/main/images/chat.png"/></a>
+  <a href="https://chat-webapp-mern.netlify.app/"><img src="https://github.com/SinghAstra/Chat-WebApp/blob/main/images/chat.png"/></a>
 </div>
 
 ## Features
