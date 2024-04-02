@@ -1,9 +1,9 @@
-# Chat Web Application
-
 ![Contributors][contributors-shield]
 ![Forks][forks-shield]
 ![Stargazers][stars-shield]
 ![Issues][issues-shield]
+
+# Chat Web Application
 
 A real-time chat web application built with React, Redux, Node.js, and Socket.IO for WebSocket communication.
 
