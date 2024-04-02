@@ -15,6 +15,7 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import Navbar from "./Components/Navbar";
 import { BrowserRouter } from "react-router-dom";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -41,6 +42,7 @@ const App = () => {
               <Route path="users" element={<Users />} />
               <Route path="groups" element={<Groups />} />
               <Route path="create-group" element={<CreateGroup />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
           )}
 
