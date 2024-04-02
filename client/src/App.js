@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
-import Welcome from "./Components/Welcome";
+import Welcome from "./Components/Welcome/Welcome";
 import ChatArea from "./Components/ChatArea";
 import Users from "./Components/Users";
 import Groups from "./Components/Groups";
