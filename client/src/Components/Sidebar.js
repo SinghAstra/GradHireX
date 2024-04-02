@@ -17,56 +17,43 @@ import { Link } from "react-router-dom";
 import { fetchChatsAction } from "../Redux/actions/chatActions";
 
 const Sidebar = () => {
-  const lightTheme = useSelector((state) => state.theme);
-
   const dispatch = useDispatch();
-  const toggleTheme = () => {
-    dispatch(toggleThemeAction());
-  };
+
   const chats = useSelector((state) => state.chat.chats);
   useEffect(() => {
     dispatch(fetchChatsAction());
   }, [dispatch]);
   return (
     <div className="sidebar-container">
-      <div className={"sb-header" + (lightTheme ? "" : " dark")}>
+      <div className={"sb-header"}>
         <div>
-          <IconButton className={"icon" + (lightTheme ? "" : " dark")}>
+          <IconButton className={"icon"}>
             <AccountCircle />
           </IconButton>
         </div>
         <div className="sb-header-navigation">
           <Link to="/app/users">
-            <IconButton className={"icon" + (lightTheme ? "" : " dark")}>
+            <IconButton className={"icon"}>
               <PersonAdd />
             </IconButton>
           </Link>
           <Link to="/app/groups">
-            <IconButton className={"icon" + (lightTheme ? "" : " dark")}>
+            <IconButton className={"icon"}>
               <GroupAdd />
             </IconButton>
           </Link>
           <Link to="/app/create-group">
-            <IconButton className={"icon" + (lightTheme ? "" : " dark")}>
+            <IconButton className={"icon"}>
               <AddCircle />
             </IconButton>
           </Link>
-          <IconButton
-            className={"icon" + (lightTheme ? "" : " dark")}
-            onClick={toggleTheme}
-          >
-            {lightTheme ? <Nightlight /> : <LightMode />}
-          </IconButton>
         </div>
       </div>
-      <div className={"sb-search" + (lightTheme ? "" : " dark")}>
-        <IconButton className={lightTheme ? "" : " dark"}>
+      <div className={"sb-search"}>
+        <IconButton>
           <Search />
         </IconButton>
-        <input
-          className={"search-box" + (lightTheme ? "" : " dark")}
-          placeholder="search"
-        />
+        <input className={"search-box"} placeholder="search" />
       </div>
       <div className="sb-conversation">
         {chats.map((conversation) => (

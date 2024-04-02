@@ -19,11 +19,10 @@ const Navbar = () => {
       </div>
       <div className="">
         {user ? (
-          <Link
-            className="w-10 h-10 rounded-full border-2 border-violet-400 flex items-center justify-center text-white hover:text-black hover:bg-violet-400 text-2xl"
-            to={"/app/profile"}
-          >
-            {user.username[0]}
+          <Link className="avatar placeholder" to="/app/profile">
+            <div className="bg-neutral text-neutral-content rounded-full w-12 border-2 border-purple-400">
+              <span className="text-2xl">{user.username[0]}</span>
+            </div>
           </Link>
         ) : (
           <Link

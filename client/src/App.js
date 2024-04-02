@@ -13,9 +13,9 @@ import Notification from "./Components/Notification";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter } from "react-router-dom";
-import Profile from "./pages/Profile";
+import Profile from "./Components/Profile/Profile";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
