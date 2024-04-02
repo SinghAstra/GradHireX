@@ -24,7 +24,7 @@ const Sidebar = () => {
     dispatch(fetchChatsAction());
   }, [dispatch]);
   return (
-    <div className="sidebar-container">
+    <div className="w-1/3">
       <div className={"sb-header"}>
         <div>
           <IconButton className={"icon"}>
@@ -54,11 +54,6 @@ const Sidebar = () => {
           <Search />
         </IconButton>
         <input className={"search-box"} placeholder="search" />
-      </div>
-      <div className="sb-conversation">
-        {chats.map((conversation) => (
-          <ConversationItem props={conversation} key={conversation._id} />
-        ))}
       </div>
     </div>
   );

@@ -11,13 +11,13 @@ const Navbar = () => {
   const buttonUrl = isSignUpPage ? "/log-in" : "/sign-up";
 
   return (
-    <div className="flex font-mono justify-between items-center py-4 px-6 shadow-lg bg-black text-white w-full">
+    <div className="flex font-mono justify-between items-center py-4 px-6 shadow-lg bg-black text-white w-full z-10">
       <div>
         <h1 className="text-2xl text-violet-400  font-semibold">
           <Link to={"/"}>Chat Web App</Link>
         </h1>
       </div>
-      <div className="">
+      <div>
         {user ? (
           <Link className="avatar placeholder" to="/app/profile">
             <div className="bg-neutral text-neutral-content rounded-full w-12 border-2 border-purple-400">

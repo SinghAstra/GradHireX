@@ -29,7 +29,7 @@ const App = () => {
   const loading = useSelector((state) => state.loading);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <BrowserRouter>
         <Navbar />
         <Routes>

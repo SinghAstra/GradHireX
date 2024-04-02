@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const Welcome = () => {
   const userName = useSelector((state) => state.user.currentUser.username);
   return (
-    <div className="diff aspect-[16/9]">
+    <div className="diff aspect-[16/9] w-2/3">
       <div className="diff-item-1">
         <div className="bg-violet-400 text-primary-content text-9xl font-black grid place-content-center">
           {userName.toUpperCase()}

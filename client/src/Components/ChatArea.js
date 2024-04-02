@@ -41,7 +41,7 @@ const ChatArea = () => {
     };
   }, [chatId, dispatch, socket]);
   return (
-    <div className="chatArea-container">
+    <div className="w-2/3">
       <div className={"chatArea-header" + (lightTheme ? "" : " dark")}>
         <div className="chatArea-header-icon">S</div>
         <div className="chatArea-header-title">Title</div>
