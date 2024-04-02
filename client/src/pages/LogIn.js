@@ -22,14 +22,14 @@ const LogIn = () => {
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     console.log("logIn values is ", values);
-    // dispatch(logIn(values.username, values.password, navigate));
+    dispatch(logIn(values.username, values.password, navigate));
   };
 
   return (
     <div className="flex bg-black w-full h-screen font-mono">
       <div className="flex-1 flex items-center justify-center w-full h-screen flex-col">
         <div className="w-4/5 mb-6">
-          <h1 className="text-2xl font-bold text-violet-500">Welcome back</h1>
+          <h1 className="text-xl font-medium text-violet-400">Welcome back</h1>
         </div>
         <Formik
           initialValues={initialLogInValues}

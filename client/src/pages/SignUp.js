@@ -28,16 +28,16 @@ const SignUp = () => {
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
     console.log("isRegister values is ", values);
-    // dispatch(
-    //   register(values.username, values.email, values.password, navigate)
-    // );
+    dispatch(
+      register(values.username, values.email, values.password, navigate)
+    );
   };
 
   return (
     <div className="flex bg-black w-full h-screen font-mono">
       <div className="flex-1 flex items-center justify-center w-full h-screen flex-col">
         <div className="w-4/5 mb-6">
-          <h1 className="text-2xl font-bold text-violet-500">
+          <h1 className="text-xl font-medium text-violet-400">
             Create Your Account
           </h1>
         </div>
