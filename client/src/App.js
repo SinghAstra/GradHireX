@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
-import Auth from "./Components/Auth";
 import Welcome from "./Components/Welcome";
 import ChatArea from "./Components/ChatArea";
 import Users from "./Components/Users";
@@ -12,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "./Redux/actions/notificationAction";
 import Notification from "./Components/Notification";
 import { Backdrop, CircularProgress } from "@mui/material";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -40,10 +41,15 @@ const App = () => {
         )}
 
         {/* Route for non-authenticated users */}
-        {!user && <Route path="/" element={<Auth />} />}
+        {!user && (
+          <>
+            <Route path="/log-in" element={<LogIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+          </>
+        )}
 
         {/* Redirect to login for unauthorized sub-routes */}
-        {!user && <Route path="*" element={<Navigate to="/" />} />}
+        {!user && <Route path="*" element={<Navigate to="/sign-up" />} />}
       </Routes>
       <Notification
         open={open}
