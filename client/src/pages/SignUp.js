@@ -63,46 +63,80 @@ const SignUp = () => {
                 className="w-4/5 flex flex-col gap-3"
                 onSubmit={handleSubmit}
               >
-                <input
-                  className="w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400"
-                  placeholder="Username"
-                  type="text"
-                  id="username"
-                  autoComplete="off"
-                  value={values.username}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <input
-                  className="w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400"
-                  placeholder="Email"
-                  type="email"
-                  id="email"
-                  autoComplete="off"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <input
-                  className="w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400"
-                  placeholder="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="off"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
-                <input
-                  className="w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400"
-                  placeholder="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="off"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                />
+                <div>
+                  <input
+                    className={`w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400 ${
+                      touched.username && errors.username
+                        ? "border-red-400"
+                        : ""
+                    }`}
+                    placeholder="Username"
+                    type="text"
+                    id="username"
+                    autoComplete="off"
+                    value={values.username}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <p className="ml-2 text-red-400">
+                    {touched.username && errors.username}
+                  </p>
+                </div>
+                <div>
+                  <input
+                    className={`w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400 ${
+                      touched.email && errors.email ? "border-red-400" : ""
+                    }`}
+                    placeholder="Email"
+                    type="email"
+                    id="email"
+                    autoComplete="off"
+                    value={values.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <p className="ml-2 text-red-400">
+                    {touched.email && errors.email}
+                  </p>
+                </div>
+                <div>
+                  <input
+                    className={`w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400 ${
+                      touched.password && errors.password
+                        ? "border-red-400"
+                        : ""
+                    }`}
+                    placeholder="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="off"
+                    value={values.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <p className="ml-2 text-red-400">
+                    {touched.password && errors.password}
+                  </p>
+                </div>
+                <div>
+                  <input
+                    className={`w-full h-10 bg-transparent text-white font-mono outline outline-0 focus:outline-0 border focus:border-2 text-sm px-3 py-2.5 rounded-[7px] focus:border-violet-400 ${
+                      touched.confirmPassword && errors.confirmPassword
+                        ? "border-red-400"
+                        : ""
+                    }`}
+                    placeholder="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="off"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <p className="ml-2 text-red-400">
+                    {touched.confirmPassword && errors.confirmPassword}
+                  </p>
+                </div>
                 <button
                   className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 border border-violet-700 rounded w-full mt-3"
                   type="submit"
