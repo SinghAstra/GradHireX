@@ -55,9 +55,6 @@ const SignUp = () => {
               handleBlur,
               handleSubmit,
             } = props;
-            console.log("values is ", values);
-            console.log("touched is ", touched);
-            console.log("errors is ", errors);
             return (
               <form
                 className="w-4/5 flex flex-col gap-3"
