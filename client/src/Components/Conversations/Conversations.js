@@ -15,14 +15,18 @@ const Conversations = () => {
   console.log("chats is ", chats);
 
   return (
-    <div className=" bg-violet-400 overflow-y-scroll h-screen no-scrollbar w-1/3 p-4">
-      {chats.length > 0
-        ? chats.map((conversation) => (
+    <div className=" bg-violet-400 overflow-y-scroll h-screen no-scrollbar w-1/3 p-2">
+      {chats.length > 0 ? (
+        <ul className="menu menu-md bg-base-200 w-full rounded-box">
+          {chats.map((conversation) => (
             <ConversationItem chat={conversation} key={conversation._id} />
-          ))
-        : Array.from({ length: 8 }).map((_, index) => (
-            <ConversationItemSkelton key={index} />
           ))}
+        </ul>
+      ) : (
+        Array.from({ length: 8 }).map((_, index) => (
+          <ConversationItemSkelton key={index} />
+        ))
+      )}
     </div>
   );
 };

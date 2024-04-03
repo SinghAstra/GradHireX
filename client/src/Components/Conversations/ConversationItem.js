@@ -27,11 +27,11 @@ const ConversationItem = ({ chat }) => {
   }
   return (
     <div
-      className="w-full my-2 mx-1 flex bg-black p-2 rounded-xl gap-2 cursor-pointer"
+      className="w-full my-1 flex flex-row bg-black p-2 rounded-xl gap-2 cursor-pointer hover:border-2 hover:border-violet-400 font-mono"
       onClick={() => navigate(`/app/chat/${chat._id}`)}
     >
       <UserAvatar chatName={chatName} />
-      <div className="flex-1 flex flex-col justify-between text-white">
+      <div className="flex-1 flex flex-col justify-between text-white items-start">
         <h1>{chatName}</h1>
         <div className="text-neutral-500">
           {chat.lastMessage
