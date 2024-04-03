@@ -8,10 +8,12 @@ const {
   createGroupChat,
   exitGroupChat,
   addSelfToGroupChat,
+  fetchChat,
 } = require("../controllers/chatController");
 
 router.post("/", authMiddleware, accessChat);
 router.get("/", authMiddleware, fetchChats);
+router.get("/:chatId", authMiddleware, fetchChat);
 router.get("/groups", authMiddleware, fetchGroups);
 router.post("/create-group", authMiddleware, createGroupChat);
 router.put("/join-group", authMiddleware, addSelfToGroupChat);

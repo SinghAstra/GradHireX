@@ -74,6 +74,17 @@ const fetchChats = async (req, res) => {
   }
 };
 
+const fetchChat = async (req, res) => {
+  try {
+    const chat = await Chat.findById(req.params.chatId)
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+    res.json(chat);
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
 /**
  * Fetches all group chats.
  * @param {Object} req - The request object.
@@ -237,6 +248,7 @@ const addSelfToGroupChat = async (req, res) => {
 module.exports = {
   accessChat,
   fetchChats,
+  fetchChat,
   fetchGroups,
   createGroupChat,
   exitGroupChat,
