@@ -3,10 +3,9 @@ import "./styles.css";
 
 const SelfMessage = ({ message }) => {
   return (
-    <div className="self-message-container">
-      <div className="self-message">
-        <div className="message-text">{message}</div>
-        <div className="message-timeline">09:02 AM</div>
+    <div class="chat chat-end">
+      <div class="chat-bubble bg-violet-400">
+        <p className="font-mono text-white">{message}</p>
       </div>
     </div>
   );
