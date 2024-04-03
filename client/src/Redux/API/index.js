@@ -30,6 +30,8 @@ export const createGroupChatApi = (name, users) =>
 
 export const fetchChatsApi = () => API.get("/chat");
 
+export const fetchChat = (chatId) => API.get(`/chat/${chatId}`);
+
 export const fetchGroupsApi = (searchQuery) =>
   API.get(`/chat/groups?search=${searchQuery}`);
 

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Welcome from "./Components/Welcome/Welcome";
-import ChatArea from "./Components/ChatArea";
+import ChatArea from "./Components/ChatArea/ChatArea";
 import Users from "./Components/Users";
 import Groups from "./Components/Groups";
 import CreateGroup from "./Components/CreateGroup";
@@ -13,7 +13,6 @@ import Notification from "./Components/Notification";
 import { Backdrop, CircularProgress } from "@mui/material";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
-import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 
@@ -29,9 +28,8 @@ const App = () => {
   const loading = useSelector((state) => state.loading);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="h-screen">
       <BrowserRouter>
-        <Navbar />
         <Routes>
           {/* Routes for authenticated users */}
           {user && <Route path="/" element={<Navigate to="/app/welcome" />} />}

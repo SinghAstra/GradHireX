@@ -1,16 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
-import "./styles.css";
+import React, { useEffect, useState } from "react";
+import "../styles.css";
 import { IconButton } from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import SendIcon from "@mui/icons-material/Send";
-import SelfMessage from "./SelfMessage";
-import OtherMessage from "./OtherMessage";
+import SelfMessage from "../SelfMessage";
+import OtherMessage from "../OtherMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
   fetchMessageAction,
   sendMessageAction,
-} from "../Redux/actions/messageAction";
+} from "../../Redux/actions/messageAction";
+import ChatHeader from "./ChatHeader";
+import { fetchCurrentChat } from "../../Redux/actions/chatActions";
 const { io } = require("socket.io-client");
 
 const ChatArea = () => {
@@ -20,7 +21,6 @@ const ChatArea = () => {
   const { chatId } = useParams();
   const currentUserId = useSelector((state) => state.user.currentUser._id);
   const messages = useSelector((state) => state.message.messages);
-  // const socket = useMemo(() => io("http://localhost:5000/"), []);
   const socket = io("http://localhost:5000/");
 
   const handleMessageSent = () => {
@@ -32,6 +32,7 @@ const ChatArea = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchCurrentChat(chatId));
     dispatch(fetchMessageAction(chatId));
     socket.on("chat message", (msg) => {
       dispatch(fetchMessageAction(chatId));
@@ -39,19 +40,10 @@ const ChatArea = () => {
     return () => {
       socket.disconnect();
     };
-  }, [chatId, dispatch, socket]);
+  }, [chatId, dispatch]);
   return (
     <div className="w-2/3">
-      <div className={"chatArea-header" + (lightTheme ? "" : " dark")}>
-        <div className="chatArea-header-icon">S</div>
-        <div className="chatArea-header-title">Title</div>
-        <div className="chatArea-header-online">online</div>
-        <div className="chatArea-header-delete-icon">
-          <IconButton className={lightTheme ? "" : " dark"}>
-            <DeleteOutlineIcon />
-          </IconButton>
-        </div>
-      </div>
+      <ChatHeader />
       <div className={"chatArea-messages" + (lightTheme ? "" : " dark")}>
         {messages.map((message) => {
           return message.sender._id === currentUserId ? (

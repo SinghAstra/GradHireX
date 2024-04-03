@@ -5,7 +5,7 @@ import Conversations from "./Conversations/Conversations";
 
 const MainContainer = () => {
   return (
-    <div className="w-full flex flex-1">
+    <div className="w-full flex">
       <Conversations />
       <Outlet />
     </div>
