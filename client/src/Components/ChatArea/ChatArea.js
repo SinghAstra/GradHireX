@@ -11,14 +11,13 @@ import {
   sendMessageAction,
 } from "../../Redux/actions/messageAction";
 import ChatAreaHeader from "./ChatAreaHeader";
+import ChatAreaMessages from "./ChatAreaMessages";
 const { io } = require("socket.io-client");
 
 const ChatArea = () => {
-  const lightTheme = useSelector((state) => state.theme);
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const { chatId } = useParams();
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
   const messages = useSelector((state) => state.message.messages);
   const socket = io("http://localhost:5000/");
 
@@ -39,33 +38,31 @@ const ChatArea = () => {
       socket.disconnect();
     };
   }, [chatId, dispatch]);
+
   return (
-    <div className="w-2/3">
+    <div className="w-2/3 flex flex-col h-screen">
       <ChatAreaHeader />
-      <div className={"chatArea-messages" + (lightTheme ? "" : " dark")}>
-        {messages.map((message) => {
-          return message.sender._id === currentUserId ? (
-            <SelfMessage key={message._id} message={message.content} />
-          ) : (
-            <OtherMessage key={message._id} message={message.content} />
-          );
-        })}
-      </div>
-      <div className={"chatArea-input-area" + (lightTheme ? "" : " dark")}>
-        <input
-          className={"search-box" + (lightTheme ? "" : " dark")}
-          placeholder="Type Your Message here..."
-          onKeyDown={(e) => {
-            if (e.code === "Enter") {
-              handleMessageSent();
-            }
-          }}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-        <IconButton onClick={handleMessageSent}>
-          <SendIcon />
-        </IconButton>
+      <ChatAreaMessages messages={messages} />
+      <div className="p-2">
+        <div className="bg-black border-violet-400 border-2 rounded-xl flex">
+          <input
+            className="rounded-l-xl flex-1 p-2  text-white font-mono outline outline-0 focus:outline-0 text-xl"
+            placeholder="Type Your Message here..."
+            onKeyDown={(e) => {
+              if (e.code === "Enter") {
+                handleMessageSent();
+              }
+            }}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <div
+            onClick={handleMessageSent}
+            className="flex items-center justify-center px-2"
+          >
+            <SendIcon className="text-violet-400 text-3xl" />
+          </div>
+        </div>
       </div>
     </div>
   );

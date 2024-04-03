@@ -33,7 +33,7 @@ const ChatAreaHeader = () => {
   }
 
   return (
-    <div className="p-2 ">
+    <div className="p-2">
       <div className="w-full p-2 gap-2 flex rounded-xl bg-black border-2 border-violet-400">
         <UserAvatar chatName={chatName} />
         <div className="flex flex-1 flex-col justify-center">
