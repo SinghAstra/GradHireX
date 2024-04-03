@@ -5,10 +5,12 @@ import {
   fetchChatsApi,
 } from "../API";
 import {
+  END_LOADING_CHATS,
   END_LOADING_CURRENT_CHAT,
   FETCH_CHATS_FAILURE,
   FETCH_CHATS_SUCCESS,
   FETCH_CHAT_SUCCESS,
+  START_LOADING_CHATS,
   START_LOADING_CURRENT_CHAT,
 } from "./actionTypes";
 import { showNotification } from "./notificationAction";
@@ -30,11 +32,14 @@ export const createChatAction = (userId) => async (dispatch) => {
 
 export const fetchChatsAction = () => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING_CHATS });
     const { data } = await fetchChatsApi();
     dispatch({ type: FETCH_CHATS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FETCH_CHATS_FAILURE });
     dispatch(showNotification(error.message, "error"));
+  } finally {
+    dispatch({ type: END_LOADING_CHATS });
   }
 };
 
@@ -55,6 +60,7 @@ export const createGroupChatAction = (name, users) => async (dispatch) => {
 
 export const fetchCurrentChat = (chatId) => async (dispatch) => {
   try {
+    console.log("In the fetchCurrentChat");
     dispatch({ type: START_LOADING_CURRENT_CHAT });
     const { data } = await fetchChat(chatId);
     console.log("data --fetchCurrentChat", data);
