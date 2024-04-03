@@ -14,8 +14,6 @@ import { showNotification } from "./notificationAction";
 export const logIn = (name, password, navigate) => {
   return async function (dispatch) {
     try {
-      dispatch({ type: START_LOADING });
-      // Call the sign-in API
       const { data } = await logInApi(name, password);
 
       dispatch({
@@ -29,13 +27,10 @@ export const logIn = (name, password, navigate) => {
       });
 
       dispatch(showNotification(`Welcome back, ${data.name}!`, "success"));
-      // Navigate to the desired page after successful sign-in
       navigate("/app/welcome");
     } catch (error) {
-      // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
     } finally {
-      dispatch({ type: END_LOADING });
     }
   };
 };
@@ -44,9 +39,6 @@ export const logIn = (name, password, navigate) => {
 export const register = (name, email, password, navigate) => {
   return async function (dispatch) {
     try {
-      dispatch({ type: START_LOADING });
-
-      // Call the sign-up API
       const { data } = await registerApi(name, email, password);
 
       dispatch({
@@ -67,21 +59,18 @@ export const register = (name, email, password, navigate) => {
       // Handle errors by showing an error notification
       dispatch(showNotification(error.response.data.message, "error"));
     } finally {
-      dispatch({ type: END_LOADING });
     }
   };
 };
 
 export const fetchUsers = (searchQuery) => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING });
     const { data } = await fetchUsersApi(searchQuery);
     dispatch({ type: FETCH_USERS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FETCH_USERS_FAILURE });
     dispatch(showNotification(error.message, "error"));
   } finally {
-    dispatch({ type: END_LOADING });
   }
 };
 

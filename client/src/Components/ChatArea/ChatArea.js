@@ -10,8 +10,7 @@ import {
   fetchMessageAction,
   sendMessageAction,
 } from "../../Redux/actions/messageAction";
-import ChatHeader from "./ChatHeader";
-import { fetchCurrentChat } from "../../Redux/actions/chatActions";
+import ChatAreaHeader from "./ChatAreaHeader";
 const { io } = require("socket.io-client");
 
 const ChatArea = () => {
@@ -32,7 +31,6 @@ const ChatArea = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchCurrentChat(chatId));
     dispatch(fetchMessageAction(chatId));
     socket.on("chat message", (msg) => {
       dispatch(fetchMessageAction(chatId));
@@ -43,7 +41,7 @@ const ChatArea = () => {
   }, [chatId, dispatch]);
   return (
     <div className="w-2/3">
-      <ChatHeader />
+      <ChatAreaHeader />
       <div className={"chatArea-messages" + (lightTheme ? "" : " dark")}>
         {messages.map((message) => {
           return message.sender._id === currentUserId ? (

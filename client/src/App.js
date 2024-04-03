@@ -10,7 +10,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "./Redux/actions/notificationAction";
 import Notification from "./Components/Notification";
-import { Backdrop, CircularProgress } from "@mui/material";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import { BrowserRouter } from "react-router-dom";
@@ -25,7 +24,6 @@ const App = () => {
   const handleCloseNotification = () => {
     dispatch(hideNotification());
   };
-  const loading = useSelector((state) => state.loading);
 
   return (
     <div className="h-screen">
@@ -63,12 +61,6 @@ const App = () => {
           message={message}
           severity={severity}
         />
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
       </BrowserRouter>
     </div>
   );
