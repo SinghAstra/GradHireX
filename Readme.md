@@ -4,8 +4,8 @@
 ![Issues][issues-shield]
 
 # Chat Web Application
-
-A real-time chat web application built with React, Redux, Node.js, and Socket.IO for WebSocket communication.
+[![Codacy Badge][codacy-repo]][codacy-badge]
+<p>A real-time chat web application built with React, Redux, Node.js, and Socket.IO for WebSocket communication.</p>
 
 <div align="center">
   <a href="https://chat-webapp-mern.netlify.app/"><img src="https://github.com/SinghAstra/Chat-WebApp/blob/main/images/chat.png"/></a>
@@ -68,3 +68,5 @@ A real-time chat web application built with React, Redux, Node.js, and Socket.IO
 [JWT-url]: https://jwt.io/
 [Socket.io]: https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101
 [Socket.io-url]: https://socket.io/
+[codacy-repo]:https://app.codacy.com/project/badge/Grade/614b6b9701ff4d969ab7c06cae5ef61b
+[codacy-badge]:https://app.codacy.com/gh/SinghAstra/Chat-WebApp/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
