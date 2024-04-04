@@ -13,8 +13,8 @@ const {
 
 router.post("/", authMiddleware, accessChat);
 router.get("/", authMiddleware, fetchChats);
-router.get("/:chatId", authMiddleware, fetchChat);
 router.get("/groups", authMiddleware, fetchGroups);
+router.get("/:chatId", authMiddleware, fetchChat);
 router.post("/create-group", authMiddleware, createGroupChat);
 router.put("/join-group", authMiddleware, addSelfToGroupChat);
 router.put("/exit-group", authMiddleware, exitGroupChat);

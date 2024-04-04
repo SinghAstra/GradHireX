@@ -4,11 +4,13 @@ const {
   logInController,
   registerController,
   fetchAllUsers,
+  fetchUserInfo,
 } = require("../controllers/userController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-router.post("/logIn", logInController);
-router.post("/register", registerController);
+router.post("/log-in", logInController);
+router.post("/sign-up", registerController);
 router.get("/fetchAllUser", authMiddleware, fetchAllUsers);
+router.get("/fetchUserInfo", authMiddleware, fetchUserInfo);
 
 module.exports = router;

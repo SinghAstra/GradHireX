@@ -31,7 +31,7 @@ const logInController = async (req, res) => {
 
     // Generate a JWT token for the authenticated user
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1h",
+      expiresIn: "1m",
     });
 
     // Return a successful response with user details and token
@@ -129,5 +129,19 @@ const fetchAllUsers = async (req, res) => {
   }
 };
 
+const fetchUserInfo = async (req, res) => {
+  try {
+    const userInfo = await User.findById(req.user._id).select("-password");
+    res.json(userInfo);
+  } catch (error) {
+    return res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 // Export the functions for use in other modules
-module.exports = { logInController, registerController, fetchAllUsers };
+module.exports = {
+  logInController,
+  registerController,
+  fetchAllUsers,
+  fetchUserInfo,
+};
