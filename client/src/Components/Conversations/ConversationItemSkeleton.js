@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConversationItemSkelton = () => {
+const ConversationItemSkeleton = () => {
   return (
     <div className="w-full my-1 flex bg-black p-2 rounded-xl gap-2">
       <div className="skeleton w-12 h-12 rounded-full shrink-0"></div>
@@ -12,4 +12,4 @@ const ConversationItemSkelton = () => {
   );
 };
 
-export default ConversationItemSkelton;
+export default ConversationItemSkeleton;

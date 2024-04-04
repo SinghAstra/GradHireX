@@ -1,6 +1,6 @@
 import React from "react";
 
-const ChatAreaHeaderSkelton = () => {
+const ChatAreaHeaderSkeleton = () => {
   return (
     <div className="p-2">
       <div className="w-full p-2 gap-2 flex rounded-xl bg-black border-violet-400 border-2">
@@ -14,4 +14,4 @@ const ChatAreaHeaderSkelton = () => {
   );
 };
 
-export default ChatAreaHeaderSkelton;
+export default ChatAreaHeaderSkeleton;

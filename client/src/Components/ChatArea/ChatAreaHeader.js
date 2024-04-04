@@ -3,7 +3,7 @@ import UserAvatar from "../Conversations/UserAvatar";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchCurrentChat } from "../../Redux/actions/chatActions";
-import ChatAreaHeaderSkelton from "./ChatAreaHeaderSkelton";
+import ChatAreaHeaderSkeleton from "./ChatAreaHeaderSkeleton";
 
 const ChatAreaHeader = () => {
   const { chatId } = useParams();
@@ -20,7 +20,7 @@ const ChatAreaHeader = () => {
   }, [chatId, dispatch]);
 
   if (loadingCurrentChat) {
-    return <ChatAreaHeaderSkelton />;
+    return <ChatAreaHeaderSkeleton />;
   }
 
   if (currentChat.isGroupChat) {
