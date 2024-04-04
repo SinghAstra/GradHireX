@@ -17,9 +17,15 @@ const Conversations = ({ searchQuery }) => {
   console.log("chats is ", chats);
 
   if (loadingChats) {
-    return Array.from({ length: 8 }).map((_, index) => (
-      <ConversationItemSkelton key={index} />
-    ));
+    return (
+      <div className="overflow-y-scroll flex-1 no-scrollbar m-2 mt-0">
+        <ul className="menu menu-md bg-base-200 w-full rounded-box">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <ConversationItemSkelton key={index} />
+          ))}
+        </ul>
+      </div>
+    );
   }
 
   const filteredChats = chats.filter((chat) => {
