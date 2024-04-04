@@ -14,8 +14,8 @@ const Users = () => {
   }, [dispatch, searchQuery]);
 
   return (
-    <div className="w-full flex h-screen flex-col">
-      <div className="flex items-center bg-neutral rounded w-full border-2 border-violet-400 p-0.5">
+    <div className="w-3/4 flex h-screen flex-col">
+      <div className="flex items-center bg-neutral w-full border-2 border-violet-400 p-0.5">
         <div className="px-3">
           <CiSearch size={32} />
         </div>

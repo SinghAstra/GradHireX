@@ -36,7 +36,7 @@ const ConversationItem = ({ chat }) => {
         <div className="text-neutral-500">
           {chat.lastMessage
             ? chat.lastMessage.content
-            : "Click here! Start a conversation !"}
+            : "Start a conversation !"}
         </div>
       </div>
       <div className={"text-neutral-500"}>{timeIn12HourFormat}</div>

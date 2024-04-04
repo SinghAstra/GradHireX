@@ -14,6 +14,14 @@ const Conversations = ({ searchQuery }) => {
     dispatch(fetchChatsAction());
   }, [dispatch]);
 
+  console.log("chats is ", chats);
+
+  if (loadingChats) {
+    return Array.from({ length: 8 }).map((_, index) => (
+      <ConversationItemSkelton key={index} />
+    ));
+  }
+
   const filteredChats = chats.filter((chat) => {
     let chatName;
     if (chat.isGroupChat) {
@@ -24,21 +32,13 @@ const Conversations = ({ searchQuery }) => {
     return chatName.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
-  console.log("loadingChats is ", loadingChats);
-
   return (
     <div className="overflow-y-scroll flex-1 no-scrollbar m-2 mt-0">
-      {!loadingChats ? (
-        <ul className="menu menu-md bg-base-200 w-full rounded-box">
-          {filteredChats.map((conversation) => (
-            <ConversationItem chat={conversation} key={conversation._id} />
-          ))}
-        </ul>
-      ) : (
-        Array.from({ length: 8 }).map((_, index) => (
-          <ConversationItemSkelton key={index} />
-        ))
-      )}
+      <ul className="menu menu-md bg-base-200 w-full rounded-box">
+        {filteredChats.map((conversation) => (
+          <ConversationItem chat={conversation} key={conversation._id} />
+        ))}
+      </ul>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Welcome from "./Components/Welcome/Welcome";
 import ChatArea from "./Components/ChatArea/ChatArea";
-import CreateGroup from "./Components/CreateGroup";
+import CreateGroup from "./Components/Groups/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "./Redux/actions/notificationAction";

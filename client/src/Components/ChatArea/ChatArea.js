@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles.css";
-import { IconButton } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import SelfMessage from "../SelfMessage";
-import OtherMessage from "../OtherMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -40,7 +37,7 @@ const ChatArea = () => {
   }, [chatId, dispatch]);
 
   return (
-    <div className="w-2/3 flex flex-col h-screen">
+    <div className="w-3/4 flex flex-col h-screen">
       <ChatAreaHeader />
       <ChatAreaMessages messages={messages} />
       <div className="p-2">
