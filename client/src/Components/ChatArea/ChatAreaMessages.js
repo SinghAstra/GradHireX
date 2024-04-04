@@ -7,7 +7,7 @@ const ChatAreaMessages = ({ messages }) => {
   const currentUserId = useSelector((state) => state.user.currentUser._id);
 
   return (
-    <div className="flex-1 overflow-auto flex-col-reverse  flex p-2">
+    <div className="flex-1 overflow-auto flex-col-reverse flex p-2 scrollbar-thumb-violet-300 scrollbar-thin scrollbar-track-base-200">
       {messages.map((message) => {
         return message.sender?._id === currentUserId ? (
           <SelfMessage key={message._id} message={message.content} />

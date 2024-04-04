@@ -37,7 +37,7 @@ const Conversations = ({ searchQuery }) => {
   });
 
   return (
-    <div className="overflow-y-scroll flex-1 no-scrollbar m-2 mt-0">
+    <div className="overflow-y-scroll flex-1 m-2 mt-0 no-scrollbar">
       <ul className="menu menu-md bg-base-200 w-full rounded-box">
         {filteredChats.map((conversation) => (
           <ConversationItem chat={conversation} key={conversation._id} />

@@ -14,7 +14,7 @@ const Users = () => {
   }, [dispatch, searchQuery]);
 
   return (
-    <div className="w-3/4 flex h-screen flex-col">
+    <div className="w-3/4 flex h-screen flex-col bg-base-200">
       <div className="flex items-center bg-neutral w-full border-2 border-violet-400 p-0.5">
         <div className="px-3">
           <CiSearch size={32} />
@@ -27,7 +27,7 @@ const Users = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <div className="p-2 flex-1 overflow-y-scroll">
+      <div className="p-2 flex-1 overflow-y-scroll scrollbar-thumb-violet-300 scrollbar-thin scrollbar-track-base-200">
         <ul className="menu menu-md bg-base-200 w-full rounded-box">
           {users.map((user) => (
             <UserItem user={user} key={user._id} />

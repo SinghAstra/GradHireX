@@ -21,7 +21,6 @@ const App = () => {
     <div className="h-screen">
       <BrowserRouter>
         <Routes>
-          {/* Routes for authenticated users */}
           {user && <Route path="/" element={<Navigate to="/app/welcome" />} />}
           {user && (
             <Route path="app" element={<MainContainer />}>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles.css";
 import SendIcon from "@mui/icons-material/Send";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -38,28 +37,26 @@ const ChatArea = () => {
   }, [chatId, dispatch]);
 
   return (
-    <div className="w-3/4 flex flex-col h-screen">
+    <div className="w-3/4 flex flex-col h-screen bg-base-200 p-2">
       <ChatAreaHeader />
       <ChatAreaMessages messages={reversedMessages} />
-      <div className="p-2">
-        <div className="bg-black border-violet-400 border-2 rounded-xl flex">
-          <input
-            className="rounded-l-xl flex-1 p-2  text-white font-mono outline outline-0 focus:outline-0 text-xl"
-            placeholder="Type Your Message here..."
-            onKeyDown={(e) => {
-              if (e.code === "Enter") {
-                handleMessageSent();
-              }
-            }}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <div
-            onClick={handleMessageSent}
-            className="flex items-center justify-center px-2"
-          >
-            <SendIcon className="text-violet-400 text-3xl" />
-          </div>
+      <div className="bg-black border-violet-400 border-2 rounded-xl flex">
+        <input
+          className="rounded-l-xl flex-1 p-2  text-white font-mono outline outline-0 focus:outline-0 text-xl"
+          placeholder="Type Your Message here..."
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              handleMessageSent();
+            }
+          }}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <div
+          onClick={handleMessageSent}
+          className="flex items-center justify-center px-2"
+        >
+          <SendIcon className="text-violet-400 text-3xl" />
         </div>
       </div>
     </div>
