@@ -2,8 +2,8 @@ import React from "react";
 
 const SelfMessage = ({ message }) => {
   return (
-    <div class="chat chat-end">
-      <div class="chat-bubble bg-violet-400">
+    <div className="chat chat-end">
+      <div className="chat-bubble bg-violet-400">
         <p className="font-mono text-white">{message}</p>
       </div>
     </div>

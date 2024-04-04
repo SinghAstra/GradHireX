@@ -13,6 +13,13 @@ const GroupName = ({ groupMemberIds }) => {
     dispatch(createGroupChatAction(groupName, groupMemberIds));
     navigate("/app/welcome");
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      createGroup();
+    }
+  };
+
   return (
     <div className="w-3/4 flex h-screen flex-col">
       <div className="flex items-center w-full  p-1 font-mono bg-neutral">
@@ -22,6 +29,7 @@ const GroupName = ({ groupMemberIds }) => {
           className="w-full bg-transparent flex-1 p-2 text-white font-mono outline outline-0 focus:outline-0 text-xl "
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <div
           className=" rounded-full text-violet-400 cursor-pointer px-2 hover:text-violet-700  hover:cursor-pointer"

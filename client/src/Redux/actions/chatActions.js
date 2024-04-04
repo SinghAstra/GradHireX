@@ -13,20 +13,15 @@ import {
   START_LOADING_CHATS,
   START_LOADING_CURRENT_CHAT,
 } from "./actionTypes";
-import { showNotification } from "./notificationAction";
+import { showToast } from "./toastAction";
 
 export const createChatAction = (userId) => async (dispatch) => {
   try {
     const { data } = await createChatApi(userId);
-    dispatch(
-      showNotification(
-        `Chat Created Successfully - ${data.chatName}`,
-        "success"
-      )
-    );
+    dispatch(showToast(`Start Conversation - ${data.chatName}`, "success"));
     dispatch(fetchChatsAction());
   } catch (error) {
-    dispatch(showNotification(error.message, "error"));
+    dispatch(showToast(error.message, "error"));
   }
 };
 
@@ -37,7 +32,7 @@ export const fetchChatsAction = () => async (dispatch) => {
     dispatch({ type: FETCH_CHATS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FETCH_CHATS_FAILURE });
-    dispatch(showNotification(error.message, "error"));
+    dispatch(showToast(error.message, "error"));
   } finally {
     dispatch({ type: END_LOADING_CHATS });
   }
@@ -46,28 +41,21 @@ export const fetchChatsAction = () => async (dispatch) => {
 export const createGroupChatAction = (name, users) => async (dispatch) => {
   try {
     const { data } = await createGroupChatApi(name, users);
-    dispatch(
-      showNotification(
-        `Group Chat Created Successfully - ${data.chatName}`,
-        "success"
-      )
-    );
+    dispatch(showToast(`Group Created - ${data.chatName}`, "success"));
     dispatch(fetchChatsAction());
   } catch (error) {
-    dispatch(showNotification(error.message, "error"));
+    dispatch(showToast(error.message, "error"));
   }
 };
 
 export const fetchCurrentChat = (chatId) => async (dispatch) => {
   try {
-    console.log("In the fetchCurrentChat");
     dispatch({ type: START_LOADING_CURRENT_CHAT });
     const { data } = await fetchChat(chatId);
-    console.log("data --fetchCurrentChat", data);
     dispatch({ type: FETCH_CHAT_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FETCH_CHATS_FAILURE });
-    dispatch(showNotification(error.message, "error"));
+    dispatch(showToast(error.message, "error"));
   } finally {
     dispatch({ type: END_LOADING_CURRENT_CHAT });
   }

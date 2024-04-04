@@ -4,9 +4,7 @@ import MainContainer from "./Components/MainContainer";
 import Welcome from "./Components/Welcome/Welcome";
 import ChatArea from "./Components/ChatArea/ChatArea";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { hideNotification } from "./Redux/actions/notificationAction";
-import Notification from "./Components/Notification";
+import { useSelector } from "react-redux";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import { BrowserRouter } from "react-router-dom";
@@ -14,16 +12,10 @@ import Profile from "./Components/Profile/Profile";
 import Users from "./Components/Users/Users";
 import Groups from "./Components/Groups/Groups";
 import CreateGroup from "./Components/Groups/CreateGroup";
+import Toast from "./Components/Toast/Toast";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
-  const { open, message, severity } = useSelector(
-    (state) => state.notification
-  );
-  const dispatch = useDispatch();
-  const handleCloseNotification = () => {
-    dispatch(hideNotification());
-  };
 
   return (
     <div className="h-screen">
@@ -53,14 +45,7 @@ const App = () => {
           {/* Redirect to login for unauthorized sub-routes */}
           {!user && <Route path="*" element={<Navigate to="/sign-up" />} />}
         </Routes>
-        <Notification
-          open={open}
-          onClose={() => {
-            handleCloseNotification();
-          }}
-          message={message}
-          severity={severity}
-        />
+        <Toast />
       </BrowserRouter>
     </div>
   );

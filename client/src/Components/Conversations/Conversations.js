@@ -14,8 +14,6 @@ const Conversations = ({ searchQuery }) => {
     dispatch(fetchChatsAction());
   }, [dispatch]);
 
-  console.log("chats is ", chats);
-
   if (loadingChats) {
     return (
       <div className="overflow-y-scroll flex-1 no-scrollbar m-2 mt-0">

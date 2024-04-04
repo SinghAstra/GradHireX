@@ -1,7 +1,8 @@
 import React from "react";
+import Welcome from "../Welcome/Welcome";
 
 const Profile = () => {
-  return <div className="w-3/4">Profile</div>;
+  return <Welcome />;
 };
 
 export default Profile;

@@ -15,8 +15,6 @@ const ChatAreaHeader = () => {
   const currentUserId = useSelector((state) => state.user.currentUser._id);
   let chatName = "";
 
-  console.log("loadingCurrentChat is ", loadingCurrentChat);
-
   useEffect(() => {
     dispatch(fetchCurrentChat(chatId));
   }, [chatId, dispatch]);
@@ -25,8 +23,6 @@ const ChatAreaHeader = () => {
     return <ChatAreaHeaderSkelton />;
   }
 
-  console.log("currentChat is ", currentChat);
-  console.log("currentChat.users is ", currentChat.users);
   if (currentChat.isGroupChat) {
     chatName = currentChat.chatName;
   } else {
