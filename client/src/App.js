@@ -3,7 +3,6 @@ import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Welcome from "./Components/Welcome/Welcome";
 import ChatArea from "./Components/ChatArea/ChatArea";
-import CreateGroup from "./Components/Groups/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { hideNotification } from "./Redux/actions/notificationAction";
@@ -14,6 +13,7 @@ import { BrowserRouter } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import Users from "./Components/Users/Users";
 import Groups from "./Components/Groups/Groups";
+import CreateGroup from "./Components/Groups/CreateGroup";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
