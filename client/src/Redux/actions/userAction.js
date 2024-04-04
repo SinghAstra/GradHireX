@@ -1,12 +1,19 @@
 // import { AUTH, LOG_OUT } from "./actionTypes";
 import { fetchUsersApi, logInApi, registerApi } from "../api";
-import { AUTH, FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS } from "./actionTypes";
+import {
+  AUTH,
+  END_AUTHENTICATING,
+  FETCH_USERS_FAILURE,
+  FETCH_USERS_SUCCESS,
+  START_AUTHENTICATING,
+} from "./actionTypes";
 import { showToast } from "./toastAction";
 
 // Action creator for user sign-in
 export const logIn = (name, password, navigate) => {
   return async function (dispatch) {
     try {
+      dispatch({ type: START_AUTHENTICATING });
       const { data } = await logInApi(name, password);
 
       dispatch({
@@ -24,6 +31,7 @@ export const logIn = (name, password, navigate) => {
     } catch (error) {
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
+      dispatch({ type: END_AUTHENTICATING });
     }
   };
 };
@@ -32,6 +40,7 @@ export const logIn = (name, password, navigate) => {
 export const register = (name, email, password, navigate) => {
   return async function (dispatch) {
     try {
+      dispatch({ type: START_AUTHENTICATING });
       const { data } = await registerApi(name, email, password);
 
       dispatch({
@@ -52,6 +61,7 @@ export const register = (name, email, password, navigate) => {
       // Handle errors by showing an error notification
       dispatch(showToast(error.response.data.message, "error"));
     } finally {
+      dispatch({ type: END_AUTHENTICATING });
     }
   };
 };

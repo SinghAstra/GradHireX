@@ -1,7 +1,9 @@
 import {
+  END_AUTHENTICATING,
   END_LOADING_CHATS,
   END_LOADING_CURRENT_CHAT,
   END_LOADING_MESSAGES,
+  START_AUTHENTICATING,
   START_LOADING_CHATS,
   START_LOADING_CURRENT_CHAT,
   START_LOADING_MESSAGES,
@@ -11,6 +13,7 @@ const initialLoadingState = {
   loadingCurrentChat: true,
   loadingChats: false,
   loadingMessages: false,
+  auth: false,
 };
 
 export const loadingReducer = (state = initialLoadingState, action) => {
@@ -44,6 +47,16 @@ export const loadingReducer = (state = initialLoadingState, action) => {
       return {
         ...state,
         loadingMessages: false,
+      };
+    case START_AUTHENTICATING:
+      return {
+        ...state,
+        auth: true,
+      };
+    case END_AUTHENTICATING:
+      return {
+        ...state,
+        auth: false,
       };
     default:
       return state;

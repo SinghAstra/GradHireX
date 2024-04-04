@@ -3,9 +3,10 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { logIn } from "../Redux/actions/userAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const LogIn = () => {
+  const isAuthenticating = useSelector((state) => state.loading.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +22,6 @@ const LogIn = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    console.log("logIn values is ", values);
     dispatch(logIn(values.username, values.password, navigate));
   };
 
@@ -64,6 +64,7 @@ const LogIn = () => {
                     value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    disabled={isAuthenticating}
                   />
                   <p className="ml-2 text-red-400">
                     {touched.username && errors.username}
@@ -83,16 +84,24 @@ const LogIn = () => {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    disabled={isAuthenticating}
                   />
                   <p className="ml-2 text-red-400">
                     {touched.password && errors.password}
                   </p>
                 </div>
                 <button
-                  className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 border border-violet-700 rounded w-full mt-3"
+                  className="bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 border border-violet-700 rounded w-full mt-3 flex items-center justify-center"
                   type="submit"
+                  disabled={isAuthenticating}
                 >
-                  Log In
+                  {isAuthenticating ? "Please Wait " : "Log In "}
+                  {isAuthenticating && (
+                    <>
+                      &nbsp;
+                      <span className="loading loading-dots loading-md"></span>
+                    </>
+                  )}
                 </button>
               </form>
             );

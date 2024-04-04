@@ -36,6 +36,22 @@ const Conversations = ({ searchQuery }) => {
     return chatName.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
+  if (chats.length === 0) {
+    return (
+      <div className="flex-1 mt-0 flex items-center justify-center bg-base-200 font-mono m-2 rounded-box">
+        <span>No Conversation yet!</span>
+      </div>
+    );
+  }
+
+  if (filteredChats.length === 0) {
+    return (
+      <div className="flex-1 mt-0 flex items-center justify-center bg-base-200 font-mono m-2 rounded-box">
+        <span>No Such Conversation found!</span>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-y-scroll flex-1 m-2 mt-0 no-scrollbar">
       <ul className="menu menu-md bg-base-200 w-full rounded-box">
