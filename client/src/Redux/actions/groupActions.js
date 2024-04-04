@@ -1,4 +1,4 @@
-import { exitGroupChatApi, fetchGroupsApi, joinGroupChatApi } from "../API";
+import { exitGroupChatApi, fetchGroupsApi, joinGroupChatApi } from "../api";
 import { FETCH_GROUPS_FAILURE, FETCH_GROUPS_SUCCESS } from "./actionTypes";
 import { fetchChatsAction } from "./chatActions";
 import { showToast } from "./toastAction";

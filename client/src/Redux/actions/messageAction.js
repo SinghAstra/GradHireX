@@ -1,4 +1,4 @@
-import { fetchMessageApi, sendMessageApi } from "../API";
+import { fetchMessageApi, sendMessageApi } from "../api";
 import { FETCH_MESSAGE_FAILURE, FETCH_MESSAGE_SUCCESS } from "./actionTypes";
 import { fetchChatsAction } from "./chatActions";
 import { showToast } from "./toastAction";

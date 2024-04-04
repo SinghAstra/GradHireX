@@ -3,7 +3,7 @@ import {
   createGroupChatApi,
   fetchChat,
   fetchChatsApi,
-} from "../API";
+} from "../api";
 import {
   END_LOADING_CHATS,
   END_LOADING_CURRENT_CHAT,

@@ -1,5 +1,5 @@
 // import { AUTH, LOG_OUT } from "./actionTypes";
-import { fetchUsersApi, logInApi, registerApi } from "../API";
+import { fetchUsersApi, logInApi, registerApi } from "../api";
 import { AUTH, FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS } from "./actionTypes";
 import { showToast } from "./toastAction";
 
