@@ -6,6 +6,7 @@ import { showNotification } from "./notificationAction";
 export const fetchGroupsAction = (searchQuery) => async (dispatch) => {
   try {
     const { data } = await fetchGroupsApi(searchQuery);
+    console.log("data --fetchGroupsAction", data);
     dispatch({ type: FETCH_GROUPS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: FETCH_GROUPS_FAILURE });

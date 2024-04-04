@@ -23,7 +23,7 @@ const Groups = () => {
 
   return (
     <div className="groups-container">
-      <div className={"groups-header-container" + (lightTheme ? "" : " dark")}>
+      <div className={"groups-header-container"}>
         <img
           src="/chat.png"
           className="groups-header-icon"
@@ -31,12 +31,12 @@ const Groups = () => {
         />
         <p className="groups-header-title">Groups</p>
       </div>
-      <div className={"groups-search-container" + (lightTheme ? "" : " dark")}>
+      <div className={"groups-search-container"}>
         <IconButton className={lightTheme ? "" : " dark"}>
           <Search />
         </IconButton>
         <input
-          className={"search-box" + (lightTheme ? "" : " dark")}
+          className={"search-box"}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search groups..."
@@ -44,7 +44,7 @@ const Groups = () => {
       </div>
       {groups.map((group) => (
         <motion.div
-          className={"group-container" + (lightTheme ? "" : " dark")}
+          className={"group-container"}
           whileHover={{ scale: 1.01 }}
           whileTap={{ scale: 0.98 }}
           key={group._id}

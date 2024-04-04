@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../Redux/actions/userAction";
 import { CiSearch } from "react-icons/ci";
-import UserItem from "./UserItem";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchGroupsAction } from "../../Redux/actions/groupActions";
+import GroupItem from "./GroupItem";
 
-const Users = () => {
-  const users = useSelector((state) => state.user.users);
+const Groups = () => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const groups = useSelector((state) => state.group.groups);
 
   useEffect(() => {
-    dispatch(fetchUsers(searchQuery));
+    dispatch(fetchGroupsAction(searchQuery));
   }, [dispatch, searchQuery]);
 
   return (
@@ -21,7 +21,7 @@ const Users = () => {
         </div>
         <input
           type="text"
-          placeholder="Search by username or email..."
+          placeholder="Search group..."
           className="w-full bg-transparent flex-1 p-2 text-white font-mono outline outline-0 focus:outline-0 text-xl "
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -29,8 +29,8 @@ const Users = () => {
       </div>
       <div className="p-2 flex-1 overflow-y-scroll">
         <ul className="menu menu-md bg-base-200 w-full rounded-box">
-          {users.map((user) => (
-            <UserItem user={user} key={user._id} />
+          {groups.map((group) => (
+            <GroupItem group={group} key={group._id} />
           ))}
         </ul>
       </div>
@@ -38,4 +38,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Groups;

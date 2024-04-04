@@ -3,7 +3,6 @@ import "./App.css";
 import MainContainer from "./Components/MainContainer";
 import Welcome from "./Components/Welcome/Welcome";
 import ChatArea from "./Components/ChatArea/ChatArea";
-import Groups from "./Components/Groups";
 import CreateGroup from "./Components/CreateGroup";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +13,7 @@ import SignUp from "./pages/SignUp";
 import { BrowserRouter } from "react-router-dom";
 import Profile from "./Components/Profile/Profile";
 import Users from "./Components/Users/Users";
+import Groups from "./Components/Groups/Groups";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
