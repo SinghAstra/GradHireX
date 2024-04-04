@@ -16,6 +16,7 @@ const ChatArea = () => {
   const dispatch = useDispatch();
   const { chatId } = useParams();
   const messages = useSelector((state) => state.message.messages);
+  const reversedMessages = messages.slice().reverse();
   const socket = io("http://localhost:5000/");
 
   const handleMessageSent = () => {
@@ -39,7 +40,7 @@ const ChatArea = () => {
   return (
     <div className="w-3/4 flex flex-col h-screen">
       <ChatAreaHeader />
-      <ChatAreaMessages messages={messages} />
+      <ChatAreaMessages messages={reversedMessages} />
       <div className="p-2">
         <div className="bg-black border-violet-400 border-2 rounded-xl flex">
           <input

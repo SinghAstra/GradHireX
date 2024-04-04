@@ -18,7 +18,7 @@ import { showToast } from "./toastAction";
 export const createChatAction = (userId) => async (dispatch) => {
   try {
     const { data } = await createChatApi(userId);
-    dispatch(showToast(`Start Conversation - ${data.chatName}`, "success"));
+    dispatch(showToast(`Start Conversation `, "success"));
     dispatch(fetchChatsAction());
   } catch (error) {
     dispatch(showToast(error.message, "error"));

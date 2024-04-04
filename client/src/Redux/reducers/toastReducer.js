@@ -1,8 +1,8 @@
 import { HIDE_TOAST, SHOW_TOAST } from "../actions/actionTypes";
 
 const initialToastState = {
-  showToast: true,
-  toastText: "Testing....",
+  showToast: false,
+  toastText: "",
   severity: "",
 };
 
