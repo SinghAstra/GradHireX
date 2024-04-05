@@ -32,7 +32,8 @@
 3. Install dependencies by running `npm install` in the terminal.
 4. Start the frontend server by running `npm start` in the terminal within the client directory.
 5. Start the backend server by running `npm start` in the terminal within the server directory.
-6. Access the application in your web browser at [http://localhost:3000](http://localhost:3000).
+6. Create two env variable in the server directory `CONNECTION_URL` and `JWT_SECRET_KEY`
+7. Access the application in your web browser at [http://localhost:3000](http://localhost:3000).
 
 ## Contributing
 
