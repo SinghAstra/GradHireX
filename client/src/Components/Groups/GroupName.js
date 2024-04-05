@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const GroupName = ({ groupMemberIds }) => {
-  const [groupName, setGroupName] = useState();
+  const [groupName, setGroupName] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

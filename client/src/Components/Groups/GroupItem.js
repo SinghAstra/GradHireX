@@ -8,7 +8,7 @@ import {
 
 const GroupItem = ({ group }) => {
   const dispatch = useDispatch();
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user?._id);
   return (
     <div className="flex w-full font-mono gap-2 m-1 p-1 rounded-md ">
       <UserAvatar chatName={group.chatName} />

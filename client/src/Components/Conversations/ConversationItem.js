@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 
 const ConversationItem = ({ chat }) => {
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user._id);
   let chatName;
   const navigate = useNavigate();
 

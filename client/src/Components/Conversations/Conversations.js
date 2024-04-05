@@ -8,7 +8,7 @@ const Conversations = ({ searchQuery }) => {
   const chats = useSelector((state) => state.chat.chats);
   const dispatch = useDispatch();
   const loadingChats = useSelector((state) => state.loading.loadingChats);
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user?._id);
 
   useEffect(() => {
     dispatch(fetchChatsAction());

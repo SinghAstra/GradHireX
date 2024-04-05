@@ -12,7 +12,7 @@ const ChatAreaHeader = () => {
     (state) => state.loading.loadingCurrentChat
   );
   const currentChat = useSelector((state) => state.chat.currentChat);
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user?._id);
   let chatName = "";
 
   useEffect(() => {

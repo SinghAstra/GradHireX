@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { register } from "../Redux/actions/userAction";
+import { registerAction } from "../Redux/actions/userAction";
 import { Formik } from "formik";
 
 const SignUp = () => {
@@ -28,9 +28,8 @@ const SignUp = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    console.log("isRegister values is ", values);
     dispatch(
-      register(values.username, values.email, values.password, navigate)
+      registerAction(values.username, values.email, values.password, navigate)
     );
   };
 

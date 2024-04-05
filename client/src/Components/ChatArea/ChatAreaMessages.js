@@ -5,7 +5,7 @@ import OtherMessage from "../Messages/OtherMessage";
 import ChatAreaMessagesSkeleton from "./ChatAreaMessagesSkeleton";
 
 const ChatAreaMessages = ({ messages, loadingMessages }) => {
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user?._id);
 
   if (loadingMessages) {
     return <ChatAreaMessagesSkeleton />;

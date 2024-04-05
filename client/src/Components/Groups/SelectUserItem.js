@@ -12,7 +12,7 @@ const SelectUserItem = ({
   const [searchQuery, setSearchQuery] = useState("");
   const chats = useSelector((state) => state.chat.chats);
   const userConversationChats = chats.filter((chat) => !chat.isGroupChat);
-  const currentUserId = useSelector((state) => state.user.currentUser._id);
+  const currentUserId = useSelector((state) => state.user.user?._id);
   const users = userConversationChats.map((chat) => {
     const otherUser = chat.users.find((user) => user._id !== currentUserId);
     return otherUser;

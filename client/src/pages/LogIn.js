@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { logIn } from "../Redux/actions/userAction";
+import { logInAction } from "../Redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const LogIn = () => {
@@ -22,7 +22,7 @@ const LogIn = () => {
 
   const onSubmit = (values, { setSubmitting }) => {
     setSubmitting(true);
-    dispatch(logIn(values.username, values.password, navigate));
+    dispatch(logInAction(values.username, values.password, navigate));
   };
 
   return (
