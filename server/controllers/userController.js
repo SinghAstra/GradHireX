@@ -2,39 +2,30 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 
-// Function to handle user log-in
 const logInController = async (req, res) => {
   try {
-    // Extract email and password from the request body
     const { name, password } = req.body;
 
-    // Check for missing credentials
     if (!name || !password) {
       return res.status(400).json({ message: "Missing Credentials." });
     }
 
-    // Find user in the database by email
     const user = await User.findOne({ name });
 
-    // Check if the user exists
     if (!user) {
       return res.status(404).json({ message: "User Not Found." });
     }
 
-    // Compare the entered password with the hashed password stored in the database
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    // Check if the password is correct
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Invalid Credentials." });
     }
 
-    // Generate a JWT token for the authenticated user
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1m",
+      expiresIn: "1h",
     });
 
-    // Return a successful response with user details and token
     return res.status(200).json({
       id: user._id,
       name: user.name,
@@ -43,7 +34,6 @@ const logInController = async (req, res) => {
       message: "Log-in successful.",
     });
   } catch (error) {
-    // Handle internal server error
     return res.status(500).json({ message: "Internal server error." });
   }
 };
@@ -132,7 +122,9 @@ const fetchAllUsers = async (req, res) => {
 const fetchUserInfo = async (req, res) => {
   try {
     const userInfo = await User.findById(req.user._id).select("-password");
-    res.json(userInfo);
+    const token = req.headers.authorization.split(" ")[1];
+    const { _id, name, email } = userInfo;
+    res.json({ _id, name, email, token });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error." });
   }
