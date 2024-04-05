@@ -33,18 +33,6 @@ app.get("/", (req, res) => {
   res.send("Chat Server is Running.");
 });
 
-const server = createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-io.on("connection", (socket) => {
-  console.log("user connected");
-  socket.on("chat message", (msg) => {
-    socket.emit("chat message", msg);
-  });
-});
 server.listen(5000, () => {
   console.log("Server is listening on port 5000");
 });
