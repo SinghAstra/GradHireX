@@ -34,7 +34,9 @@ const ConversationItem = ({ chat }) => {
         <h1>{chatName}</h1>
         <div className="text-neutral-500">
           {chat.lastMessage
-            ? chat.lastMessage.content
+            ? chat.lastMessage.content.length > 20
+              ? chat.lastMessage.content.substring(0, 20) + "..."
+              : chat.lastMessage.content
             : "Start a conversation !"}
         </div>
       </div>
