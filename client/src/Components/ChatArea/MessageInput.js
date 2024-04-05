@@ -10,7 +10,6 @@ const MessageInput = ({ chatId, socket }) => {
   const handleMessageSent = () => {
     if (message.trim().length > 0) {
       dispatch(sendMessageAction(chatId, message));
-      socket.emit("chat message", { chatId, message });
       setMessage("");
     }
   };

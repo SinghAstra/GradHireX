@@ -20,11 +20,8 @@ const App = () => {
   const token = useSelector((state) => state.user.token);
   const dispatch = useDispatch();
   let isTokenValid;
-  const state = useSelector((state) => state);
-  console.log("state is ", state);
 
   const checkTokenValidity = () => {
-    console.log("token --checkTokenValidity is ", token);
     const decodedToken = jwtDecode(token);
     let currentDate = new Date();
     if (decodedToken.exp * 1000 < currentDate.getTime()) {

@@ -17,16 +17,9 @@ const ChatArea = () => {
   const messages = useSelector((state) => state.message.messages);
   const loadingMessages = useSelector((state) => state.loading.loadingMessages);
   const reversedMessages = messages.slice().reverse();
-  const socket = io("http://localhost:5000/");
 
   useEffect(() => {
     dispatch(fetchMessageAction(chatId));
-    socket.on("chat message", (msg) => {
-      dispatch(fetchMessageAction(chatId));
-    });
-    return () => {
-      socket.disconnect();
-    };
   }, [chatId, dispatch]);
 
   return (
@@ -36,7 +29,7 @@ const ChatArea = () => {
         messages={reversedMessages}
         loadingMessages={loadingMessages}
       />
-      {!loadingMessages && <MessageInput chatId={chatId} socket={socket} />}
+      {!loadingMessages && <MessageInput chatId={chatId} />}
     </div>
   );
 };

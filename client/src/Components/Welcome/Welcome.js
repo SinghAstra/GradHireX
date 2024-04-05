@@ -2,12 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const Welcome = () => {
-  const user = useSelector((state) => state.user);
-  const user1 = useSelector((state) => state.user.user);
   let userName = useSelector((state) => state.user.user?.username);
-  console.log("state.user", user);
-  console.log("state.user.user", user1);
-  console.log("userName", userName);
+
   userName += " ";
   userName = userName.slice(0, userName.indexOf(" "));
   return (
