@@ -1,73 +1,36 @@
-![Contributors][contributors-shield]
-![Forks][forks-shield]
-![Stargazers][stars-shield]
-![Issues][issues-shield]
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Chat Web Application
-[![Codacy Badge][codacy-repo]][codacy-badge]
-<p>A real-time chat web application built with React, Redux, Node.js, and Socket.IO for WebSocket communication.</p>
+## Getting Started
 
-<div align="center">
-  <a href="https://chat-webapp-mern.netlify.app/"><img src="https://github.com/SinghAstra/Chat-WebApp/blob/main/images/chat.png"/></a>
-</div>
+First, run the development server:
 
-## Features
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-- Real-time messaging: Users can send and receive messages instantly.
-- User authentication: Secure sign up, log in, and log out functionality.
-- Group chat: Users can create and join group chats.
-- User search: Users can search for other users to start a conversation.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Technologies Used
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- **Frontend**: [![React][React.js]][React-url][![Redux][Redux]][Redux-url][![Socket.io][Socket.io]][Socket.io-url]
-- **Backend**: [![NodeJS][NodeJS]][NodeJS-url][![Express.js][ExpressJS]][ExpressJS-url]
-- **Database**: [![MongoDB][MongoDB]][MongoDB-url]
-- **Authentication**: [![JWT][JWT]][JWT-url]
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## How to Run the Project Locally
+## Learn More
 
-1. Clone the repository to your local machine.
-2. Navigate to the project directory.
-3. Install dependencies by running `npm install` in the terminal.
-4. Start the frontend server by running `npm start` in the terminal within the client directory.
-5. Start the backend server by running `npm start` in the terminal within the server directory.
-6. Create two env variable in the server directory `CONNECTION_URL` and `JWT_SECRET_KEY`
-7. Access the application in your web browser at [http://localhost:3000](http://localhost:3000).
+To learn more about Next.js, take a look at the following resources:
 
-## Contributing
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-1. Fork and clone the repository.
-2. Create a new branch for your feature or fix.
-3. Implement your feature or fix.
-4. Run tests and ensure they pass.
-5. Commit your changes and push to your fork.
-6. Submit a pull request to the main repository's main branch.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+## Deploy on Vercel
 
-[contributors-shield]: https://img.shields.io/github/contributors/SinghAstra/Chat-WebApp.svg?style=for-the-badge
-[contributors-url]: https://github.com/SinghAstra/Chat-WebApp/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/SinghAstra/Chat-WebApp.svg?style=for-the-badge
-[forks-url]: https://github.com/SinghAstra/Chat-WebApp/network/members
-[stars-shield]: https://img.shields.io/github/stars/SinghAstra/Chat-WebApp.svg?style=for-the-badge
-[stars-url]: https://github.com/SinghAstra/Chat-WebApp/stargazers
-[issues-shield]: https://img.shields.io/github/issues/SinghAstra/Chat-WebApp.svg?style=for-the-badge
-[issues-url]: https://github.com/SinghAstra/Chat-WebApp/issues
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Redux]: https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white
-[Redux-url]: https://redux.js.org/
-[NodeJS]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
-[NodeJS-url]: https://nodejs.org/en
-[ExpressJS]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB
-[ExpressJS-url]: https://expressjs.com/
-[MongoDB]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
-[MongoDB-url]: https://www.mongodb.com/
-[JWT]: https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens
-[JWT-url]: https://jwt.io/
-[Socket.io]: https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101
-[Socket.io-url]: https://socket.io/
-[codacy-repo]:https://app.codacy.com/project/badge/Grade/614b6b9701ff4d969ab7c06cae5ef61b
-[codacy-badge]:https://app.codacy.com/gh/SinghAstra/Chat-WebApp/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
