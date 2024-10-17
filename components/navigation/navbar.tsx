@@ -10,7 +10,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { homeNavLinks } from "@/config/home";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
@@ -19,6 +18,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import AnimationContainer from "../global/animation-container";
 import MaxWidthWrapper from "../global/max-width-wrapper";
+import { Icons } from "../ui/Icons";
 import { UserAvatar } from "../user-avatar";
 import MobileNavbar from "./mobile-navbar";
 
@@ -54,81 +54,10 @@ const Navbar = () => {
         <MaxWidthWrapper className="flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <Link href="/">
-              <span className="text-lg font-semibold  !leading-none">
+              <span className="text-lg font-medium  !leading-none">
                 {siteConfig.name}
               </span>
             </Link>
-
-            <NavigationMenu className="hidden lg:flex">
-              <NavigationMenuList>
-                {homeNavLinks.map((link) => (
-                  <NavigationMenuItem key={link.title}>
-                    {link.menu ? (
-                      <>
-                        <NavigationMenuTrigger className="bg-transparent">
-                          {link.title}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <ul
-                            className={cn(
-                              "grid gap-1 p-4 md:w-[400px] lg:w-[500px] rounded-xl",
-                              link.title === "Features"
-                                ? "lg:grid-cols-[.75fr_1fr]"
-                                : "lg:grid-cols-2"
-                            )}
-                          >
-                            {link.title === "Features" && (
-                              <li className="row-span-4 pr-2 relative rounded-lg overflow-hidden">
-                                <div className="absolute inset-0 !z-10 h-full w-[calc(100%-10px)] bg-[linear-gradient(to_right,rgb(38,38,38,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgb(38,38,38,0.5)_1px,transparent_1px)] bg-[size:1rem_1rem]"></div>
-                                <NavigationMenuLink
-                                  asChild
-                                  className="z-20 relative"
-                                >
-                                  <Link
-                                    href="/"
-                                    className="flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-muted/50 to-muted p-4 no-underline outline-none focus:shadow-md"
-                                  >
-                                    <h6 className="mb-2 mt-4 text-lg font-medium">
-                                      All Features
-                                    </h6>
-                                    <p className="text-sm leading-tight text-muted-foreground">
-                                      Manage links, track performance, and more.
-                                    </p>
-                                  </Link>
-                                </NavigationMenuLink>
-                              </li>
-                            )}
-                            {link.menu.map((menuItem) => (
-                              <ListItem
-                                key={menuItem.title}
-                                title={menuItem.title}
-                                href={menuItem.href}
-                                icon={menuItem.icon}
-                              >
-                                {menuItem.tagline}
-                              </ListItem>
-                            ))}
-                          </ul>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <Link
-                        href={link.href}
-                        legacyBehavior
-                        passHref
-                        className="bg-transparent"
-                      >
-                        <NavigationMenuLink
-                          className={navigationMenuTriggerStyle()}
-                        >
-                          {link.title}
-                        </NavigationMenuLink>
-                      </Link>
-                    )}
-                  </NavigationMenuItem>
-                ))}
-              </NavigationMenuList>
-            </NavigationMenu>
           </div>
 
           <div className="hidden lg:flex items-center">

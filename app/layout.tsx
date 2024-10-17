@@ -11,11 +11,14 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "Radix UI",
+    "Campus Placement",
+    "Employability Insights",
+    "University Recruitment",
+    "Corporate Access",
+    "Centralized Data",
+    "Job Market Analysis",
+    "Government Policy",
+    "Tech Education",
   ],
   authors: [
     {
