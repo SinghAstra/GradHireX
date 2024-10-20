@@ -198,6 +198,7 @@ export default function SignUp() {
 
                     {role === "STUDENT" && (
                       <AnimationContainer
+                        reverse
                         delay={0.3}
                         className="size-full space-y-4"
                       >
@@ -241,7 +242,11 @@ export default function SignUp() {
                     )}
 
                     {role === "UNIVERSITY" && (
-                      <AnimationContainer delay={0.3} className="size-full">
+                      <AnimationContainer
+                        reverse
+                        delay={0.3}
+                        className="size-full"
+                      >
                         <FormField
                           control={form.control}
                           name="universityName"
@@ -262,7 +267,11 @@ export default function SignUp() {
                     )}
 
                     {role === "COMPANY" && (
-                      <AnimationContainer delay={0.3} className="size-full">
+                      <AnimationContainer
+                        reverse
+                        delay={0.3}
+                        className="size-full space-y-4"
+                      >
                         <FormField
                           control={form.control}
                           name="companyName"
