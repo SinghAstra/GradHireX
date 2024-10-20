@@ -9,7 +9,61 @@ interface AnimationContainerProps {
   className?: string;
 }
 
-const AnimationContainer = ({
+interface MotionContainerProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: 20 },
+  transition: { duration: 0.3 },
+};
+
+export const staggerContainer = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+export const AnimatedContainer = ({
+  children,
+  className,
+  ...props
+}: MotionContainerProps) => (
+  <motion.div
+    variants={fadeInUp}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+    className={className}
+    {...props}
+  >
+    {children}
+  </motion.div>
+);
+
+export const StaggeredContainer = ({
+  children,
+  className,
+  ...props
+}: MotionContainerProps) => (
+  <motion.div
+    variants={staggerContainer}
+    initial="initial"
+    animate="animate"
+    className={className}
+    {...props}
+  >
+    {children}
+  </motion.div>
+);
+
+export const AnimationContainer = ({
   children,
   className,
   reverse,
@@ -34,5 +88,3 @@ const AnimationContainer = ({
     </motion.div>
   );
 };
-
-export default AnimationContainer;

@@ -16,7 +16,7 @@ import { LucideIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import AnimationContainer from "../global/animation-container";
+import { AnimationContainer } from "../global/animation-container";
 import MaxWidthWrapper from "../global/max-width-wrapper";
 import { Icons } from "../ui/Icons";
 import { UserAvatar } from "../user-avatar";

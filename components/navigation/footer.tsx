@@ -1,6 +1,6 @@
 import { siteConfig } from "@/config/site";
 import Link from "next/link";
-import AnimationContainer from "../global/animation-container";
+import { AnimationContainer } from "../global/animation-container";
 import { Icons } from "../ui/Icons";
 
 const Footer = () => {

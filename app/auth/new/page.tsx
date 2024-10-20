@@ -1,6 +1,19 @@
 "use client";
 
-import AnimationContainer from "@/components/global/animation-container";
+import {
+  AnimatedContainer,
+  AnimationContainer,
+  StaggeredContainer,
+} from "@/components/global/animation-container";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -20,6 +33,7 @@ import {
 } from "@/components/ui/select";
 import { siteConfig } from "@/config/site";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -58,8 +72,10 @@ const signUpSchema = z
   );
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
+const steps = ["Basic Info", "Role Selection", "Role Details"];
 
 export default function SignUp() {
+  const [step, setStep] = useState(0);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -77,52 +93,37 @@ export default function SignUp() {
   const role = watch("role");
 
   const onSubmit = async (data: SignUpFormValues) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+    console.log("data --onSubmit is ", data);
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/auth/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
 
-      if (response.ok) {
-        router.push("/auth/signin");
-      } else {
-        const errorData = await response.json();
-        console.log("Sign up failed:", errorData.error);
-        // Handle error (e.g., show error message to user)
+        if (response.ok) {
+          router.push("/auth/signin");
+        } else {
+          const errorData = await response.json();
+          console.log("Sign up failed:", errorData.error);
+        }
+      } catch (error) {
+        console.log("Sign up error:", error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.log("Sign up error:", error);
-      // Handle error (e.g., show error message to user)
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen max-w-sm mx-auto">
-      <AnimationContainer
-        reverse
-        delay={0.3}
-        className="flex items-center w-full py-8 border-b border-border/80"
-      >
-        <Link href="/" className="flex items-center gap-x-2">
-          <Icons.logo className="w-6 h-6" />
-          <h1 className="text-lg font-medium">{siteConfig.name}</h1>
-        </Link>
-      </AnimationContainer>
-      <AnimationContainer
-        delay={0.3}
-        className="w-full p-4 border border-border/80 rounded-md my-4"
-      >
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 w-full"
-          >
+  const renderStepContent = (currentStep: number) => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <div className="space-y-4">
             <FormField
               control={form.control}
               name="name"
@@ -162,6 +163,11 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
+          </div>
+        );
+      case 1:
+        return (
+          <div className="space-y-4">
             <FormField
               control={form.control}
               name="role"
@@ -188,6 +194,11 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
+          </div>
+        );
+      case 2:
+        return (
+          <>
             {role === "STUDENT" && (
               <>
                 <FormField
@@ -225,22 +236,24 @@ export default function SignUp() {
               </>
             )}
             {role === "UNIVERSITY" && (
-              <FormField
-                control={form.control}
-                name="universityName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>University Name</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="universityName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>University Name</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             )}
             {role === "COMPANY" && (
-              <>
+              <div className="space-y-4">
                 <FormField
                   control={form.control}
                   name="companyName"
@@ -267,36 +280,81 @@ export default function SignUp() {
                     </FormItem>
                   )}
                 />
-              </>
+              </div>
             )}
-          </form>
-        </Form>
-        <button
-          type="submit"
-          className="relative inline-flex h-10 overflow-hidden rounded-md p-[1.5px] w-full my-8"
-          disabled={isLoading}
-          onClick={form.handleSubmit(onSubmit)}
-        >
-          <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,hsl(var(--primary))_0%,hsl(var(--primary-foreground))_50%,hsl(var(--primary))_100%)]" />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
 
-          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-md bg-[hsl(var(--background))] px-4 py-1 text-sm font-medium text-[hsl(var(--primary))] backdrop-blur-3xl ">
-            {isLoading ? "Signing up..." : "Sign Up"}
-            <Icons.next className="ml-2 size-6 animate-moveLeftRight" />
-          </span>
-        </button>
-      </AnimationContainer>
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen max-w-sm mx-auto">
       <AnimationContainer
-        delay={0.5}
-        className="w-full p-4 border-t border-border/80"
+        reverse
+        delay={0.3}
+        className="flex items-center w-full py-8 "
       >
+        <Link href="/" className="flex items-center gap-x-2">
+          <Icons.logo className="w-6 h-6" />
+          <h1 className="text-lg font-medium">{siteConfig.name}</h1>
+        </Link>
+      </AnimationContainer>
+      <AnimatedContainer className="w-full max-w-md">
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle className="text-xl text-font-semibold text-center">
+              {steps[step]}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={step}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {renderStepContent(step)}
+                  </motion.div>
+                </AnimatePresence>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={() => setStep((s) => Math.max(0, s - 1))}
+              disabled={step === 0}
+            >
+              Previous
+            </Button>
+            <Button onClick={form.handleSubmit(onSubmit)} disabled={isLoading}>
+              {isLoading
+                ? "Loading..."
+                : step === steps.length - 1
+                ? "Submit"
+                : "Next"}
+            </Button>
+          </CardFooter>
+        </Card>
+      </AnimatedContainer>
+      <AnimationContainer delay={0.3} className="w-full p-4">
         <div className="flex flex-col items-start w-full">
           <p className="text-sm text-muted-foreground">
             By signing in, you agree to our{" "}
-            <Link href="/terms" className="text-primary">
+            <Link href="/" className="text-primary">
               Terms of Service{" "}
             </Link>
             and{" "}
-            <Link href="/privacy" className="text-primary">
+            <Link href="/" className="text-primary">
               Privacy Policy
             </Link>
           </p>
