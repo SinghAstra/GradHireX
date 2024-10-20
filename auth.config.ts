@@ -1,7 +1,6 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
 import { compare } from "bcrypt";
-import NextAuth, { NextAuthConfig } from "next-auth";
+import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./lib/db";
 
@@ -17,12 +16,15 @@ const providers = [
         return null;
       }
       const user = await prisma.user.findUnique({
-        where: { email: credentials.email },
+        where: { email: credentials.email as string },
       });
       if (!user) {
         return null;
       }
-      const isPasswordValid = compare(credentials.password, user.password);
+      const isPasswordValid = await compare(
+        credentials.password as string,
+        user.password
+      );
       if (!isPasswordValid) {
         return null;
       }
@@ -48,14 +50,14 @@ export const authOptions: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.role = token.role;
+        session.user.role = token.role as string;
       }
       return session;
     },
   },
   pages: {
-    signIn: "/auth/signin",
-    signOut: "/auth/signout",
+    signIn: "/auth/sign-in",
+    signOut: "/auth/sign-out",
     error: "/auth/error",
     verifyRequest: "/auth/verify-request",
     newUser: "/auth/new-user",
