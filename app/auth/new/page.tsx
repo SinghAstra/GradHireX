@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -95,215 +96,208 @@ export default function SignUp() {
     <div className="flex items-center justify-center min-h-screen">
       <AnimationContainer delay={0.1} className="size-full">
         <MaxWidthWrapper className="flex items-center justify-center ">
-          <Card className="shadow-lg w-[400px]">
+          <Card className="shadow-lg w-[600px] ">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">
+              <CardTitle className="text-2xl font-semibold text-center">
                 Sign Up
               </CardTitle>
-              <CardDescription className="text-center">
-                Create your account to get started
-              </CardDescription>
+              <TextGenerateEffect
+                className="font-medium text-sm text-center"
+                words="Create your account to get started"
+              />
             </CardHeader>
             <CardContent>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
+                  className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-6"
                 >
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            className="transition-all duration-200 focus:ring-2"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="email"
-                            {...field}
-                            className="transition-all duration-200 focus:ring-2 "
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            {...field}
-                            className="transition-all duration-200 focus:ring-2 "
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="role"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Role</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
                           <FormControl>
-                            <SelectTrigger className="transition-all duration-200 focus:ring-2 ">
-                              <SelectValue placeholder="Select Role" />
-                            </SelectTrigger>
+                            <Input
+                              {...field}
+                              className="transition-all duration-200 focus:ring-2"
+                            />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="STUDENT">Student</SelectItem>
-                            <SelectItem value="UNIVERSITY">
-                              University
-                            </SelectItem>
-                            <SelectItem value="COMPANY">Company</SelectItem>
-                            <SelectItem value="GOVERNMENT">
-                              Government
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              {...field}
+                              className="transition-all duration-200 focus:ring-2 "
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              {...field}
+                              className="transition-all duration-200 focus:ring-2 "
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control}
+                      name="role"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Role</FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="transition-all duration-200 focus:ring-2 ">
+                                <SelectValue placeholder="Select Role" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="STUDENT">Student</SelectItem>
+                              <SelectItem value="UNIVERSITY">
+                                University
+                              </SelectItem>
+                              <SelectItem value="COMPANY">Company</SelectItem>
+                              <SelectItem value="GOVERNMENT">
+                                Government
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {role === "STUDENT" && (
+                      <AnimationContainer
+                        delay={0.3}
+                        className="size-full space-y-4"
+                      >
+                        <FormField
+                          control={form.control}
+                          name="course"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Course</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  className="transition-all duration-200 focus:ring-2 "
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="graduationYear"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Graduation Year</FormLabel>
+                              <FormControl>
+                                <Input
+                                  type="number"
+                                  {...field}
+                                  onChange={(e) =>
+                                    field.onChange(parseInt(e.target.value))
+                                  }
+                                  className="transition-all duration-200 focus:ring-2 "
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </AnimationContainer>
                     )}
-                  />
 
-                  {role === "STUDENT" && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FormField
-                        control={form.control}
-                        name="course"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Course</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                className="transition-all duration-200 focus:ring-2 "
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="graduationYear"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Graduation Year</FormLabel>
-                            <FormControl>
-                              <Input
-                                type="number"
-                                {...field}
-                                onChange={(e) =>
-                                  field.onChange(parseInt(e.target.value))
-                                }
-                                className="transition-all duration-200 focus:ring-2 "
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </motion.div>
-                  )}
+                    {role === "UNIVERSITY" && (
+                      <AnimationContainer delay={0.3} className="size-full">
+                        <FormField
+                          control={form.control}
+                          name="universityName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>University Name</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  className="transition-all duration-200 focus:ring-2 "
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </AnimationContainer>
+                    )}
 
-                  {role === "UNIVERSITY" && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FormField
-                        control={form.control}
-                        name="universityName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>University Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                className="transition-all duration-200 focus:ring-2 "
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </motion.div>
-                  )}
-
-                  {role === "COMPANY" && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <FormField
-                        control={form.control}
-                        name="companyName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Company Name</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                className="transition-all duration-200 focus:ring-2 "
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="industry"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Industry</FormLabel>
-                            <FormControl>
-                              <Input
-                                {...field}
-                                className="transition-all duration-200 focus:ring-2 "
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </motion.div>
-                  )}
+                    {role === "COMPANY" && (
+                      <AnimationContainer delay={0.3} className="size-full">
+                        <FormField
+                          control={form.control}
+                          name="companyName"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Company Name</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  className="transition-all duration-200 focus:ring-2 "
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="industry"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Industry</FormLabel>
+                              <FormControl>
+                                <Input
+                                  {...field}
+                                  className="transition-all duration-200 focus:ring-2 "
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </AnimationContainer>
+                    )}
+                  </div>
                 </form>
               </Form>
             </CardContent>
