@@ -291,22 +291,21 @@ export default function SignUp() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen max-w-sm mx-auto">
-      <AnimationContainer
-        reverse
-        delay={0.3}
-        className="flex items-center w-full py-8 "
-      >
-        <Link href="/" className="flex items-center gap-x-2">
-          <Icons.logo className="w-6 h-6" />
-          <h1 className="text-lg font-medium">{siteConfig.name}</h1>
-        </Link>
-      </AnimationContainer>
       <AnimatedContainer className="w-full max-w-md">
         <Card className="w-full">
           <CardHeader>
-            <CardTitle className="text-xl text-font-semibold text-center">
-              {steps[step]}
-            </CardTitle>
+            <AnimationContainer
+              reverse
+              delay={0.3}
+              className="flex items-center w-full"
+            >
+              <Link href="/" className="flex items-center gap-x-2">
+                <Icons.logo className="w-6 h-6" />
+                <h1 className="text-lg font-medium">
+                  {steps[step]} | {siteConfig.name}
+                </h1>
+              </Link>
+            </AnimationContainer>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -317,9 +316,9 @@ export default function SignUp() {
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={step}
-                    initial={{ opacity: 0, x: 50 }}
+                    initial={{ opacity: 0, x: 100 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
+                    exit={{ opacity: 0, x: -100 }}
                     transition={{ duration: 0.3 }}
                   >
                     {renderStepContent(step)}
