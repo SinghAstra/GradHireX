@@ -1,62 +1,72 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signIn } from "next-auth/react";
+import { AnimationContainer } from "@/components/global/animation-container";
+import { Card, CardContent } from "@/components/ui/card";
+import { Icons } from "@/components/ui/Icons";
+import { siteConfig } from "@/config/site";
+import { Loader2 } from "lucide-react";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const session = useSession();
   const router = useRouter();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      console.error(result.error);
-    } else {
-      router.push("/dashboard");
-    }
-  };
+  const isAuthenticated = session.status === "authenticated";
+  const isAuthenticating = session.status === "loading";
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-8 bg-white rounded shadow-md w-96">
-        <h1 className="mb-6 text-2xl font-bold text-center">Sign In</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <Button type="submit" className="w-full">
-            Sign In
-          </Button>
-        </form>
-      </div>
+    <div className="flex flex-col items-start max-w-sm mx-auto min-h-screen overflow-hidden pt-4">
+      <AnimationContainer
+        reverse
+        delay={0.1}
+        className="flex items-center w-full py-8 border-b border-border/80"
+      >
+        <Link href="/" className="flex items-center gap-x-2">
+          <Icons.logo className="w-6 h-6" />
+          <h1 className="text-lg font-medium">{siteConfig.name}</h1>
+        </Link>
+      </AnimationContainer>
+
+      <AnimationContainer delay={0.2}>
+        <div className="flex mt-16 mb-8 items-center justify-center flex-col gap-2 w-full">
+          {isAuthenticating ? (
+            <Card className="w-full max-w-md mx-auto ">
+              <CardContent className="flex flex-col items-center justify-center p-10">
+                <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                <p className="mt-4 text-lg font-medium text-gray-300">
+                  {isAuthenticating ? "Authenticating..." : "Redirecting..."}
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <button
+              onClick={() => signIn("google")}
+              className="relative inline-flex h-10 overflow-hidden rounded-full p-[1.5px] w-full"
+            >
+              <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,hsl(var(--primary))_0%,hsl(var(--primary-foreground))_50%,hsl(var(--primary))_100%)]" />
+
+              <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[hsl(var(--background))] px-4 py-1 text-sm font-medium text-[hsl(var(--foreground))] backdrop-blur-3xl">
+                Connect Google
+                <Icons.next className="ml-2 size-6 animate-moveLeftRight" />
+              </span>
+            </button>
+          )}
+        </div>
+
+        <div className="flex flex-col items-start w-full">
+          <p className="text-sm text-muted-foreground">
+            By signing in, you agree to our{" "}
+            <Link href="/terms" className="text-primary">
+              Terms of Service{" "}
+            </Link>
+            and{" "}
+            <Link href="/privacy" className="text-primary">
+              Privacy Policy
+            </Link>
+          </p>
+        </div>
+      </AnimationContainer>
     </div>
   );
 }
