@@ -1,79 +1,96 @@
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowRight, Briefcase, FileText, User } from "lucide-react";
 import MaxWidthWrapper from "@/components/global/max-width-wrapper";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  Briefcase,
+  ChevronRight,
+  FileText,
+  User,
+} from "lucide-react";
+import { useState } from "react";
+import ApplicationsTab from "./ApplicationsTab";
+import JobTab from "./JobTab";
+import ProfileTab from "./ProfileTab";
 
 export default function StudentDashboard() {
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeSection, setActiveSection] = useState("profile");
+  const sidebarItems = [
+    { id: "profile", icon: User, label: "Profile" },
+    { id: "jobListing", icon: Briefcase, label: "Job Listing" },
+    { id: "application", icon: FileText, label: "Application" },
+  ];
+
+  const renderContent = () => {
+    switch (activeSection) {
+      case "profile":
+        return <ProfileTab />;
+      case "jobListing":
+        return <JobTab />;
+      case "application":
+        return <ApplicationsTab />;
+      default:
+        return null;
+    }
+  };
+
+  const handleSave = () => {
+    // Save user data to API
+    console.log("Saving user data.");
+  };
 
   return (
-    <MaxWidthWrapper className="mt-8">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 mb-8">
-          <TabsTrigger value="profile">Profile</TabsTrigger>
-          <TabsTrigger value="jobs">Job Listings</TabsTrigger>
-          <TabsTrigger value="applications">Applications</TabsTrigger>
-        </TabsList>
-        <TabsContent value="profile">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <User className="mr-2" />
-                Your Profile
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-4">
-                Manage and update your personal information, skills, and resume.
-              </p>
-              <Button>
-                Edit Profile <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="jobs">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Briefcase className="mr-2" />
-                Available Job Listings
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-4">
-                Browse through job opportunities that match your skills and
-                interests.
-              </p>
-              <Button>
-                View Jobs <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="applications">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <FileText className="mr-2" />
-                Your Applications
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-4">
-                Track the status of your job applications and interviews.
-              </p>
-              <Button>
-                View Applications <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </MaxWidthWrapper>
+    <div className="flex h-screen bg-background">
+      <motion.div
+        className="w-64 bg-card text-card-foreground p-4 shadow-lg"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {sidebarItems.map((item) => (
+          <motion.button
+            key={item.id}
+            className={`flex items-center w-full p-2 mt-2 rounded-lg ${
+              activeSection === item.id
+                ? "bg-primary text-primary-foreground"
+                : "hover:bg-accent"
+            }`}
+            onClick={() => setActiveSection(item.id)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <item.icon className="w-5 h-5 mr-2" />
+            {item.label}
+            <ChevronRight className="w-4 h-4 ml-auto" />
+          </motion.button>
+        ))}
+      </motion.div>
+      <div className="flex-1 p-8">
+        <Card className="w-full max-w-4xl mx-auto">
+          <CardContent className="p-6">
+            <motion.div
+              key={activeSection}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="text-2xl font-bold mb-4">
+                {sidebarItems.find((item) => item.id === activeSection)?.label}
+              </h2>
+              {renderContent()}
+            </motion.div>
+            <Separator className="my-6" />
+            <Button onClick={handleSave} className="w-full">
+              Save Changes <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
