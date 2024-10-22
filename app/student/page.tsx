@@ -1,17 +1,9 @@
 "use client";
-import MaxWidthWrapper from "@/components/global/max-width-wrapper";
+import { HorizontalAnimationContainer } from "@/components/global/animation-container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Briefcase,
-  ChevronRight,
-  FileText,
-  User,
-} from "lucide-react";
+import { Briefcase, ChevronRight, FileText, User } from "lucide-react";
 import { useState } from "react";
 import ApplicationsTab from "./ApplicationsTab";
 import JobTab from "./JobTab";
@@ -20,9 +12,9 @@ import ProfileTab from "./ProfileTab";
 export default function StudentDashboard() {
   const [activeSection, setActiveSection] = useState("profile");
   const sidebarItems = [
-    { id: "profile", icon: User, label: "Profile" },
     { id: "jobListing", icon: Briefcase, label: "Job Listing" },
     { id: "application", icon: FileText, label: "Application" },
+    { id: "profile", icon: User, label: "Profile" },
   ];
 
   const renderContent = () => {
@@ -45,11 +37,9 @@ export default function StudentDashboard() {
 
   return (
     <div className="flex h-screen bg-background">
-      <motion.div
+      <HorizontalAnimationContainer
+        reverse
         className="w-64 bg-card text-card-foreground p-4 shadow-lg"
-        initial={{ x: -100, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
       >
         {sidebarItems.map((item) => (
           <motion.button
@@ -68,28 +58,12 @@ export default function StudentDashboard() {
             <ChevronRight className="w-4 h-4 ml-auto" />
           </motion.button>
         ))}
-      </motion.div>
+      </HorizontalAnimationContainer>
+
       <div className="flex-1 p-8">
-        <Card className="w-full max-w-4xl mx-auto">
-          <CardContent className="p-6">
-            <motion.div
-              key={activeSection}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h2 className="text-2xl font-bold mb-4">
-                {sidebarItems.find((item) => item.id === activeSection)?.label}
-              </h2>
-              {renderContent()}
-            </motion.div>
-            <Separator className="my-6" />
-            <Button onClick={handleSave} className="w-full">
-              Save Changes <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </CardContent>
-        </Card>
+        <HorizontalAnimationContainer className="w-full max-w-4xl mx-auto">
+          {renderContent()}
+        </HorizontalAnimationContainer>
       </div>
     </div>
   );

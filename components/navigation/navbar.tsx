@@ -16,7 +16,7 @@ import { LucideIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { AnimationContainer } from "../global/animation-container";
+import { VerticalAnimationContainer } from "../global/animation-container";
 import MaxWidthWrapper from "../global/max-width-wrapper";
 import { Icons } from "../ui/Icons";
 import { UserAvatar } from "../user-avatar";
@@ -50,7 +50,7 @@ const Navbar = () => {
         scroll && "border-background/80 bg-background/40 backdrop-blur-md"
       )}
     >
-      <AnimationContainer reverse delay={0.1} className="size-full">
+      <VerticalAnimationContainer reverse delay={0.1} className="size-full">
         <MaxWidthWrapper className="flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <Link href="/">
@@ -96,7 +96,7 @@ const Navbar = () => {
 
           <MobileNavbar />
         </MaxWidthWrapper>
-      </AnimationContainer>
+      </VerticalAnimationContainer>
     </header>
   );
 };
