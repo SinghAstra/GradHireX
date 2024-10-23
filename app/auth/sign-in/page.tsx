@@ -39,9 +39,9 @@ const roles = [
 const fields = ["Computer Science", "Engineering", "Business", "Arts", "Other"];
 
 interface FormData {
+  name: string;
   email: string;
   password: string;
-  name: string;
   role: string;
   universityName: string;
   studentId: string;
@@ -52,8 +52,23 @@ interface FormData {
   document: File | null;
 }
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  password?: string;
+  role?: string;
+  universityName?: string;
+  studentId?: string;
+  fieldOfStudy?: string;
+  organizationName?: string;
+  organizationWebsite?: string;
+  userPosition?: string;
+  document?: File | null;
+}
+
 const MultiStageRegistration = () => {
   const [stage, setStage] = useState(1);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -71,6 +86,16 @@ const MultiStageRegistration = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const handleRoleChange = (value: string) => {
+    setFormData((prev) => ({ ...prev, role: value }));
+    if (errors.role) {
+      setErrors((prev) => ({ ...prev, role: undefined }));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,11 +113,32 @@ const MultiStageRegistration = () => {
     setStage((prev) => prev - 1);
   };
 
+  const validateForm = () => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+
+    // Add Validation For Organization and Password
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setStage(5); // Move to confirmation stage
   };
+
+  console.log("formData.role is ", formData.role);
 
   return (
     <BackgroundGradient containerClassName="max-w-md mx-auto mt-10 ">
@@ -122,7 +168,7 @@ const MultiStageRegistration = () => {
                 <Input
                   id="name"
                   name="name"
-                  className="peer"
+                  errorMessage={errors.name}
                   label="Name"
                   placeholder="Your Name"
                   required
@@ -134,6 +180,7 @@ const MultiStageRegistration = () => {
                   name="email"
                   type="email"
                   label="Email"
+                  errorMessage={errors.email}
                   placeholder="projectmayhem@fc.com"
                   required
                   value={formData.email}
@@ -144,12 +191,13 @@ const MultiStageRegistration = () => {
                   name="password"
                   type="password"
                   label="Password"
+                  errorMessage={errors.password}
                   required
                   value={formData.password}
                   placeholder="••••••••"
                   onChange={handleInputChange}
                 />
-                <div className="space-y-2">
+                <div className="m-4">
                   <RadioGroup
                     name="role"
                     value={formData.role}
@@ -161,12 +209,14 @@ const MultiStageRegistration = () => {
                     {roles.map((role) => (
                       <div
                         key={role.organization}
-                        className="flex items-center"
+                        className="flex items-center relative"
                       >
-                        <RadioGroupItem
+                        <input
+                          type="radio"
+                          name="organization"
                           value={role.organization}
                           id={role.organization}
-                          className="sr-only peer"
+                          className="peer absolute top-2 left-2 h-4 w-4 checked:bg-blue-500 checked:border-blue-500 focus:outline-none appearance-none border border-gray-300 rounded-full"
                         />
                         <Label
                           htmlFor={role.organization}
