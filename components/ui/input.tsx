@@ -1,6 +1,5 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import * as React from "react";
 
 export interface InputProps
@@ -10,19 +9,6 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, ...props }, ref) => {
-    console.log("label is ", label);
-    const radius = 100;
-    const [visible, setVisible] = React.useState(false);
-
-    let mouseX = useMotionValue(0);
-    let mouseY = useMotionValue(0);
-
-    function handleMouseMove({ currentTarget, clientX, clientY }: any) {
-      let { left, top } = currentTarget.getBoundingClientRect();
-
-      mouseX.set(clientX - left);
-      mouseY.set(clientY - top);
-    }
     return (
       <div className="flex flex-col-reverse w-full">
         <input

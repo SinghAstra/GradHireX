@@ -14,14 +14,28 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import React, { useState } from "react";
 
-import { HorizontalAnimationContainer } from "@/components/global/animation-container";
+import {
+  HorizontalAnimationContainer,
+  VerticalAnimationContainer,
+} from "@/components/global/animation-container";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { CircleArrowLeft } from "lucide-react";
+import {
+  Building2,
+  CircleArrowLeft,
+  GraduationCap,
+  Scale,
+  University,
+} from "lucide-react";
 import Link from "next/link";
 
-const roles = ["Student", "University", "Company", "Government"];
+const roles = [
+  { organization: "Student", icon: <GraduationCap /> },
+  { organization: "University", icon: <University /> },
+  { organization: "Company", icon: <Building2 /> },
+  { organization: "Government", icon: <Scale /> },
+];
 const fields = ["Computer Science", "Engineering", "Business", "Arts", "Other"];
 
 interface FormData {
@@ -135,23 +149,36 @@ const MultiStageRegistration = () => {
                   placeholder="••••••••"
                   onChange={handleInputChange}
                 />
-                <LabelInputContainer>
-                  <Label>Role</Label>
+                <div className="space-y-2">
                   <RadioGroup
                     name="role"
                     value={formData.role}
                     onValueChange={(value) =>
                       setFormData((prev) => ({ ...prev, role: value }))
                     }
+                    className="grid grid-cols-2"
                   >
                     {roles.map((role) => (
-                      <div key={role} className="flex items-center space-x-2">
-                        <RadioGroupItem value={role} id={role} />
-                        <Label htmlFor={role}>{role}</Label>
+                      <div
+                        key={role.organization}
+                        className="flex items-center"
+                      >
+                        <RadioGroupItem
+                          value={role.organization}
+                          id={role.organization}
+                          className="sr-only peer"
+                        />
+                        <Label
+                          htmlFor={role.organization}
+                          className="flex flex-col items-center justify-center w-full p-4 space-y-2 border rounded-lg cursor-pointer border-gray-700 peer-checked:text-blue-500 peer-checked:border-blue-600  text-white bg-black hover:bg-neutral-900"
+                        >
+                          {role.icon}
+                          <span>{role.organization}</span>
+                        </Label>
                       </div>
                     ))}
                   </RadioGroup>
-                </LabelInputContainer>
+                </div>
               </div>
             )}
 
@@ -338,16 +365,27 @@ const MultiStageRegistration = () => {
             )}
           </HorizontalAnimationContainer>
         </form>
-        {stage < 4 && (
-          <Button type="button" onClick={handleNext} className="w-full">
-            Next
-          </Button>
-        )}
-        {stage === 4 && (
-          <Button type="submit" onClick={handleSubmit} className="ml-auto">
-            Submit
-          </Button>
-        )}
+        <VerticalAnimationContainer>
+          {stage < 4 && (
+            <Button type="button" onClick={handleNext} className="w-full">
+              Next
+            </Button>
+          )}
+          {stage === 4 && (
+            <Button type="submit" onClick={handleSubmit} className="ml-auto">
+              Submit
+            </Button>
+          )}
+          <p className="mt-4 text-sm text-center text-gray-500">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-blue-500 hover:text-blue-400 transition-colors"
+            >
+              Log in
+            </Link>
+          </p>
+        </VerticalAnimationContainer>
       </div>
     </BackgroundGradient>
   );
