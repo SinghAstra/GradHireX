@@ -86,18 +86,25 @@ const MultiStageRegistration = () => {
   };
 
   return (
-    <BackgroundGradient
-      className="rounded-none md:rounded-lg"
-      containerClassName="max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto mt-10 "
-    >
-      <div className="bg-black p-8 space-y-2 ">
+    <BackgroundGradient containerClassName="max-w-md mx-auto mt-10 ">
+      <div className="bg-black p-8 rounded-none md:rounded-lg">
         <h2 className="font-medium text-xl text-neutral-200">
-          Welcome to {siteConfig.name}
+          Welcome to <span className="text-blue-500">{siteConfig.name}</span>
         </h2>
         <form className="my-8" onSubmit={handleSubmit}>
           {stage === 1 && (
             <div className="space-y-4">
-              <div className="space-y-2">
+              <LabelInputContainer>
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleInputChange}
+                />
+              </LabelInputContainer>
+              <LabelInputContainer>
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
@@ -107,8 +114,8 @@ const MultiStageRegistration = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="space-y-2">
+              </LabelInputContainer>
+              <LabelInputContainer>
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
@@ -118,18 +125,8 @@ const MultiStageRegistration = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="space-y-2">
+              </LabelInputContainer>
+              <LabelInputContainer>
                 <Label>Role</Label>
                 <RadioGroup
                   name="role"
@@ -145,7 +142,7 @@ const MultiStageRegistration = () => {
                     </div>
                   ))}
                 </RadioGroup>
-              </div>
+              </LabelInputContainer>
             </div>
           )}
 
@@ -153,7 +150,7 @@ const MultiStageRegistration = () => {
             <div className="space-y-4">
               {formData.role === "Student" ? (
                 <>
-                  <div className="space-y-2">
+                  <LabelInputContainer>
                     <Label htmlFor="universityName">University Name</Label>
                     <Input
                       id="universityName"
@@ -162,7 +159,7 @@ const MultiStageRegistration = () => {
                       value={formData.universityName}
                       onChange={handleInputChange}
                     />
-                  </div>
+                  </LabelInputContainer>
                   <div className="space-y-2">
                     <Label htmlFor="studentId">Student ID</Label>
                     <Input
@@ -353,3 +350,17 @@ const MultiStageRegistration = () => {
 };
 
 export default MultiStageRegistration;
+
+const LabelInputContainer = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div className={cn("flex flex-col space-y-2 w-full group", className)}>
+      {children}
+    </div>
+  );
+};
