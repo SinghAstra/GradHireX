@@ -9,6 +9,7 @@ import {
   User,
 } from "lucide-react";
 import React from "react";
+import { HorizontalAnimationContainer } from "../global/animation-container";
 
 interface InfoItemProps {
   icon: React.ReactNode;
@@ -31,11 +32,13 @@ function InfoItem({ icon, label, value }: InfoItemProps) {
 export function ReviewStage({ formData }: { formData: FormData }) {
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-center text-gray-200 mb-6">
-        Review Your Information
-      </h3>
+      <HorizontalAnimationContainer reverse={true}>
+        <h3 className="text-lg font-medium text-center text-gray-200 mb-6">
+          Review Your Information
+        </h3>
+      </HorizontalAnimationContainer>
 
-      <div className="space-y-3">
+      <HorizontalAnimationContainer className="space-y-3">
         <InfoItem
           icon={<User size={20} />}
           label="Name"
@@ -83,7 +86,7 @@ export function ReviewStage({ formData }: { formData: FormData }) {
             />
           </>
         )}
-      </div>
+      </HorizontalAnimationContainer>
     </div>
   );
 }

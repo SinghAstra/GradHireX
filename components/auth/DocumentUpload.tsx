@@ -1,6 +1,7 @@
 import { StageProps } from "@/types/registration";
 import { Upload } from "lucide-react";
 import React from "react";
+import { HorizontalAnimationContainer } from "../global/animation-container";
 
 export function DocumentUpload({
   formData,
@@ -9,14 +10,17 @@ export function DocumentUpload({
 }: StageProps) {
   return (
     <div className="space-y-4">
-      <div className="text-center space-y-2">
+      <HorizontalAnimationContainer
+        reverse={true}
+        className="text-center space-y-2"
+      >
         <h3 className="text-lg font-medium text-gray-200">Document Upload</h3>
         <p className="text-sm text-gray-400">
           Please upload any relevant documentation to verify your organization
         </p>
-      </div>
+      </HorizontalAnimationContainer>
 
-      <div className="border-2 border-dashed border-neutral-700 rounded-lg p-6 text-center">
+      <HorizontalAnimationContainer className="border-2 border-dashed border-neutral-700 rounded-lg p-6 text-center">
         <label
           htmlFor="document-upload"
           className="flex flex-col items-center cursor-pointer space-y-2"
@@ -37,7 +41,7 @@ export function DocumentUpload({
             onChange={handleFileChange}
           />
         </label>
-      </div>
+      </HorizontalAnimationContainer>
       {errors.document && (
         <p className="text-sm text-red-500 text-center">{errors.document}</p>
       )}

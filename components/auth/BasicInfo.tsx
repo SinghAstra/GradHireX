@@ -1,6 +1,7 @@
 import { StageProps } from "@/types/registration";
 import { Building2, GraduationCap, Scale, University } from "lucide-react";
 import React from "react";
+import { HorizontalAnimationContainer } from "../global/animation-container";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup } from "../ui/radio-group";
@@ -52,7 +53,7 @@ export function BasicInfo({
         placeholder="••••••••"
         onChange={handleInputChange}
       />
-      <div className="m-4">
+      <HorizontalAnimationContainer className="m-4">
         <RadioGroup
           name="role"
           value={formData.role}
@@ -78,7 +79,7 @@ export function BasicInfo({
             </div>
           ))}
         </RadioGroup>
-      </div>
+      </HorizontalAnimationContainer>
     </div>
   );
 }

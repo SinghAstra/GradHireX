@@ -155,9 +155,7 @@ const RegistrationForm = () => {
         </HorizontalAnimationContainer>
 
         <form className="my-8" onSubmit={handleSubmit}>
-          <HorizontalAnimationContainer>
-            {renderStage()}
-          </HorizontalAnimationContainer>
+          {renderStage()}
         </form>
 
         <VerticalAnimationContainer>

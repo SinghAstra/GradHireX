@@ -1,6 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import * as React from "react";
+import { HorizontalAnimationContainer } from "../global/animation-container";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +12,7 @@ export interface InputProps
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, errorMessage, ...props }, ref) => {
     return (
-      <div className="flex flex-col-reverse w-full">
+      <HorizontalAnimationContainer className="flex flex-col-reverse w-full">
         <input
           type={type}
           className={cn(
@@ -37,7 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >
           {label}
         </p>
-      </div>
+      </HorizontalAnimationContainer>
     );
   }
 );

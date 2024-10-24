@@ -1,5 +1,6 @@
 import { StageProps } from "@/types/registration";
 import React from "react";
+import { HorizontalAnimationContainer } from "../global/animation-container";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -19,28 +20,24 @@ export function StudentDetails({
 }: StageProps) {
   return (
     <div className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="universityName">University Name</Label>
-        <Input
-          id="universityName"
-          name="universityName"
-          required
-          value={formData.universityName}
-          onChange={handleInputChange}
-          errorMessage={errors.universityName}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="studentId">Student ID</Label>
-        <Input
-          id="studentId"
-          name="studentId"
-          required
-          value={formData.studentId}
-          onChange={handleInputChange}
-          errorMessage={errors.studentId}
-        />
-      </div>
+      <Input
+        id="universityName"
+        name="universityName"
+        label="University Name"
+        required
+        value={formData.universityName}
+        onChange={handleInputChange}
+        errorMessage={errors.universityName}
+      />
+      <Input
+        id="studentId"
+        name="studentId"
+        label="Student ID"
+        required
+        value={formData.studentId}
+        onChange={handleInputChange}
+        errorMessage={errors.studentId}
+      />
       <div className="space-y-2">
         <Label htmlFor="fieldOfStudy">Field of Study</Label>
         <Select
