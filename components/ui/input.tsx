@@ -11,9 +11,16 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, errorMessage, ...props }, ref) => {
-    console.log("In Input errorMessage is ", errorMessage);
     return (
       <HorizontalAnimationContainer className="flex flex-col-reverse w-full">
+        {errorMessage && (
+          <HorizontalAnimationContainer
+            reverse={true}
+            className="flex justify-end mt-1"
+          >
+            <p className="text-xs text-red-500">{errorMessage}</p>
+          </HorizontalAnimationContainer>
+        )}
         <input
           type={type}
           className={cn(

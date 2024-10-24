@@ -29,6 +29,7 @@ export interface FormErrors {
 export interface StageProps {
   formData: FormData;
   errors: FormErrors;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors>>;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRoleChange: (value: string) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

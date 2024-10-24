@@ -33,7 +33,7 @@ const initialFormData: FormData = {
 };
 
 const RegistrationForm = () => {
-  const [stage, setStage] = useState(1);
+  const [stage, setStage] = useState(2);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
@@ -46,14 +46,11 @@ const RegistrationForm = () => {
   };
 
   const handleRoleChange = (value: string) => {
-    console.log("In handleRoleChange");
     setFormData((prev) => ({ ...prev, role: value }));
     if (errors.role) {
       setErrors((prev) => ({ ...prev, role: undefined }));
     }
   };
-
-  console.log("formData is ", formData);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -170,6 +167,7 @@ const RegistrationForm = () => {
     const props = {
       formData,
       errors,
+      setErrors,
       handleInputChange,
       handleRoleChange,
       handleFileChange,
