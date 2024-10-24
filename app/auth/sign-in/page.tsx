@@ -12,6 +12,7 @@ import {
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import { toast } from "@/hooks/use-toast";
 import { FormData, FormErrors } from "@/types/registration";
 import { CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -21,7 +22,7 @@ const initialFormData: FormData = {
   email: "",
   password: "",
   name: "",
-  role: "",
+  role: "Student",
   universityName: "",
   studentId: "",
   fieldOfStudy: "",
@@ -45,11 +46,14 @@ const RegistrationForm = () => {
   };
 
   const handleRoleChange = (value: string) => {
+    console.log("In handleRoleChange");
     setFormData((prev) => ({ ...prev, role: value }));
     if (errors.role) {
       setErrors((prev) => ({ ...prev, role: undefined }));
     }
   };
+
+  console.log("formData is ", formData);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -58,11 +62,75 @@ const RegistrationForm = () => {
     }));
   };
 
+  const validateStage = (currentStage: number): boolean => {
+    const newErrors: FormErrors = {};
+
+    switch (currentStage) {
+      case 1:
+        if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!formData.email.trim()) {
+          newErrors.email = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+          newErrors.email = "Please enter a valid email";
+        }
+        if (!formData.password.trim()) {
+          newErrors.password = "Password is required";
+        } else if (formData.password.length < 8) {
+          newErrors.password = "Password must be at least 8 characters";
+        }
+        if (!formData.role) newErrors.role = "Please select a role";
+        break;
+
+      case 2:
+        if (formData.role === "Student") {
+          if (!formData.universityName.trim())
+            newErrors.universityName = "University name is required";
+          if (!formData.studentId.trim())
+            newErrors.studentId = "Student ID is required";
+          if (!formData.fieldOfStudy.trim())
+            newErrors.fieldOfStudy = "Field of study is required";
+        } else {
+          if (!formData.organizationName.trim())
+            newErrors.organizationName = "Organization name is required";
+          if (!formData.organizationWebsite.trim()) {
+            newErrors.organizationWebsite = "Organization website is required";
+          } else if (
+            !/^https?:\/\/[^\s/$.?#].[^\s]*$/.test(formData.organizationWebsite)
+          ) {
+            newErrors.organizationWebsite = "Please enter a valid URL";
+          }
+          if (!formData.userPosition.trim())
+            newErrors.userPosition = "Position is required";
+        }
+        break;
+
+      case 3:
+        if (formData.role !== "Student" && !formData.document) {
+          newErrors.document = "Please upload required documents";
+        }
+        break;
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      toast({
+        description: "Please fill in all required fields correctly",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
   const handleNext = () => {
-    if (formData.role === "Student" && stage === 2) {
-      setStage(4);
-    } else {
-      setStage((prev) => prev + 1);
+    if (validateStage(stage)) {
+      if (formData.role === "Student" && stage === 2) {
+        setStage(4);
+      } else {
+        setStage((prev) => prev + 1);
+      }
     }
   };
 

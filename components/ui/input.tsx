@@ -11,6 +11,7 @@ export interface InputProps
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, errorMessage, ...props }, ref) => {
+    console.log("In Input errorMessage is ", errorMessage);
     return (
       <HorizontalAnimationContainer className="flex flex-col-reverse w-full">
         <input
@@ -32,8 +33,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         <p
-          className={`text-sm font-medium text-white transition-colors duration-200 leading-none my-2 ${
-            errorMessage ? "text-red-500" : "peer-focus-visible:text-blue-500"
+          className={`text-sm font-medium transition-colors duration-200 leading-none my-2 ${
+            errorMessage
+              ? "text-red-500"
+              : " text-white peer-focus-visible:text-blue-500"
           }`}
         >
           {label}

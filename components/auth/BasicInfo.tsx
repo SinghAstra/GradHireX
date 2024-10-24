@@ -4,7 +4,7 @@ import React from "react";
 import { HorizontalAnimationContainer } from "../global/animation-container";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { RadioGroup } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const roles = [
   { organization: "Student", icon: <GraduationCap /> },
@@ -55,23 +55,26 @@ export function BasicInfo({
       />
       <HorizontalAnimationContainer className="m-4">
         <RadioGroup
-          name="role"
-          value={formData.role}
+          defaultValue={formData.role}
           onValueChange={handleRoleChange}
           className="grid grid-cols-2"
         >
           {roles.map((role) => (
             <div key={role.organization} className="flex items-center relative">
-              <input
-                type="radio"
-                name="organization"
+              <RadioGroupItem
                 value={role.organization}
                 id={role.organization}
-                className="peer absolute top-2 left-2 h-4 w-4 checked:bg-blue-500 checked:border-blue-500 focus:outline-none appearance-none border border-gray-300 rounded-full"
+                className={`peer sr-only ${
+                  errors.role ? "border-red-500" : "border-gray-300"
+                }`}
               />
               <Label
                 htmlFor={role.organization}
-                className="flex flex-col items-center justify-center w-full p-4 space-y-2 border rounded-lg cursor-pointer border-gray-700 peer-checked:text-blue-500 peer-checked:border-blue-600 text-white bg-black hover:bg-neutral-900"
+                className={`flex flex-col items-center justify-center w-full p-4 space-y-2 border rounded-lg cursor-pointer peer-data-[state=checked]:text-blue-500 peer-data-[state=checked]:border-blue-600 bg-black hover:bg-neutral-900 ${
+                  errors.role
+                    ? "text-red-500 border-red-400"
+                    : "text-white border-gray-700"
+                }`}
               >
                 {role.icon}
                 <span>{role.organization}</span>
