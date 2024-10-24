@@ -1,0 +1,89 @@
+import { FormData } from "@/types/registration";
+import {
+  Briefcase,
+  Building2,
+  FileCheck,
+  Globe,
+  GraduationCap,
+  Mail,
+  User,
+} from "lucide-react";
+import React from "react";
+
+interface InfoItemProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}
+
+function InfoItem({ icon, label, value }: InfoItemProps) {
+  return (
+    <div className="flex items-center space-x-3 p-3 bg-neutral-900 rounded-lg">
+      <div className="text-neutral-400">{icon}</div>
+      <div>
+        <p className="text-xs text-neutral-500">{label}</p>
+        <p className="text-sm text-neutral-200">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+export function ReviewStage({ formData }: { formData: FormData }) {
+  return (
+    <div className="space-y-4">
+      <h3 className="text-lg font-medium text-center text-gray-200 mb-6">
+        Review Your Information
+      </h3>
+
+      <div className="space-y-3">
+        <InfoItem
+          icon={<User size={20} />}
+          label="Name"
+          value={formData.name}
+        />
+        <InfoItem
+          icon={<Mail size={20} />}
+          label="Email"
+          value={formData.email}
+        />
+        {formData.role === "Student" ? (
+          <>
+            <InfoItem
+              icon={<GraduationCap size={20} />}
+              label="University"
+              value={formData.universityName}
+            />
+            <InfoItem
+              icon={<FileCheck size={20} />}
+              label="Student ID"
+              value={formData.studentId}
+            />
+            <InfoItem
+              icon={<Briefcase size={20} />}
+              label="Field of Study"
+              value={formData.fieldOfStudy}
+            />
+          </>
+        ) : (
+          <>
+            <InfoItem
+              icon={<Building2 size={20} />}
+              label="Organization"
+              value={formData.organizationName}
+            />
+            <InfoItem
+              icon={<Globe size={20} />}
+              label="Website"
+              value={formData.organizationWebsite}
+            />
+            <InfoItem
+              icon={<Briefcase size={20} />}
+              label="Position"
+              value={formData.userPosition}
+            />
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
