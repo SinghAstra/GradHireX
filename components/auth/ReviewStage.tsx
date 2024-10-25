@@ -1,3 +1,8 @@
+import {
+  COMPANY_POSITIONS,
+  GOVERNMENT_POSITIONS,
+  UNIVERSITY_POSITIONS,
+} from "@/types/organization";
 import { FormData } from "@/types/registration";
 import {
   Briefcase,
@@ -29,7 +34,29 @@ function InfoItem({ icon, label, value }: InfoItemProps) {
   );
 }
 
+const getPositionTitle = (role: string, positionId: string): string => {
+  let positions;
+  switch (role) {
+    case "University":
+      positions = UNIVERSITY_POSITIONS;
+      break;
+    case "Company":
+      positions = COMPANY_POSITIONS;
+      break;
+    case "Government":
+      positions = GOVERNMENT_POSITIONS;
+      break;
+    default:
+      return positionId;
+  }
+
+  const position = positions.find((p) => p.id === positionId);
+  return position?.title || positionId;
+};
+
 export function ReviewStage({ formData }: { formData: FormData }) {
+  const positionTitle = getPositionTitle(formData.role, formData.userPosition);
+
   return (
     <div className="space-y-4">
       <HorizontalAnimationContainer reverse={true}>
@@ -82,7 +109,7 @@ export function ReviewStage({ formData }: { formData: FormData }) {
             <InfoItem
               icon={<Briefcase size={20} />}
               label="Position"
-              value={formData.userPosition}
+              value={positionTitle}
             />
           </>
         )}
@@ -90,3 +117,5 @@ export function ReviewStage({ formData }: { formData: FormData }) {
     </div>
   );
 }
+
+export default ReviewStage;

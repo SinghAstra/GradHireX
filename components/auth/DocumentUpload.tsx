@@ -133,11 +133,11 @@ export function DocumentUpload({
                   </TooltipTrigger>
                   <TooltipContent
                     side="top"
-                    className="max-w-xs bg-neutral-900 text-neutral-200 border-neutral-800"
+                    className="max-w-xs bg-black text-white border-neutral-800"
                   >
                     <div className="space-y-2 p-1">
-                      <p className="font-medium">{doc.name}</p>
-                      <p className="text-sm text-neutral-400">
+                      <p className="font-medium text-white">{doc.name}</p>
+                      <p className="text-sm text-neutral-200">
                         {doc.description}
                       </p>
                       {doc.required && (
@@ -145,7 +145,7 @@ export function DocumentUpload({
                           This document is required
                         </p>
                       )}
-                      <ul className="text-xs text-neutral-400 list-disc list-inside">
+                      <ul className="text-xs list-disc list-inside text-neutral-400">
                         <li>Must be official documentation</li>
                         <li>Ensure all information is clearly legible</li>
                         <li>
