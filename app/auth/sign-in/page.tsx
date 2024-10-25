@@ -254,9 +254,7 @@ const RegistrationForm = () => {
     }
   };
 
-  const isLastStage =
-    (formData.role === "Student" && stage === 4) ||
-    (formData.role !== "Student" && stage === 4);
+  const isLastStage = stage === 4;
 
   return (
     <BackgroundGradient containerClassName="max-w-md mx-auto mt-10">

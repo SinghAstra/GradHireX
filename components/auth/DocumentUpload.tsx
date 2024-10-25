@@ -5,12 +5,30 @@ import {
   UNIVERSITY_POSITIONS,
 } from "@/types/organization";
 import { StageProps } from "@/types/registration";
-import { Upload } from "lucide-react";
-import React from "react";
+import { AlertCircle, Upload } from "lucide-react";
+import React, { useState } from "react";
 import {
   HorizontalAnimationContainer,
   VerticalAnimationContainer,
 } from "../global/animation-container";
+import { Alert, AlertDescription } from "../ui/alert";
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+const ALLOWED_FILE_TYPES = [
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+const ALLOWED_FILE_EXTENSIONS = [".pdf", ".doc", ".docx"];
+
+interface ValidationError {
+  type: "size" | "format";
+  message: string;
+}
+
+interface FileValidationState {
+  [key: string]: ValidationError | null;
+}
 
 export function DocumentUpload({
   formData,
@@ -18,6 +36,67 @@ export function DocumentUpload({
   handleFileChange,
 }: StageProps) {
   const documents = getRequiredDocuments(formData);
+  const [validationErrors, setValidationErrors] = useState<FileValidationState>(
+    {}
+  );
+
+  const validateFile = (file: File): ValidationError | null => {
+    if (file.size > MAX_FILE_SIZE) {
+      return {
+        type: "size",
+        message: `File size exceeds 10MB limit (${(
+          file.size /
+          1024 /
+          1024
+        ).toFixed(2)}MB)`,
+      };
+    }
+
+    const fileExtension = `.${file.name.split(".").pop()?.toLowerCase()}`;
+    if (!ALLOWED_FILE_EXTENSIONS.includes(fileExtension)) {
+      return {
+        type: "format",
+        message:
+          "Invalid file format. Please upload PDF, DOC, or DOCX files only",
+      };
+    }
+
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      return {
+        type: "format",
+        message:
+          "Invalid file type. Please upload PDF, DOC, or DOCX files only",
+      };
+    }
+
+    return null;
+  };
+
+  const handleFileValidation = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    docId: string
+  ) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validationError = validateFile(file);
+    setValidationErrors((prev) => ({
+      ...prev,
+      [docId]: validationError,
+    }));
+
+    if (!validationError) {
+      handleFileChange(e, docId);
+    }
+  };
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return "0 Bytes";
+    const k = 1024;
+    const sizes = ["Bytes", "KB", "MB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+  };
 
   return (
     <div className="space-y-6">
@@ -77,14 +156,26 @@ export function DocumentUpload({
                 name={`document-${doc.id}`}
                 type="file"
                 className="hidden"
-                accept=".pdf,.doc,.docx"
-                onChange={(e) => handleFileChange(e, doc.id)}
+                accept={ALLOWED_FILE_EXTENSIONS.join(",")}
+                onChange={(e) => handleFileValidation(e, doc.id)}
               />
             </label>
           </HorizontalAnimationContainer>
-          <HorizontalAnimationContainer>
-            <div className="flex justify-end"></div>
-          </HorizontalAnimationContainer>
+          {validationErrors[doc.id] && (
+            <Alert variant="destructive" className="mt-2">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                {validationErrors[doc.id]?.message}
+              </AlertDescription>
+            </Alert>
+          )}
+          <div className="flex justify-end">
+            {formData.documents?.[doc.id] && !validationErrors[doc.id] && (
+              <p className="text-xs text-gray-400 mt-1">
+                File size: {formatFileSize(formData.documents[doc.id].size)}
+              </p>
+            )}
+          </div>
         </div>
       ))}
 
