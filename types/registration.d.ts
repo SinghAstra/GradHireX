@@ -9,7 +9,7 @@ export interface FormData {
   organizationName: string;
   organizationWebsite: string;
   userPosition: string;
-  document: File | null;
+  documents: Record<string, File>;
 }
 
 export interface FormErrors {
@@ -23,7 +23,7 @@ export interface FormErrors {
   organizationName?: string;
   organizationWebsite?: string;
   userPosition?: string;
-  document?: string;
+  documents?: Record<string, string | undefined>;
 }
 
 export interface StageProps {
@@ -32,5 +32,8 @@ export interface StageProps {
   setErrors: React.Dispatch<React.SetStateAction<FormErrors>>;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRoleChange: (value: string) => void;
-  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFileChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    documentId: string
+  ) => void;
 }

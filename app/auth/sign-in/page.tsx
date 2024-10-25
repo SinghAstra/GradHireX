@@ -13,6 +13,12 @@ import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { toast } from "@/hooks/use-toast";
+import {
+  COMPANY_POSITIONS,
+  DocumentRequirement,
+  GOVERNMENT_POSITIONS,
+  UNIVERSITY_POSITIONS,
+} from "@/types/organization";
 import { FormData, FormErrors } from "@/types/registration";
 import { CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -28,12 +34,34 @@ const initialFormData: FormData = {
   fieldOfStudy: "",
   organizationName: "",
   organizationWebsite: "",
-  userPosition: "",
-  document: null,
+  userPosition: "dean",
+  documents: {},
+};
+
+export const getRequiredDocuments = (
+  formData: FormData
+): DocumentRequirement[] => {
+  let positions = [];
+  switch (formData.role) {
+    case "University":
+      positions = UNIVERSITY_POSITIONS;
+      break;
+    case "Company":
+      positions = COMPANY_POSITIONS;
+      break;
+    case "Government":
+      positions = GOVERNMENT_POSITIONS;
+      break;
+    default:
+      return [];
+  }
+
+  const position = positions.find((p) => p.id === formData.userPosition);
+  return position?.documents || [];
 };
 
 const RegistrationForm = () => {
-  const [stage, setStage] = useState(2);
+  const [stage, setStage] = useState(3);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
@@ -52,11 +80,29 @@ const RegistrationForm = () => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      document: e.target.files ? e.target.files[0] : null,
-    }));
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    documentId: string
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData((prev) => ({
+        ...prev,
+        documents: {
+          ...prev.documents,
+          [documentId]: e.target.files![0],
+        },
+      }));
+
+      if (errors.documents?.[documentId]) {
+        setErrors((prev) => ({
+          ...prev,
+          documents: {
+            ...prev.documents,
+            [documentId]: undefined,
+          },
+        }));
+      }
+    }
   };
 
   const validateStage = (currentStage: number): boolean => {
@@ -102,8 +148,21 @@ const RegistrationForm = () => {
         break;
 
       case 3:
-        if (formData.role !== "Student" && !formData.document) {
-          newErrors.document = "Please upload required documents";
+        if (formData.role !== "Student") {
+          const requiredDocs = getRequiredDocuments(formData);
+          const documentErrors: Record<string, string> = {};
+          let hasErrors = false;
+
+          requiredDocs.forEach((doc) => {
+            if (doc.required && !formData.documents[doc.id]) {
+              documentErrors[doc.id] = `${doc.name} is required`;
+              hasErrors = true;
+            }
+          });
+
+          if (hasErrors) {
+            newErrors.documents = documentErrors;
+          }
         }
         break;
     }
