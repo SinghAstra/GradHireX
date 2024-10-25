@@ -37,23 +37,39 @@ export function DocumentUpload({
         <div key={doc.id} className="space-y-2">
           <div className="flex justify-between items-start">
             <HorizontalAnimationContainer reverse={true}>
-              <h4 className="text-sm font-medium text-gray-200">{doc.name}</h4>
-              <p className="text-xs text-gray-400">{doc.description}</p>
+              <h4
+                className={`text-sm font-medium ${
+                  errors.documents?.[doc.id] ? "text-red-400" : "text-gray-200"
+                }`}
+              >
+                {doc.name}
+              </h4>
+              <p
+                className={`text-xs ${
+                  errors.documents?.[doc.id] ? "text-red-500" : "text-gray-400"
+                }`}
+              >
+                {doc.description}
+              </p>
             </HorizontalAnimationContainer>
-            <HorizontalAnimationContainer>
-              {doc.required && (
-                <span className="text-xs text-red-500">Required</span>
-              )}
-            </HorizontalAnimationContainer>
+            {errors.documents?.[doc.id] && (
+              <span className="text-xs text-red-500">Required</span>
+            )}
           </div>
 
-          <HorizontalAnimationContainer className="border-2 border-dashed border-neutral-700 rounded-lg p-4">
+          <HorizontalAnimationContainer
+            className={`border-2 border-dashed rounded-lg p-4 ${
+              errors.documents?.[doc.id]
+                ? "border-red-700 text-red-500"
+                : "border-neutral-700"
+            }`}
+          >
             <label
               htmlFor={`document-${doc.id}`}
               className="flex items-center cursor-pointer space-x-3"
             >
-              <Upload className="h-5 w-5 text-neutral-400" />
-              <span className="text-sm text-neutral-400">
+              <Upload className="h-5 w-5" />
+              <span className="text-sm truncate ">
                 {formData.documents?.[doc.id]?.name || "Click to upload"}
               </span>
               <input
@@ -66,9 +82,9 @@ export function DocumentUpload({
               />
             </label>
           </HorizontalAnimationContainer>
-          {errors.documents?.[doc.id] && (
-            <p className="text-sm text-red-500">{errors.documents[doc.id]}</p>
-          )}
+          <HorizontalAnimationContainer>
+            <div className="flex justify-end"></div>
+          </HorizontalAnimationContainer>
         </div>
       ))}
 
