@@ -1,5 +1,5 @@
-import { getRequiredDocuments } from "@/app/auth/sign-in/page";
 import { StageProps } from "@/types/registration";
+import { getRequiredDocuments } from "@/utils/auth";
 import { AlertCircle, HelpCircle, Upload } from "lucide-react";
 import React, { useState } from "react";
 import {

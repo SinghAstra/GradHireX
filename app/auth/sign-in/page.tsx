@@ -13,13 +13,8 @@ import { BackgroundGradient } from "@/components/ui/background-gradient";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { toast } from "@/hooks/use-toast";
-import {
-  COMPANY_POSITIONS,
-  DocumentRequirement,
-  GOVERNMENT_POSITIONS,
-  UNIVERSITY_POSITIONS,
-} from "@/types/organization";
 import { FormData, FormErrors } from "@/types/registration";
+import { getRequiredDocuments } from "@/utils/auth";
 import { CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -36,28 +31,6 @@ const initialFormData: FormData = {
   organizationWebsite: "",
   userPosition: "dean",
   documents: {},
-};
-
-export const getRequiredDocuments = (
-  formData: FormData
-): DocumentRequirement[] => {
-  let positions = [];
-  switch (formData.role) {
-    case "University":
-      positions = UNIVERSITY_POSITIONS;
-      break;
-    case "Company":
-      positions = COMPANY_POSITIONS;
-      break;
-    case "Government":
-      positions = GOVERNMENT_POSITIONS;
-      break;
-    default:
-      return [];
-  }
-
-  const position = positions.find((p) => p.id === formData.userPosition);
-  return position?.documents || [];
 };
 
 const RegistrationForm = () => {
