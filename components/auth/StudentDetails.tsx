@@ -61,10 +61,7 @@ export function StudentDetails({
             onValueChange={handleSelectChange}
           >
             <SelectTrigger errorMessage={errors.fieldOfStudy}>
-              <SelectValue
-                className="text-red-500"
-                placeholder="Select field of study"
-              />
+              <SelectValue placeholder="Select field of study" />
             </SelectTrigger>
             <SelectContent>
               {fields.map((field) => (

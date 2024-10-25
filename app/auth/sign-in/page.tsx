@@ -33,7 +33,7 @@ const initialFormData: FormData = {
 };
 
 const RegistrationForm = () => {
-  const [stage, setStage] = useState(3);
+  const [stage, setStage] = useState(2);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
