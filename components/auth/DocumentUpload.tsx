@@ -1,25 +1,13 @@
 import { getRequiredDocuments } from "@/app/auth/sign-in/page";
-import {
-  COMPANY_POSITIONS,
-  GOVERNMENT_POSITIONS,
-  UNIVERSITY_POSITIONS,
-} from "@/types/organization";
 import { StageProps } from "@/types/registration";
-import { AlertCircle, Upload } from "lucide-react";
+import { AlertCircle, HelpCircle, Upload } from "lucide-react";
 import React, { useState } from "react";
 import {
   HorizontalAnimationContainer,
   VerticalAnimationContainer,
 } from "../global/animation-container";
 import { Alert, AlertDescription } from "../ui/alert";
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024;
-const ALLOWED_FILE_TYPES = [
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
-const ALLOWED_FILE_EXTENSIONS = [".pdf", ".doc", ".docx"];
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface ValidationError {
   type: "size" | "format";
@@ -39,6 +27,13 @@ export function DocumentUpload({
   const [validationErrors, setValidationErrors] = useState<FileValidationState>(
     {}
   );
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
+  const ALLOWED_FILE_TYPES = [
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  ];
+  const ALLOWED_FILE_EXTENSIONS = [".pdf", ".doc", ".docx"];
 
   const validateFile = (file: File): ValidationError | null => {
     if (file.size > MAX_FILE_SIZE) {
@@ -116,20 +111,51 @@ export function DocumentUpload({
         <div key={doc.id} className="space-y-2">
           <div className="flex justify-between items-start">
             <HorizontalAnimationContainer reverse={true}>
-              <h4
-                className={`text-sm font-medium ${
-                  errors.documents?.[doc.id] ? "text-red-400" : "text-gray-200"
-                }`}
-              >
-                {doc.name}
-              </h4>
-              <p
-                className={`text-xs ${
-                  errors.documents?.[doc.id] ? "text-red-500" : "text-gray-400"
-                }`}
-              >
-                {doc.description}
-              </p>
+              <div className="flex items-center gap-2">
+                <h4
+                  className={`text-sm font-medium ${
+                    errors.documents?.[doc.id]
+                      ? "text-red-400"
+                      : "text-gray-200"
+                  }`}
+                >
+                  {doc.name}
+                </h4>
+                <Tooltip delayDuration={300}>
+                  <TooltipTrigger
+                    className={`hover:text-blue-400 transition-colors ${
+                      errors.documents?.[doc.id]
+                        ? "text-red-400"
+                        : "text-gray-200"
+                    }`}
+                  >
+                    <HelpCircle className="h-4 w-4" />
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="top"
+                    className="max-w-xs bg-neutral-900 text-neutral-200 border-neutral-800"
+                  >
+                    <div className="space-y-2 p-1">
+                      <p className="font-medium">{doc.name}</p>
+                      <p className="text-sm text-neutral-400">
+                        {doc.description}
+                      </p>
+                      {doc.required && (
+                        <p className="text-xs text-blue-400">
+                          This document is required
+                        </p>
+                      )}
+                      <ul className="text-xs text-neutral-400 list-disc list-inside">
+                        <li>Must be official documentation</li>
+                        <li>Ensure all information is clearly legible</li>
+                        <li>
+                          Documents should be recent (within last 3 months)
+                        </li>
+                      </ul>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </HorizontalAnimationContainer>
             {errors.documents?.[doc.id] && (
               <span className="text-xs text-red-500">Required</span>
