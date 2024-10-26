@@ -23,18 +23,18 @@ const initialFormData: FormData = {
   email: "",
   password: "",
   name: "",
-  role: "University",
+  role: "",
   universityName: "",
   studentId: "",
   fieldOfStudy: "",
   organizationName: "",
   organizationWebsite: "",
-  userPosition: "dean",
+  userPosition: "",
   documents: {},
 };
 
 const RegistrationForm = () => {
-  const [stage, setStage] = useState(3);
+  const [stage, setStage] = useState(1);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
