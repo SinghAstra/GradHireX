@@ -34,7 +34,7 @@ const initialFormData: FormData = {
 };
 
 const RegistrationForm = () => {
-  const [stage, setStage] = useState(5);
+  const [stage, setStage] = useState(1);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<FormData>(initialFormData);
 
@@ -153,8 +153,40 @@ const RegistrationForm = () => {
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (validateStage(stage)) {
+      if (stage === 1) {
+        try {
+          const response = await fetch("/api/auth/verify-email", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: formData.email }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            toast({
+              description: data.message,
+            });
+          } else {
+            toast({
+              description: data.error,
+              variant: "destructive",
+            });
+            return;
+          }
+        } catch (error) {
+          toast({
+            description: "Failed to send verification email",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+
       if (formData.role === "Student" && stage === 2) {
         setStage(4);
       } else {
