@@ -12,12 +12,12 @@ model User {
   id            String    @id @default(cuid())
   name          String
   email         String    @unique
-  password      String    @default("RESET_REQUIRED")
+  password      String    
   emailVerified Boolean   @default(false)
   image         String?
   role          UserRole  @default(STUDENT)
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  updatedAt     DateTime  @updatedAt
   sessions      Session[]
   student       Student?
   university    University?
@@ -72,7 +72,7 @@ model University {
   location    String
   website     String?
   createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now()) @updatedAt
+  updatedAt   DateTime    @updatedAt
   students    Student[]
   placements  Placement[]
 
@@ -90,7 +90,7 @@ model Student {
   graduationYear Int
   skills         String[]
   createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @default(now()) @updatedAt 
+  updatedAt      DateTime         @updatedAt 
   placements     Placement[]
   applications   JobApplication[]
 
@@ -106,7 +106,7 @@ model Company {
   industry    String
   website     String?
   createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @default(now()) @updatedAt
+  updatedAt   DateTime     @updatedAt
   jobListings JobListing[]
   placements  Placement[]
 
@@ -124,7 +124,7 @@ model JobListing {
   location       String?
   type           String?
   createdAt      DateTime         @default(now())
-  updatedAt   DateTime     @default(now()) @updatedAt
+  updatedAt   DateTime     @updatedAt
   applications   JobApplication[]
 
   @@index([companyId])
@@ -138,7 +138,7 @@ model JobApplication {
   jobListing   JobListing        @relation(fields: [jobListingId], references: [id], onDelete: Cascade)
   status       ApplicationStatus @default(PENDING)
   appliedAt    DateTime         @default(now())
-  updatedAt   DateTime     @default(now()) @updatedAt
+  updatedAt   DateTime     @updatedAt
 
   @@index([studentId])
   @@index([jobListingId])
@@ -158,7 +158,7 @@ model Placement {
   endDate      DateTime?
   status       PlacementStatus @default(ONGOING)
   createdAt    DateTime   @default(now())
-  updatedAt   DateTime     @default(now()) @updatedAt
+  updatedAt   DateTime     @updatedAt
 
   @@index([studentId])
   @@index([companyId])

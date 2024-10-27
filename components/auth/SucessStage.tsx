@@ -7,35 +7,25 @@ import {
   Sparkles,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 
 export function SuccessStage() {
   const [showConfetti, setShowConfetti] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowConfetti(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <div className="relative flex flex-col items-center justify-center py-8 space-y-6">
-      {showConfetti && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-4 left-1/4 animate-float">
-            <Sparkles className="w-6 h-6 text-yellow-500" />
-          </div>
-          <div className="absolute top-0 right-1/4 animate-float-delayed">
-            <Sparkles className="w-4 h-4 text-blue-500" />
-          </div>
-          <div className="absolute top-8 left-1/3 animate-float">
-            <Sparkles className="w-5 h-5 text-purple-500" />
-          </div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-4 left-1/4 animate-float">
+          <Sparkles className="w-6 h-6 text-yellow-500" />
         </div>
-      )}
+        <div className="absolute top-0 right-1/4 animate-float-delayed">
+          <Sparkles className="w-4 h-4 text-blue-500" />
+        </div>
+        <div className="absolute top-8 left-1/3 animate-float">
+          <Sparkles className="w-5 h-5 text-purple-500" />
+        </div>
+      </div>
 
       <div className="relative">
         <div className="absolute inset-0 animate-ping">
