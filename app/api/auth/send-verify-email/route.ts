@@ -11,7 +11,7 @@ const transporter = createTransport({
   },
 });
 
-console.log("transporter is ", transporter);
+console.log("transporter --send-verify-email is ", transporter);
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    console.log("email is ", email);
+    console.log("email --send-verify-email is ", email);
 
     const token = crypto.randomUUID();
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -34,11 +34,14 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log("createdEmailVerificationRow is ", createdEmailVerificationRow);
+    console.log(
+      "createdEmailVerificationRow --send-verify-email is ",
+      createdEmailVerificationRow
+    );
 
-    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/verify-email?token=${token}`;
+    const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verify-email?token=${token}`;
 
-    console.log("verificationUrl is ", verificationUrl);
+    console.log("verificationUrl --send-verify-email is ", verificationUrl);
 
     await transporter.sendMail({
       from: process.env.SMTP_FROM,

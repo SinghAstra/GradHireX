@@ -74,13 +74,13 @@ const Navbar = () => {
               <div className="flex">
                 <div className="flex items-center gap-x-4">
                   <Link
-                    href="/auth/sign-in"
+                    href="/sign-in"
                     className={buttonVariants({ size: "sm", variant: "ghost" })}
                   >
                     Sign In
                   </Link>
                   <Link
-                    href="/auth/sign-in"
+                    href="/sign-in"
                     className={buttonVariants({
                       size: "sm",
                       className: "bg-white",
