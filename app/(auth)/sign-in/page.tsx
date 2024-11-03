@@ -1,10 +1,15 @@
-// import { Signin } from '@/components/auth/signin';
-import FormContainer from "@/layouts/form-container";
+import { SignIn } from "@/components/auth/sign-in";
+import { FormContainer } from "@/layouts/form-container";
 
 const LoginPage = () => {
   return (
     <div className="my-20">
-      <FormContainer heading="heading" description="string" />
+      <FormContainer
+        heading={"Welcome back"}
+        description={"Please enter your details to sign in."}
+      >
+        <SignIn />
+      </FormContainer>
     </div>
   );
 };
