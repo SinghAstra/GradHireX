@@ -1,36 +1,26 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
-import { NextAuthOptions } from "next-auth";
+import bcrypt from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { prisma } from "./lib/db";
+import { ErrorHandler } from "./lib/error";
+import { SignInSchema } from "./lib/validators/auth.validator";
 
-const prisma = new PrismaClient();
-
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXT_AUTH_SECRET,
   session: {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/signin",
-    signUp: "/signup",
+    signIn: "/sign-in",
+    signUp: "/sign-up",
     error: "/auth/error",
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          // You can add additional fields here if needed
-        };
-      },
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     CredentialsProvider({
       name: "credentials",
@@ -39,38 +29,60 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid credentials");
+      authorize: async (credentials) => {
+        const result = SignInSchema.safeParse(credentials);
+
+        console.log("result --safeParse --auth.ts is ", result);
+
+        if (!result.success) {
+          throw new ErrorHandler(
+            "Input Validation failed",
+            "VALIDATION_ERROR",
+            {
+              fieldErrors: result.error.flatten().fieldErrors,
+            }
+          );
         }
 
-        // Find user in database
+        const { email, password } = result.data;
         const user = await prisma.user.findUnique({
           where: {
-            email: credentials.email,
+            email: email,
+            //   emailVerified: { not: null },
+            //   blockedByAdmin: null,
+          },
+          select: {
+            id: true,
+            name: true,
+            password: true,
+            role: true,
+            emailVerified: true,
+            //   onBoard: true,
           },
         });
 
-        // If user doesn't exist or password doesn't match
-        if (!user || !user.hashedPassword) {
-          throw new Error("User not found");
-        }
+        if (!user || !user.password)
+          throw new ErrorHandler(
+            "Email or password is incorrect",
+            "AUTHENTICATION_FAILED"
+          );
 
-        // Compare password
-        const passwordMatch = await bcrypt.compare(
-          credentials.password,
-          user.hashedPassword
-        );
+        const isPasswordMatched = await bcrypt.compare(password, user.password);
 
-        if (!passwordMatch) {
-          throw new Error("Invalid password");
+        if (!isPasswordMatched) {
+          throw new ErrorHandler(
+            "Email or password is incorrect",
+            "AUTHENTICATION_FAILED"
+          );
         }
 
         return {
           id: user.id,
           name: user.name,
-          email: user.email,
-          image: user.image,
+          email: email,
+          isVerified: !!user.emailVerified,
+          role: user.role,
+          // onBoard: user.onBoard,
         };
       },
     }),
@@ -94,26 +106,26 @@ export const authOptions: NextAuthOptions = {
 };
 
 // Type declarations to extend next-auth types
-declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      image?: string;
-    };
-  }
+// declare module "next-auth" {
+//   interface Session {
+//     user: {
+//       id: string;
+//       name: string;
+//       email: string;
+//       image?: string;
+//     };
+//   }
 
-  interface User {
-    id: string;
-    name: string;
-    email: string;
-    image?: string;
-  }
-}
+//   interface User {
+//     id: string;
+//     name: string;
+//     email: string;
+//     image?: string;
+//   }
+// }
 
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-  }
-}
+// declare module "next-auth/jwt" {
+//   interface JWT {
+//     id: string;
+//   }
+// }

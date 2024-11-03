@@ -9,171 +9,52 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String
+  id   String @id @default(cuid())
+  name String
+
+  password   String?
+  avatar     String?
+  isVerified Boolean @default(false)
+  role       Role    @default(USER)
+  // jobs       Job[]
+
   email         String    @unique
-  password      String    
-  emailVerified Boolean   @default(false)
-  image         String?
-  role          UserRole  @default(STUDENT)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  student       Student?
-  university    University?
-  company       Company?
+  emailVerified DateTime?
+
+  // skills     String[]
+  // experience Experience[]
+  // project    Project[]
+  // resume     String?
+
+  // oauthProvider  OauthProvider? 
+  // oauthId        String?
+  // createdAt      DateTime       @default(now())
+  // blockedByAdmin DateTime?
+  // onBoard        Boolean        @default(false)
+  // bookmark       Bookmark[]
+
+  // githubLink     String?
+  // portfolioLink  String?
+  // linkedinLink   String?
+  // twitterLink    String?
+  // discordLink    String?
+
+  // contactEmail   String?
+
+  // aboutMe        String?
+
+  // education      Education[]
+
+  // resumeUpdateDate DateTime?
+  // companyId      String?        @unique
+  // company        Company?       @relation(fields: [companyId], references: [id])
 }
 
-model Session {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expiresAt DateTime
-  createdAt DateTime @default(now())
 
-  @@index([userId])
-}
 
-model EmailVerification {
-  id        String   @id @default(cuid())
-  email     String
-  token     String   @unique
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  @@index([email])
-  @@index([token])
-}
-
-model PasswordReset {
-  id        String   @id @default(cuid())
-  email     String
-  token     String   @unique
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-
-  @@index([email])
-  @@index([token])
-}
-
-enum UserRole {
-  STUDENT
+enum Role {
+  USER
   UNIVERSITY
   COMPANY
   GOVERNMENT
-}
-
-model University {
-  id          String      @id @default(cuid())
-  userId      String      @unique
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name        String
-  location    String
-  website     String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  students    Student[]
-  placements  Placement[]
-
-  @@index([userId])
-}
-
-model Student {
-  id             String           @id @default(cuid())
-  userId         String           @unique
-  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  universityId   String
-  university     University       @relation(fields: [universityId], references: [id])
-  studentId      String
-  course         String
-  graduationYear Int
-  skills         String[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt 
-  placements     Placement[]
-  applications   JobApplication[]
-
-  @@index([userId])
-  @@index([universityId])
-}
-
-model Company {
-  id          String       @id @default(cuid())
-  userId      String       @unique
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name        String
-  industry    String
-  website     String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  jobListings JobListing[]
-  placements  Placement[]
-
-  @@index([userId])
-}
-
-model JobListing {
-  id             String           @id @default(cuid())
-  title          String
-  description    String
-  companyId      String
-  company        Company          @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  skillsRequired String[]
-  salary         Float?
-  location       String?
-  type           String?
-  createdAt      DateTime         @default(now())
-  updatedAt   DateTime     @updatedAt
-  applications   JobApplication[]
-
-  @@index([companyId])
-}
-
-model JobApplication {
-  id           String            @id @default(cuid())
-  studentId    String
-  student      Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  jobListingId String
-  jobListing   JobListing        @relation(fields: [jobListingId], references: [id], onDelete: Cascade)
-  status       ApplicationStatus @default(PENDING)
-  appliedAt    DateTime         @default(now())
-  updatedAt   DateTime     @updatedAt
-
-  @@index([studentId])
-  @@index([jobListingId])
-}
-
-model Placement {
-  id           String     @id @default(cuid())
-  studentId    String
-  student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  companyId    String
-  company      Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  universityId String
-  university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
-  jobTitle     String
-  salary       Float
-  startDate    DateTime
-  endDate      DateTime?
-  status       PlacementStatus @default(ONGOING)
-  createdAt    DateTime   @default(now())
-  updatedAt   DateTime     @updatedAt
-
-  @@index([studentId])
-  @@index([companyId])
-  @@index([universityId])
-}
-
-enum ApplicationStatus {
-  PENDING
-  INTERVIEWING
-  REJECTED
-  ACCEPTED
-}
-
-enum PlacementStatus {
-  ONGOING
-  COMPLETED
-  TERMINATED
 }
