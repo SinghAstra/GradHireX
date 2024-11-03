@@ -101,7 +101,7 @@ export function SignIn() {
           Don&apos;t have an account yet?{" "}
           <Link
             href={APP_PATHS.SIGN_UP}
-            className="text-muted-foreground font-semibold hover:underline"
+            className="text-primary font-semibold hover:underline"
           >
             Sign Up
           </Link>

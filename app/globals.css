@@ -15,7 +15,7 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -27,12 +27,13 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 224.3 76.3% 48%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --radius: 1rem;
   }
 }
 
@@ -43,4 +44,33 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+Copyinput:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px hsl(222.2 84% 4.9%) inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+  box-shadow: 0 0 0 30px hsl(222.2 84% 4.9%) inset !important;
+  border-radius: 14px !important;
+}
+
+input:-webkit-autofill:not(:focus) {
+  -webkit-box-shadow: 0 0 0 1000px hsl(222.2 84% 4.9%) inset !important;
+  -webkit-text-fill-color: white !important;
+}
+
+/* Ensure focus ring stays visible during autofill */
+input:focus:-webkit-autofill {
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Additional style to maintain the ring appearance */
+input:focus {
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
+  caret-color: white !important;
 }
