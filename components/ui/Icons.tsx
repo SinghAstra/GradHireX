@@ -16,6 +16,7 @@ import {
   Sparkles,
   Sun,
   User,
+  Zap,
   type Icon as LucideIconType,
 } from "lucide-react";
 import {
@@ -29,6 +30,7 @@ import {
 import { RiTwitterXFill } from "react-icons/ri";
 
 const Icons = {
+  zap: Zap,
   sparkle: Sparkles,
   rightarrow: ArrowRight,
   menu: Menu,

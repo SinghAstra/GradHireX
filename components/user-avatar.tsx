@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -73,17 +73,16 @@ export function UserAvatar() {
         </>
       ) : (
         <div>
-          <Button
-            className="rounded-lg"
-            size="sm"
-            variant="default"
-            onClick={() => {
-              router.push("/sign-in");
-            }}
-            aria-label="login"
+          <Link
+            href="/sign-in"
+            className={buttonVariants({
+              size: "sm",
+              className: "bg-white",
+            })}
           >
-            Login
-          </Button>
+            Get Started
+            <Icons.zap className="size-4 ml-0.5 text-orange-500 fill-orange-500" />
+          </Link>
         </div>
       )}
     </>
