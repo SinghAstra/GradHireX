@@ -1,18 +1,21 @@
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {
-  AUTH_TOKEN_EXPIRATION_TIME,
-  PASSWORD_HASH_SALT_ROUNDS,
-} from "./lib/constant/auth.constant";
+import GoogleProvider from "next-auth/providers/google";
+import { AUTH_TOKEN_EXPIRATION_TIME } from "./lib/constant/auth.constant";
 import { prisma } from "./lib/db";
 import { ErrorHandler } from "./lib/error";
-import { SignInSchema, SignUpSchema } from "./lib/validators/auth.validator";
+import { SignInSchema } from "./lib/validators/auth.validator";
 
 export const authOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
     CredentialsProvider({
-      name: "sign-in",
+      name: "signin",
+      id: "signin",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "email" },
         password: { label: "password", type: "password" },
@@ -29,15 +32,21 @@ export const authOptions = {
             }
           );
         }
+
         const { email, password } = result.data;
         const user = await prisma.user.findUnique({
-          where: { email: email },
+          where: {
+            email: email,
+            emailVerified: { not: null },
+            blockedByAdmin: null,
+          },
           select: {
             id: true,
             name: true,
             password: true,
-            isVerified: true,
             role: true,
+            emailVerified: true,
+            onBoard: true,
           },
         });
 
@@ -48,83 +57,58 @@ export const authOptions = {
           );
 
         const isPasswordMatched = await bcrypt.compare(password, user.password);
+
         if (!isPasswordMatched) {
           throw new ErrorHandler(
             "Email or password is incorrect",
             "AUTHENTICATION_FAILED"
           );
         }
+
         return {
           id: user.id,
           name: user.name,
           email: email,
-          isVerified: user.isVerified,
+          isVerified: !!user.emailVerified,
           role: user.role,
-        };
-      },
-    }),
-    CredentialsProvider({
-      name: "sign-up",
-      id: "sign-up",
-      credentials: {
-        name: { label: "Name", type: "text" },
-        email: { label: "Email", type: "email", placeholder: "email" },
-        password: { label: "password", type: "password" },
-      },
-      async authorize(credentials): Promise<any> {
-        const result = SignUpSchema.safeParse(credentials);
-
-        if (!result.success) {
-          throw new ErrorHandler(
-            "Input Validation failed",
-            "VALIDATION_ERROR",
-            {
-              fieldErrors: result.error.flatten().fieldErrors,
-            }
-          );
-        }
-        const { email, password, name } = result.data;
-        const userExist = await prisma.user.findUnique({
-          where: { email: email },
-          select: { id: true, name: true, password: true },
-        });
-
-        if (userExist)
-          throw new ErrorHandler(
-            "User with this email already exist",
-            "CONFLICT"
-          );
-
-        const hashedPassword = await bcrypt.hash(
-          password,
-          PASSWORD_HASH_SALT_ROUNDS
-        );
-        const user = await prisma.user.create({
-          data: {
-            email: email,
-            password: hashedPassword,
-            name: name,
-          },
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            isVerified: true,
-            role: true,
-          },
-        });
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          isVerified: user.isVerified,
-          role: user.role,
+          onBoard: user.onBoard,
         };
       },
     }),
   ],
   callbacks: {
-    jwt({ token, user, trigger, session }) {
+    async signIn(signInProps) {
+      let { user, account, profile } = signInProps;
+
+      if (account?.provider === "google" && profile) {
+        const { id: oauthId, email, name, image: avatar } = user;
+
+        let existingUser = await prisma.user.findFirst({
+          where: {
+            OR: [{ email: email! }, { oauthId: oauthId! }],
+          },
+        });
+        if (existingUser?.blockedByAdmin) return false;
+        if (!existingUser) {
+          existingUser = await prisma.user.create({
+            data: {
+              oauthId,
+              oauthProvider: "GOOGLE",
+              email: email as string,
+              name: name as string,
+              avatar,
+              isVerified: true,
+              emailVerified: new Date(),
+            },
+          });
+        }
+      }
+
+      return true;
+    },
+
+    async jwt(jwtProps) {
+      const { token, user, trigger, session } = jwtProps;
       if (trigger === "update") {
         return {
           ...token,
@@ -132,23 +116,37 @@ export const authOptions = {
         };
       }
       if (user) {
-        token.id = user.id;
+        const loggedInUser = await prisma.user.findFirst({
+          where: {
+            OR: [{ oauthId: { equals: user.id } }, { id: { equals: user.id } }],
+            blockedByAdmin: null,
+            emailVerified: { not: null },
+          },
+        });
+        if (!loggedInUser) return null;
+        token.id = loggedInUser.id;
         token.name = user.name;
         token.isVerified = user.isVerified;
-        token.role = user.role;
+        token.role = loggedInUser.role ? loggedInUser.role : user.role;
+        token.image = loggedInUser ? loggedInUser.avatar : user.image;
+        token.onBoard = loggedInUser.onBoard;
       }
       return token;
     },
+
     session({ session, token }) {
       if (token && session && session.user) {
         session.user.id = token.id;
         session.user.isVerified = token.isVerified;
         session.user.role = token.role;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.image = token.image as string;
+        session.user.onBoard = token.onBoard;
       }
       return session;
     },
   },
-  secret: process.env.NEXT_AUTH_SECRET,
   session: {
     strategy: "jwt",
     maxAge: AUTH_TOKEN_EXPIRATION_TIME,
@@ -156,4 +154,8 @@ export const authOptions = {
   jwt: {
     maxAge: AUTH_TOKEN_EXPIRATION_TIME,
   },
+  pages: {
+    signIn: "/sign-in",
+  },
+  secret: process.env.NEXT_AUTH_SECRET,
 } satisfies NextAuthOptions;

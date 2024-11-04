@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 
 export const DemarcationLine = () => (
   <div className="flex items-center my-4">
@@ -13,6 +14,7 @@ export const GoogleOauthButton = ({ label }: { label: string }) => (
     onClick={async (e) => {
       e.preventDefault();
       e.stopPropagation();
+      signIn("google");
     }}
     className="w-full h-10 bg-white border border-gray-300 text-gray-700 font-medium hover:bg-gray-50"
     aria-label="google-oauth-button"
