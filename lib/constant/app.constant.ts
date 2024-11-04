@@ -1,5 +1,5 @@
-// import APP_PATHS from "@/config/path.config";
-// import { PackageSearch } from "lucide-react";
+import APP_PATHS from "@/config/path.config";
+import { PackageSearch } from "lucide-react";
 // import adobe from "../../../public/adobe.svg";
 // import atlassian from "../../../public/atlassian.svg";
 // import coinbase from "../../../public/coinbase.svg";
@@ -7,32 +7,32 @@
 // import google from "../../../public/google.svg";
 // import medium from "../../../public/medium.svg";
 
-// export const nonUserNavbar = [
-//   { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
-//   { id: 2, label: "Contact us", path: APP_PATHS.CONTACT_US },
-// ];
+export const nonUserNavbar = [
+  { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
+  { id: 2, label: "Contact us", path: APP_PATHS.CONTACT_US },
+];
 
-// export const userNavbar = [
-//   { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
-//   { id: 2, label: "Contact us", path: APP_PATHS.CONTACT_US },
-// ];
-// export const adminNavbar = [
-//   { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
-//   {
-//     id: 2,
-//     label: "Manage Jobs",
-//     path: APP_PATHS.MANAGE_JOBS,
-//     roleRequired: ["ADMIN", "HR"],
-//     icon: PackageSearch,
-//   },
-//   {
-//     id: 3,
-//     label: "Post a job",
-//     path: APP_PATHS.POST_JOB,
-//     roleRequired: ["ADMIN", "HR"],
-//     icon: PackageSearch,
-//   },
-// ];
+export const userNavbar = [
+  { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
+  { id: 2, label: "Contact us", path: APP_PATHS.CONTACT_US },
+];
+export const adminNavbar = [
+  { id: 1, label: "Explore jobs", path: APP_PATHS.JOBS },
+  {
+    id: 2,
+    label: "Manage Jobs",
+    path: APP_PATHS.MANAGE_JOBS,
+    roleRequired: ["ADMIN", "HR"],
+    icon: PackageSearch,
+  },
+  {
+    id: 3,
+    label: "Post a job",
+    path: APP_PATHS.POST_JOB,
+    roleRequired: ["ADMIN", "HR"],
+    icon: PackageSearch,
+  },
+];
 // export const userProfileNavbar = [
 //   { id: 1, label: "My Account", path: APP_PATHS.PROFILE },
 //   { id: 2, label: "Edit Profile", path: APP_PATHS.EDIT_PROFILE },

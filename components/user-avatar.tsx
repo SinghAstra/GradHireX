@@ -1,60 +1,91 @@
 "use client";
-import { LogOut, User } from "lucide-react";
+import { getNameInitials } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import Icons from "./ui/Icons";
+import { Skeleton } from "./ui/skeleton";
 
 export function UserAvatar() {
   const session = useSession();
-  const user = session.data?.user;
-  const isAuthenticated = session.status === "authenticated" ? true : false;
-  const isAuthenticating = session.status === "loading" ? true : false;
-
-  if (isAuthenticating) {
-    return (
-      <div className="rounded-full w-8 h-8 animate-pulse bg-slate-500"></div>
-    );
-  }
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="cursor-pointer">
-        {user?.name && user?.image ? (
-          <Image
-            src={user?.image}
-            alt={user?.name}
-            width={36}
-            height={36}
-            className="rounded-full hidden md:block bg-primary p-1"
-          />
-        ) : (
-          <span className="w-8 h-8 rounded-full flex items-center justify-center bg-primary">
-            {user?.name?.charAt(0)}
-          </span>
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 cursor-pointer m-2">
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => signOut()}>
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {session.status === "loading" ? (
+        <Skeleton className="h-8 w-8 rounded-full" />
+      ) : session.status === "authenticated" ? (
+        <>
+          <DropdownMenu open={open} onOpenChange={setOpen}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="relative h-8 w-8 rounded-full"
+                aria-label="avatar"
+              >
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    src={
+                      session.data.user.image
+                        ? session.data.user.image
+                        : "hello"
+                    }
+                  />
+
+                  <AvatarFallback>
+                    {getNameInitials(session.data.user.name)}
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuItem>
+                <Icons.profile className="mr-2 h-4 w-4" />
+                <Link
+                  className="w-full"
+                  href={"/profile/" + session.data.user.id}
+                >
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  signOut();
+                }}
+              >
+                <Icons.logout className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      ) : (
+        <div>
+          <Button
+            className="rounded-lg"
+            size="sm"
+            variant="default"
+            onClick={() => {
+              router.push("/sign-in");
+            }}
+            aria-label="login"
+          >
+            Login
+          </Button>
+        </div>
+      )}
+    </>
   );
 }

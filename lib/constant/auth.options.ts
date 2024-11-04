@@ -2,10 +2,10 @@ import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { AUTH_TOKEN_EXPIRATION_TIME } from "./lib/constant/auth.constant";
-import { prisma } from "./lib/db";
-import { ErrorHandler } from "./lib/error";
-import { SignInSchema } from "./lib/validators/auth.validator";
+import { prisma } from "../db";
+import { ErrorHandler } from "../error";
+import { SignInSchema } from "../validators/auth.validator";
+import { AUTH_TOKEN_EXPIRATION_TIME } from "./auth.constant";
 
 export const authOptions = {
   providers: [
