@@ -17,7 +17,7 @@ import { Check, ChevronRight } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import { AddExperience } from "./add-experience-form";
+import AddExperienceForm from "./add-experience-form";
 import { AddProject } from "./add-project-form";
 import { AddResume } from "./add-resume-form";
 import { AddSkills } from "./add-skills-form";
@@ -27,7 +27,7 @@ const forms = [
     label: "Add Experience",
     description:
       "Adding your experience helps showcase your skills, build credibility, and increase your chances of standing out to potential employers or collaborators.",
-    component: AddExperience,
+    component: AddExperienceForm,
   },
   {
     label: "Add Skills",
@@ -49,7 +49,7 @@ const forms = [
   },
 ];
 
-export default function MultiStepForm() {
+const MultiStepForm = () => {
   const [step, setStep] = React.useState(0);
   const router = useRouter();
   const { toast } = useToast();
@@ -131,19 +131,11 @@ export default function MultiStepForm() {
             </div>
           ))}
         </div>
-        <motion.div
-          key={step}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <h3 className="text-lg font-semibold mb-2">{forms[step].label}</h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">
-            {forms[step].description}
-          </p>
-          <CurrentForm />
-        </motion.div>
+        <h3 className="text-lg font-semibold mb-2">{forms[step].label}</h3>
+        <p className="text-gray-600 dark:text-gray-300 mb-4">
+          {forms[step].description}
+        </p>
+        <CurrentForm />
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button onClick={handleBack} disabled={step === 0} variant="outline">
@@ -159,4 +151,6 @@ export default function MultiStepForm() {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default MultiStepForm;

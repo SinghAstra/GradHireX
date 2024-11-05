@@ -1,7 +1,7 @@
 import { EmploymentType, WorkMode } from "@prisma/client";
 import { z } from "zod";
 
-export const experienceSchema = z.object({
+export const ExperienceSchema = z.object({
   companyName: z.string().min(1, { message: "Company Name is required" }),
   designation: z.string().min(1, { message: "Designation is required" }),
   EmploymentType: z.nativeEnum(EmploymentType, {
@@ -24,3 +24,5 @@ export const experienceSchema = z.object({
     .min(50, { message: "Description must be at least 50 characters" })
     .max(255, { message: "Description cannot exceed 255 characters" }),
 });
+
+export type ExperienceSchemaType = z.infer<typeof ExperienceSchema>;
