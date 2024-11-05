@@ -23,7 +23,7 @@ model User {
   emailVerified DateTime?
 
   skills     String[]
-  // experience Experience[]
+  experience Experience[]
   // project    Project[]
   resume     String?
 
@@ -114,20 +114,20 @@ model User {
 //   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 // }
 
-// model Experience {
-//   id                Int             @id @default(autoincrement())
-//   companyName       String
-//   designation       String
-//   EmploymentType    EmployementType
-//   address           String
-//   workMode          WorkMode
-//   currentWorkStatus Boolean
-//   startDate         DateTime
-//   endDate           DateTime?
-//   description       String
-//   userId            String
-//   user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-// }
+model Experience {
+  id                Int             @id @default(autoincrement())
+  companyName       String
+  designation       String
+  EmploymentType    EmploymentType
+  address           String
+  workMode          WorkMode
+  currentWorkStatus Boolean
+  startDate         DateTime
+  endDate           DateTime?
+  description       String
+  userId            String
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
 // model Education {
 //   id                Int             @id @default(autoincrement())
@@ -189,7 +189,7 @@ enum Role {
   HR
 }
 
-enum EmployementType {
+enum EmploymentType {
   Full_time
   Part_time
   Internship
