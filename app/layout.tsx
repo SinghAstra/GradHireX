@@ -62,7 +62,6 @@ export default function RootLayout({
       >
         <Providers>
           <NextTopLoader color="hsl(var(--primary))" showSpinner={false} />
-          <Header />
           {children}
           <Toaster />
         </Providers>

@@ -51,9 +51,9 @@ const forms = [
 
 const MultiStepForm = () => {
   const [step, setStep] = React.useState(0);
-  const router = useRouter();
+  // const router = useRouter();
   const { toast } = useToast();
-  const { data: session, update } = useSession();
+  // const { data: session, update } = useSession();
 
   const handleNext = () => {
     if (step < forms.length - 1) {
@@ -104,14 +104,8 @@ const MultiStepForm = () => {
   const CurrentForm = forms[step].component;
 
   return (
-    <Card className="w-full max-w-3xl mx-auto">
-      <CardHeader>
-        <CardTitle>Complete Your Profile</CardTitle>
-        <CardDescription>
-          Fill out the following steps to set up your profile
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <Card className="w-full max-w-4xl mx-auto m-4">
+      <CardContent className="p-6 sm:p-10">
         <div className="flex justify-between mb-8">
           {forms.map((form, index) => (
             <div key={form.label} className="flex flex-col items-center">
