@@ -1,5 +1,7 @@
 const APP_PATHS = {
+  HOME: "/",
   POST_JOB: "/create",
+  CREATE_PROFILE: "/create-profile",
   MANAGE_JOBS: "/manage/jobs",
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
