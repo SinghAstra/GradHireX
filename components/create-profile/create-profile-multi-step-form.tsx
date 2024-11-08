@@ -31,34 +31,43 @@ const VerticalLinearStepper = () => {
   ];
   const [activeStep, setActiveStep] = useState(0);
   const [lineProgress, setLineProgress] = useState(Array(forms.length).fill(0));
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (isTransitioning) return;
+    await updateLineProgress(activeStep);
     setActiveStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
+    if (isTransitioning) return;
+    setLineProgress((prev) => {
+      const newProgress = [...prev];
+      newProgress[activeStep - 1] = 0;
+      return newProgress;
+    });
     setActiveStep((prev) => prev - 1);
   };
 
-  useEffect(() => {
-    if (activeStep > 0) {
-      const newProgress = [...lineProgress];
-      newProgress[activeStep - 1] = 0;
-      setLineProgress(newProgress);
-
+  const updateLineProgress = (step: number): Promise<void> => {
+    return new Promise((resolve) => {
+      setIsTransitioning(true);
       const timer = setInterval(() => {
         setLineProgress((prev) => {
           const newProgress = [...prev];
-          if (newProgress[activeStep - 1] < 100) {
-            newProgress[activeStep - 1] += 2;
+          if (newProgress[step] < 100) {
+            newProgress[step] = Math.min(newProgress[step] + 2, 100);
+            return newProgress;
+          } else {
+            clearInterval(timer);
+            setIsTransitioning(false);
+            resolve();
+            return newProgress;
           }
-          return newProgress;
         });
       }, 20);
-
-      return () => clearInterval(timer);
-    }
-  }, [activeStep]);
+    });
+  };
 
   return (
     <div className="h-screen w-full flex overflow-hidden">
@@ -101,7 +110,7 @@ const VerticalLinearStepper = () => {
               {forms.map((step, index) => (
                 <div key={step.label} className="relative">
                   {index < forms.length - 1 && (
-                    <div className="absolute left-6 top-16 w-0.5 h-24">
+                    <div className="absolute left-6 top-[60px] w-0.5 h-8">
                       <div className="h-full bg-gray-600" />
                       <div
                         className="absolute top-0 left-0 w-full bg-primary transition-all duration-500"
