@@ -82,6 +82,7 @@ export const authOptions = {
 
       if (account?.provider === "google" && profile) {
         const { id: oauthId, email, name, image: avatar } = user;
+        const cleanedAvatar = avatar?.split("=")[0];
 
         let existingUser = await prisma.user.findFirst({
           where: {
@@ -96,7 +97,7 @@ export const authOptions = {
               oauthProvider: "GOOGLE",
               email: email as string,
               name: name as string,
-              avatar,
+              avatar: cleanedAvatar,
               isVerified: true,
               emailVerified: new Date(),
             },
@@ -124,6 +125,7 @@ export const authOptions = {
           },
         });
         if (!loggedInUser) return null;
+
         token.id = loggedInUser.id;
         token.name = user.name;
         token.isVerified = user.isVerified;

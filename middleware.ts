@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
   if (
     pathname !== APP_PATHS.CREATE_PROFILE &&
     token?.role === USER_ROLE &&
-    !token.onBoard
+    token.onBoard
   ) {
     return NextResponse.redirect(new URL(APP_PATHS.CREATE_PROFILE, req.url));
   }

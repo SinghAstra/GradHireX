@@ -1,7 +1,16 @@
 "use client";
 import { NavItem } from "@/components/NavItem";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import Icons from "@/components/ui/Icons";
 import { Skeleton } from "@/components/ui/skeleton";
-import { UserAvatar } from "@/components/user-avatar";
 import { ADMIN_ROLE, HR_ROLE } from "@/config/app.config";
 import { siteConfig } from "@/config/site";
 // import { MobileNav } from "@/layouts/mobile-nav";
@@ -11,9 +20,11 @@ import {
   nonUserNavbar,
   userNavbar,
 } from "@/lib/constant/app.constant";
-import { useSession } from "next-auth/react";
+import { getNameInitials } from "@/lib/utils";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export const CompanyLogo = () => {
   return (
@@ -35,6 +46,7 @@ export const CompanyLogo = () => {
 
 const Header = () => {
   const session = useSession();
+  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -63,7 +75,72 @@ const Header = () => {
                   ))}
             </ul>
             <div className="hidden md:block">
-              <UserAvatar />
+              {session.status === "loading" ? (
+                <Skeleton className="h-8 w-8 rounded-full" />
+              ) : session.status === "authenticated" ? (
+                <>
+                  <DropdownMenu open={open} onOpenChange={setOpen}>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="relative h-8 w-8 rounded-full"
+                        aria-label="avatar"
+                      >
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage
+                            src={
+                              session.data.user.image
+                                ? session.data.user.image
+                                : "hello"
+                            }
+                          />
+
+                          <AvatarFallback>
+                            {getNameInitials(session.data.user.name)}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className="w-56"
+                      align="end"
+                      forceMount
+                    >
+                      <DropdownMenuItem>
+                        <Icons.profile className="mr-2 h-4 w-4" />
+                        <Link
+                          className="w-full"
+                          href={"/profile/" + session.data.user.id}
+                        >
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={() => {
+                          signOut();
+                        }}
+                      >
+                        <Icons.logout className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <div>
+                  <Link
+                    href="/sign-in"
+                    className={buttonVariants({
+                      size: "sm",
+                      className: "bg-white",
+                    })}
+                  >
+                    Get Started
+                    <Icons.zap className="size-4 ml-0.5 text-orange-500 fill-orange-500" />
+                  </Link>
+                </div>
+              )}
             </div>
 
             <div className="md:hidden flex justify-center ml-3">
