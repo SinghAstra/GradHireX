@@ -9,7 +9,7 @@ export default async function Home() {
   if (!session || session.user.role !== USER_ROLE) redirect("/");
   if (session.user.onBoard === true) redirect("/jobs");
   return (
-    <div className="flex flex-col justify-center place-items-center py-4">
+    <div className="flex flex-col justify-center place-items-center">
       <MultiStepForm />
     </div>
   );

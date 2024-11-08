@@ -1,150 +1,227 @@
 "use client";
 
-// import { validateUserBoarding } from "@/actions/user.profile.actions";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { Check, ChevronRight } from "lucide-react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import * as React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { siteConfig } from "@/config/site";
+import { Check, ChevronRight, HelpCircle } from "lucide-react";
+import Image from "next/image";
+import React, { useState } from "react";
 import AddExperienceForm from "./add-experience-form";
 import { AddProject } from "./add-project-form";
 import { AddResume } from "./add-resume-form";
 import { AddSkills } from "./add-skills-form";
 
-const forms = [
-  {
-    label: "Add Experience",
-    description:
-      "Adding your experience helps showcase your skills, build credibility, and increase your chances of standing out to potential employers or collaborators.",
-    component: AddExperienceForm,
-  },
-  {
-    label: "Add Skills",
-    description:
-      "Highlighting your skills is essential for demonstrating your proficiency in key areas.",
-    component: AddSkills,
-  },
-  {
-    label: "Add Projects",
-    description:
-      "Adding projects allows you to showcase practical examples of your work.",
-    component: AddProject,
-  },
-  {
-    label: "Add Resume",
-    description:
-      "Uploading your resume provides a comprehensive summary of your career.",
-    component: AddResume,
-  },
-];
+const VerticalLinearStepper = () => {
+  const [activeStep, setActiveStep] = useState(0);
 
-const MultiStepForm = () => {
-  const [step, setStep] = React.useState(0);
-  // const router = useRouter();
-  const { toast } = useToast();
-  // const { data: session, update } = useSession();
+  const forms = [
+    {
+      label: "Basic Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+    },
+    {
+      label: "Company Details",
+      description: "Enter your company information",
+      component: <AddSkills />,
+    },
+    {
+      label: "Subscription Plan",
+      description: "Choose your subscription plan",
+      component: <AddResume />,
+    },
+    {
+      label: "Payment Details",
+      description: "Complete your payment information",
+      component: <AddProject />,
+    },
+    {
+      label: "Basic Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+    },
+    {
+      label: "Company Details",
+      description: "Enter your company information",
+      component: <AddSkills />,
+    },
+    {
+      label: "Subscription Plan",
+      description: "Choose your subscription plan",
+      component: <AddResume />,
+    },
+    {
+      label: "Payment Details",
+      description: "Complete your payment information",
+      component: <AddProject />,
+    },
+    {
+      label: "Basic Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+    },
+    {
+      label: "Company Details",
+      description: "Enter your company information",
+      component: <AddSkills />,
+    },
+    {
+      label: "Subscription Plan",
+      description: "Choose your subscription plan",
+      component: <AddResume />,
+    },
+    {
+      label: "Payment Details",
+      description: "Complete your payment information",
+      component: <AddProject />,
+    },
+    {
+      label: "Basic Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+    },
+    {
+      label: "Company Details",
+      description: "Enter your company information",
+      component: <AddSkills />,
+    },
+    {
+      label: "Subscription Plan",
+      description: "Choose your subscription plan",
+      component: <AddResume />,
+    },
+    {
+      label: "Payment Details",
+      description: "Complete your payment information",
+      component: <AddProject />,
+    },
+  ];
 
   const handleNext = () => {
-    if (step < forms.length - 1) {
-      setStep((prevStep) => prevStep + 1);
-    }
+    setActiveStep((prev) => prev + 1);
   };
 
   const handleBack = () => {
-    if (step > 0) {
-      setStep((prevStep) => prevStep - 1);
-    }
+    setActiveStep((prev) => prev - 1);
   };
-
-  const handleFinish = async () => {
-    try {
-      // const response = await validateUserBoarding();
-      // if (!response.status) {
-      //   return toast({
-      //     title: response.message || "Error",
-      //     variant: "destructive",
-      //   });
-      // }
-      // toast({
-      //   title: response.message,
-      //   variant: "success",
-      // });
-      // await update({
-      //   ...session,
-      //   user: {
-      //     onBoard: true,
-      //   },
-      // });
-      // router.refresh();
-      toast({
-        title: "Something went wrong!! Please Try Again Later.",
-        description: "Internal server error",
-        variant: "destructive",
-      });
-    } catch (_error) {
-      toast({
-        title: "Something went wrong!! Please Try Again Later.",
-        description: "Internal server error",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const CurrentForm = forms[step].component;
 
   return (
-    <Card className="w-full max-w-4xl mx-auto m-4">
-      <CardContent className="p-6 sm:p-10">
-        <div className="flex justify-between mb-8">
-          {forms.map((form, index) => (
-            <div key={form.label} className="flex flex-col items-center">
-              <div
-                className={cn(
-                  "w-10 h-10 rounded-full flex items-center justify-center text-white font-bold",
-                  step > index
-                    ? "bg-green-500"
-                    : step === index
-                    ? "bg-blue-500"
-                    : "bg-gray-300"
-                )}
-              >
-                {step > index ? <Check className="w-6 h-6" /> : index + 1}
+    <div className="h-screen w-full flex overflow-hidden">
+      {/* Left side with stepper and background image */}
+      <div className="w-1/3 relative">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(/assets/images/bg-form.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* Overlay to ensure text is readable */}
+          <div className="absolute inset-0 bg-black/80" />
+
+          {/* Stepper content */}
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Logo - Fixed at top, full width */}
+            <div className="sticky top-0 w-full bg-black/20 backdrop-blur-lg border-b border-white/10">
+              <div className="flex items-center gap-2 p-4 w-full">
+                <Image
+                  src={"/assets/images/favicon.ico"}
+                  alt={`${siteConfig.name} logo`}
+                  width={30}
+                  height={30}
+                  className="rounded"
+                  priority
+                />
+                <h3 className="text-xl font-bold text-white">
+                  <span className="text-primary">{siteConfig.name}</span>
+                </h3>
               </div>
-              <span className="text-sm mt-2">{form.label}</span>
             </div>
-          ))}
+
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-y-auto">
+              {/* Steps */}
+              <div className="space-y-6 p-4">
+                {forms.map((step, index) => (
+                  <div key={step.label} className="relative">
+                    {/* Connector Line */}
+                    {index < forms.length - 1 && (
+                      <div className="absolute left-5 top-8 w-0.5 h-16 bg-gray-300" />
+                    )}
+
+                    {/* Step Content */}
+                    <div className="flex items-center gap-4">
+                      {/* Status Circle */}
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          index < activeStep
+                            ? "bg-green-500"
+                            : index === activeStep
+                            ? "bg-blue-500"
+                            : "bg-gray-300"
+                        } text-white`}
+                      >
+                        {index < activeStep ? (
+                          <Check className="w-5 h-5" />
+                        ) : (
+                          <span>{index + 1}</span>
+                        )}
+                      </div>
+
+                      {/* Step Label */}
+                      <div className="text-white">
+                        <h3 className="font-medium">{step.label}</h3>
+                        <p className="text-sm text-gray-300">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Help Link */}
+              <div className="p-4">
+                <Button variant="ghost" className="text-white">
+                  <HelpCircle className="w-5 h-5 mr-2" />
+                  Having Problems?
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-        <h3 className="text-lg font-semibold mb-2">{forms[step].label}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">
-          {forms[step].description}
-        </p>
-        <CurrentForm />
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button onClick={handleBack} disabled={step === 0} variant="outline">
-          Back
-        </Button>
-        {step < forms.length - 1 ? (
-          <Button onClick={handleNext}>
-            Next <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
-        ) : (
-          <Button onClick={handleFinish}>Finish</Button>
-        )}
-      </CardFooter>
-    </Card>
+      </div>
+
+      {/* Right side with form */}
+      <div className="w-2/3">
+        <Card className="h-full">
+          <CardContent className="p-6">
+            {/* Active Form */}
+            {forms[activeStep].component}
+
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8">
+              <Button
+                onClick={handleBack}
+                disabled={activeStep === 0}
+                variant="outline"
+              >
+                Back
+              </Button>
+              <Button
+                onClick={handleNext}
+                disabled={activeStep === forms.length - 1}
+              >
+                Next
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 
-export default MultiStepForm;
+export default VerticalLinearStepper;

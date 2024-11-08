@@ -1,4 +1,3 @@
-import Header from "@/layouts/header";
 import { authOptions } from "@/lib/constant/auth.options";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -13,10 +12,5 @@ export default async function AuthLayout({
 
   if (auth) redirect(`/`);
 
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

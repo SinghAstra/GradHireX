@@ -1,7 +1,7 @@
 import { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
-  name: "GradHireX",
+  name: "SinghAstra",
   description:
     "A centralized platform interlinking campus placement data nationwide to empower policy makers and corporates with insights and access for tackling unemployability.",
   url: "https://gradhirex.vercel.app",
