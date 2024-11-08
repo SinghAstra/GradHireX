@@ -1,46 +1,86 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { siteConfig } from "@/config/site";
-import { Check, ChevronRight, HelpCircle } from "lucide-react";
+import {
+  Building2,
+  Check,
+  ChevronRight,
+  CreditCard,
+  UserCircle,
+} from "lucide-react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AddExperienceForm from "./add-experience-form";
-import { AddProject } from "./add-project-form";
 import { AddResume } from "./add-resume-form";
 import { AddSkills } from "./add-skills-form";
 
 const VerticalLinearStepper = () => {
   const forms = [
     {
-      label: "Basic Details",
+      label: "Personal Details",
       description: "Fill in your basic information",
       component: <AddExperienceForm />,
+      icon: <UserCircle className="w-5 h-5" />,
     },
     {
-      label: "Company Details",
-      description: "Enter your company information",
+      label: "Company Information",
+      description: "Enter your professional details",
       component: <AddSkills />,
+      icon: <Building2 className="w-5 h-5" />,
     },
     {
-      label: "Subscription Plan",
-      description: "Choose your subscription plan",
+      label: "Subscription",
+      description: "Choose your plan",
       component: <AddResume />,
+      icon: <CreditCard className="w-5 h-5" />,
+    },
+    {
+      label: "Personal Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+      icon: <UserCircle className="w-5 h-5" />,
+    },
+    {
+      label: "Company Information",
+      description: "Enter your professional details",
+      component: <AddSkills />,
+      icon: <Building2 className="w-5 h-5" />,
+    },
+    {
+      label: "Subscription",
+      description: "Choose your plan",
+      component: <AddResume />,
+      icon: <CreditCard className="w-5 h-5" />,
+    },
+    {
+      label: "Personal Details",
+      description: "Fill in your basic information",
+      component: <AddExperienceForm />,
+      icon: <UserCircle className="w-5 h-5" />,
+    },
+    {
+      label: "Company Information",
+      description: "Enter your professional details",
+      component: <AddSkills />,
+      icon: <Building2 className="w-5 h-5" />,
+    },
+    {
+      label: "Subscription",
+      description: "Choose your plan",
+      component: <AddResume />,
+      icon: <CreditCard className="w-5 h-5" />,
     },
   ];
+
   const [activeStep, setActiveStep] = useState(0);
   const [lineProgress, setLineProgress] = useState(Array(forms.length).fill(0));
   const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const handleNext = async () => {
-    if (isTransitioning) return;
-    await updateLineProgress(activeStep);
+  const handleNext = () => {
     setActiveStep((prev) => prev + 1);
+    updateLineProgress(activeStep);
   };
 
   const handleBack = () => {
-    if (isTransitioning) return;
     setLineProgress((prev) => {
       const newProgress = [...prev];
       newProgress[activeStep - 1] = 0;
@@ -49,146 +89,130 @@ const VerticalLinearStepper = () => {
     setActiveStep((prev) => prev - 1);
   };
 
-  const updateLineProgress = (step: number): Promise<void> => {
-    return new Promise((resolve) => {
-      setIsTransitioning(true);
-      const timer = setInterval(() => {
-        setLineProgress((prev) => {
-          const newProgress = [...prev];
-          if (newProgress[step] < 100) {
-            newProgress[step] = Math.min(newProgress[step] + 2, 100);
-            return newProgress;
-          } else {
-            clearInterval(timer);
-            setIsTransitioning(false);
-            resolve();
-            return newProgress;
-          }
-        });
-      }, 20);
-    });
+  const updateLineProgress = (step: number) => {
+    const timer = setInterval(() => {
+      setLineProgress((prev) => {
+        const newProgress = [...prev];
+        if (newProgress[step] < 100) {
+          newProgress[step] = Math.min(newProgress[step] + 2, 100);
+          return newProgress;
+        } else {
+          clearInterval(timer);
+          return newProgress;
+        }
+      });
+    }, 20);
   };
 
   return (
-    <div className="h-screen w-full flex overflow-hidden">
-      {/* Left side with stepper and background image */}
-      <div className="w-1/3 relative">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "url(/assets/images/bg-form.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          {/* Overlay to ensure text is readable */}
-          <div className="absolute inset-0 bg-black/80" />
+    <div className="h-screen w-full overflow-hidden flex">
+      {/* Left sidebar */}
+      <div className="w-1/3 border-r bg-[#171717] h-full flex flex-col overflow-y-auto">
+        {/* Logo header */}
+        <div className="sticky top-0 backdrop-blur-lg bg-[#171717]/50 z-50">
+          <div className="flex items-center gap-2 p-4">
+            <Image
+              src={"/assets/images/favicon.ico"}
+              alt={`${siteConfig.name} logo`}
+              width={30}
+              height={30}
+              className="rounded"
+              priority
+            />
+            <h3 className="text-xl font-bold text-white">
+              <span className="text-primary">{siteConfig.name}</span>
+            </h3>
+          </div>
         </div>
 
-        {/* Stepper content */}
-        <div className="relative z-10 h-full bg-[#171717]">
-          {/* All content in single scrollable container */}
-          <div className="h-full overflow-y-auto">
-            {/* Sticky header with backdrop blur */}
-            <div className="sticky top-0 backdrop-blur-lg bg-[#171717]/50 z-50">
-              <div className="flex items-center gap-2 p-4">
-                <Image
-                  src={"/assets/images/favicon.ico"}
-                  alt={`${siteConfig.name} logo`}
-                  width={30}
-                  height={30}
-                  className="rounded"
-                  priority
-                />
-                <h3 className="text-xl font-bold text-white">
-                  <span className="text-primary">{siteConfig.name}</span>
-                </h3>
-              </div>
-            </div>
+        {/* Steps */}
+        <div className="space-y-12 p-6">
+          {forms.map((step, index) => (
+            <div key={index} className="relative">
+              {/* Connecting line */}
+              {index < forms.length - 1 && (
+                <div className="absolute left-6 top-[60px] w-0.5 h-8">
+                  <div className="h-full bg-gray-600" />
+                  <div
+                    className="absolute top-0 left-0 w-full bg-primary transition-all duration-500"
+                    style={{
+                      height: `${lineProgress[index]}%`,
+                    }}
+                  />
+                </div>
+              )}
 
-            <div className="space-y-12 p-8">
-              {forms.map((step, index) => (
-                <div key={step.label} className="relative">
-                  {index < forms.length - 1 && (
-                    <div className="absolute left-6 top-[60px] w-0.5 h-8">
-                      <div className="h-full bg-gray-600" />
-                      <div
-                        className="absolute top-0 left-0 w-full bg-primary transition-all duration-500"
-                        style={{
-                          height: `${lineProgress[index]}%`,
-                        }}
-                      />
+              {/* Step item */}
+              <div className="relative flex items-start gap-4">
+                <div className="flex-shrink-0">
+                  {index < activeStep ? (
+                    <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                      <Check className="w-6 h-6 text-white" />
+                    </div>
+                  ) : index === activeStep ? (
+                    <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20 animate-bounce">
+                      {step.icon}
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                      {step.icon}
                     </div>
                   )}
-
-                  <div className="flex items-start gap-6">
-                    <div className="relative">
-                      {index < activeStep ? (
-                        // Completed step
-                        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 ring-4 ring-primary/20">
-                          <Check className="w-6 h-6 text-white" />
-                        </div>
-                      ) : index === activeStep ? (
-                        // Current step
-                        <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30 ring-4 ring-primary/20 animate-bounce">
-                          <span className="text-white font-semibold">
-                            {index + 1}
-                          </span>
-                        </div>
-                      ) : (
-                        // Future step
-                        <div className="w-12 h-12 rounded-full border-2 border-gray-400 flex items-center justify-center">
-                          <span className="text-gray-400 font-semibold">
-                            {index + 1}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    <div
-                      className={`text-white pt-2 ${
-                        index === activeStep ? "opacity-100" : "opacity-70"
-                      }`}
-                    >
-                      <h3 className="font-medium text-lg">{step.label}</h3>
-                      <p className="text-sm text-gray-300 mt-1">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
                 </div>
-              ))}
+
+                <div className="flex-1 pt-1.5">
+                  <h3
+                    className={`text-sm font-medium ${
+                      index === activeStep ? "text-primary" : "text-gray-400"
+                    }`}
+                  >
+                    {step.label}
+                  </h3>
+                  <p
+                    className={`text-sm mt-1 ${
+                      index === activeStep ? "text-primary" : "text-gray-400"
+                    }`}
+                  >
+                    {step.description}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
 
-      {/* Right side with form */}
-      <div className="w-2/3 p-6 overflow-y-auto">
-        {/* <Card className="h-full overflow-y-auto"> */}
-        {/* <CardContent className="p-6"> */}
-        {/* Active Form */}
-        {forms[activeStep].component}
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-between mt-8">
-          <Button
-            onClick={handleBack}
-            disabled={activeStep === 0}
-            variant="outline"
-          >
-            Back
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={activeStep === forms.length - 1}
-          >
-            Next
-            <ChevronRight className="w-4 h-4 ml-2" />
-          </Button>
+      {/* Main content */}
+      <div className="w-2/3 flex-1 flex flex-col">
+        <div className="flex-1 overflow-y-auto p-8">
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              {forms[activeStep].component}
+            </div>
+          </div>
         </div>
-        {/* </CardContent> */}
-        {/* </Card> */}
+
+        {/* Navigation */}
+        <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-4">
+          <div className="max-w-3xl mx-auto flex justify-between">
+            <Button
+              onClick={handleBack}
+              disabled={activeStep === 0}
+              variant="outline"
+              className="w-32"
+            >
+              Back
+            </Button>
+            <Button
+              onClick={handleNext}
+              disabled={activeStep === forms.length - 1}
+              className="w-32"
+            >
+              Next
+              <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

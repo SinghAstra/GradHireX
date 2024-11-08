@@ -96,15 +96,15 @@ input:-webkit-autofill:not(:focus) {
   -webkit-text-fill-color: white !important;
 }
 
-/* Ensure focus ring stays visible during autofill */
+/* Ensure focus ring stays visible during autofill/ */
 input:focus:-webkit-autofill {
-  outline: 2px solid hsl(var(--ring)) !important;
+  /* outline: 2px solid hsl(var(--ring)) !important; */
   outline-offset: 2px !important;
 }
 
 /* Additional style to maintain the ring appearance */
 input:focus {
-  outline: 2px solid hsl(var(--ring)) !important;
+  /* outline: 2px solid hsl(var(--ring)) !important; */
   outline-offset: 2px !important;
   caret-color: white !important;
 }
