@@ -107,7 +107,7 @@ const VerticalLinearStepper = () => {
   return (
     <div className="h-screen w-full overflow-hidden flex">
       {/* Left sidebar */}
-      <div className="w-1/3 border-r bg-[#171717] h-full flex flex-col overflow-y-auto">
+      <div className="w-1/3 border-r bg-[#19181d] h-full flex flex-col overflow-y-auto">
         {/* Logo header */}
         <div className="sticky top-0 backdrop-blur-lg bg-[#171717]/50 z-50">
           <div className="flex items-center gap-2 p-4">
@@ -183,35 +183,9 @@ const VerticalLinearStepper = () => {
       </div>
 
       {/* Main content */}
-      <div className="w-2/3 flex-1 flex flex-col">
-        <div className="flex-1 overflow-y-auto p-8">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-              {forms[activeStep].component}
-            </div>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-800 p-4">
-          <div className="max-w-3xl mx-auto flex justify-between">
-            <Button
-              onClick={handleBack}
-              disabled={activeStep === 0}
-              variant="outline"
-              className="w-32"
-            >
-              Back
-            </Button>
-            <Button
-              onClick={handleNext}
-              disabled={activeStep === forms.length - 1}
-              className="w-32"
-            >
-              Next
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
+      <div className="w-2/3 flex-1 flex flex-col ">
+        <div className="flex-1 overflow-y-auto p-8 bg-[#1b1c20]">
+          <div className="max-w-3xl mx-auto">{forms[activeStep].component}</div>
         </div>
       </div>
     </div>

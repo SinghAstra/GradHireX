@@ -88,7 +88,7 @@ const AddExperienceForm = () => {
   return (
     <div className="w-full p-2">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
             name="companyName"
