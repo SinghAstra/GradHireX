@@ -1,3 +1,4 @@
+import { addUserExperience } from "@/actions/user.profile.actions";
 import {
   Form,
   FormControl,
@@ -7,9 +8,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  expFormSchema,
+  expFormSchemaType,
+} from "@/lib/validators/user.profile.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { EmployementType, WorkMode } from "@prisma/client";
 import _ from "lodash";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { LoadingSpinner } from "../loading-spinner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -19,21 +27,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Textarea } from "../ui/textarea";
-// import { Switch } from '../ui/switch';
-// import { LoadingSpinner } from '../loading-spinner';
-import { useToast } from "@/hooks/use-toast";
-import {
-  ExperienceSchema,
-  ExperienceSchemaType,
-} from "@/lib/validators/user.profile.validator";
-import { EmploymentType, WorkMode } from "@prisma/client";
-import { useState } from "react";
 import { Switch } from "../ui/switch";
+import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
-const AddExperienceForm = () => {
-  const form = useForm<ExperienceSchemaType>({
-    resolver: zodResolver(ExperienceSchema),
+export const AddExperience = () => {
+  const form = useForm<expFormSchemaType>({
+    resolver: zodResolver(expFormSchema),
     defaultValues: {
       companyName: "",
       designation: "",
@@ -50,43 +50,36 @@ const AddExperienceForm = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onSubmit = async (data: ExperienceSchemaType) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    toast({
-      title: "Experience Added Successfully",
-    });
+  const onSubmit = async (data: expFormSchemaType) => {
+    try {
+      setIsLoading(true);
+      const response = await addUserExperience(data);
+      if (!response.status) {
+        return toast({
+          title: response.message || "Error",
+          variant: "destructive",
+        });
+      }
+      toast({
+        title: response.message,
+        variant: "success",
+      });
+      form.reset(form.formState.defaultValues);
+    } catch (_error) {
+      toast({
+        title: "Something went wrong while Adding Experience",
+        description: "Internal server error",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  // const onSubmit = async (data: expFormSchemaType) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await addUserExperience(data);
-  //     if (!response.status) {
-  //       return toast({
-  //         title: response.message || 'Error',
-  //         variant: 'destructive',
-  //       });
-  //     }
-  //     toast({
-  //       title: response.message,
-  //       variant: 'success',
-  //     });
-  //     form.reset(form.formState.defaultValues);
-  //   } catch (_error) {
-  //     toast({
-  //       title: 'Something went wrong while Adding Experience',
-  //       description: 'Internal server error',
-  //       variant: 'destructive',
-  //     });
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const WatchCurrentWorkStatus = form.watch("currentWorkStatus");
 
   return (
-    <div className="w-full p-2">
+    <div className="p-2 max-w-md ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -133,7 +126,7 @@ const AddExperienceForm = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {Object.values(EmploymentType).map((type) => (
+                    {Object.values(EmployementType).map((type) => (
                       <SelectItem key={type} value={type}>
                         {_.startCase(type)}
                       </SelectItem>
@@ -272,18 +265,17 @@ const AddExperienceForm = () => {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            disabled={form.formState.isSubmitting}
-            className="w-full"
-            aria-label="submit"
-          >
-            {form.formState.isSubmitting ? "Submitting ..." : "Submit"}
-          </Button>
+          {isLoading ? (
+            <div className="mt-4">
+              <LoadingSpinner />{" "}
+            </div>
+          ) : (
+            <Button type="submit" className="w-full" aria-label="submit">
+              Submit
+            </Button>
+          )}
         </form>
       </Form>
     </div>
   );
 };
-
-export default AddExperienceForm;
