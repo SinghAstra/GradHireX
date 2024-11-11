@@ -17,13 +17,13 @@ export async function middleware(req: NextRequest) {
   ) {
     return NextResponse.redirect(new URL(APP_PATHS.HOME, req.url));
   }
-  if (
-    pathname !== APP_PATHS.CREATE_PROFILE &&
-    token?.role === USER_ROLE &&
-    token.onBoard
-  ) {
-    return NextResponse.redirect(new URL(APP_PATHS.CREATE_PROFILE, req.url));
-  }
+  // if (
+  //   pathname !== APP_PATHS.CREATE_PROFILE &&
+  //   token?.role === USER_ROLE &&
+  //   token.onBoard
+  // ) {
+  //   return NextResponse.redirect(new URL(APP_PATHS.CREATE_PROFILE, req.url));
+  // }
   return NextResponse.next();
 }
 

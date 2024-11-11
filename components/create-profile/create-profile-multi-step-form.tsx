@@ -23,7 +23,7 @@ import { AddProject } from "./add-project-form";
 import { AddResume } from "./add-resume-form";
 import { AddSkills } from "./add-skills-form";
 
-const VerticalLinearStepper = () => {
+const CreateProfileMultiStepForm = () => {
   const forms = [
     {
       label: "Add Experience",
@@ -172,4 +172,4 @@ const VerticalLinearStepper = () => {
   );
 };
 
-export default VerticalLinearStepper;
+export default CreateProfileMultiStepForm;

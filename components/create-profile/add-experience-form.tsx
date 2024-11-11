@@ -1,4 +1,3 @@
-import { addUserExperience } from "@/actions/user.profile.actions";
 import {
   Form,
   FormControl,
@@ -8,16 +7,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
 import {
-  expFormSchema,
-  expFormSchemaType,
+  ExperienceFormSchema,
+  ExperienceFormSchemaType,
 } from "@/lib/validators/user.profile.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { EmployementType, WorkMode } from "@prisma/client";
+import { EmploymentType, WorkMode } from "@prisma/client";
 import _ from "lodash";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { LoadingSpinner } from "../loading-spinner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import {
@@ -29,11 +29,10 @@ import {
 } from "../ui/select";
 import { Switch } from "../ui/switch";
 import { Textarea } from "../ui/textarea";
-import { useToast } from "../ui/use-toast";
 
-export const AddExperience = () => {
-  const form = useForm<expFormSchemaType>({
-    resolver: zodResolver(expFormSchema),
+const AddExperienceForm = () => {
+  const form = useForm<ExperienceFormSchemaType>({
+    resolver: zodResolver(ExperienceFormSchema),
     defaultValues: {
       companyName: "",
       designation: "",
@@ -50,30 +49,8 @@ export const AddExperience = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onSubmit = async (data: expFormSchemaType) => {
-    try {
-      setIsLoading(true);
-      const response = await addUserExperience(data);
-      if (!response.status) {
-        return toast({
-          title: response.message || "Error",
-          variant: "destructive",
-        });
-      }
-      toast({
-        title: response.message,
-        variant: "success",
-      });
-      form.reset(form.formState.defaultValues);
-    } catch (_error) {
-      toast({
-        title: "Something went wrong while Adding Experience",
-        description: "Internal server error",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+  const onSubmit = async (data: ExperienceFormSchemaType) => {
+    console.log("data --experienceFormSchema is ", data);
   };
 
   const WatchCurrentWorkStatus = form.watch("currentWorkStatus");
@@ -126,7 +103,7 @@ export const AddExperience = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {Object.values(EmployementType).map((type) => (
+                    {Object.values(EmploymentType).map((type) => (
                       <SelectItem key={type} value={type}>
                         {_.startCase(type)}
                       </SelectItem>
@@ -265,17 +242,29 @@ export const AddExperience = () => {
               </FormItem>
             )}
           />
-          {isLoading ? (
-            <div className="mt-4">
-              <LoadingSpinner />{" "}
-            </div>
-          ) : (
-            <Button type="submit" className="w-full" aria-label="submit">
-              Submit
-            </Button>
-          )}
+
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={form.formState.isSubmitting}
+            aria-label="submit"
+          >
+            {form.formState.isSubmitting ? (
+              <>
+                <svg
+                  className="animate-spin h-5 w-5 mr-3"
+                  viewBox="0 0 24 24"
+                ></svg>
+                <span className="ml-2">Please Wait</span>
+              </>
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </div>
   );
 };
+
+export default AddExperienceForm;
