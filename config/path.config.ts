@@ -8,5 +8,7 @@ const APP_PATHS = {
   FORGOT_PASSWORD: "/forgot-password",
   JOBS: "/jobs",
   CONTACT_US: "mailto:singhisabhaypratap@gmail.com",
+  WELCOME: "/welcome",
+  VERIFY_EMAIL: "/verify-email",
 };
 export default APP_PATHS;

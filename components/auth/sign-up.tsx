@@ -8,6 +8,8 @@ import {
 } from "@/lib/validators/auth.validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { signUpAction } from "@/app/actions/auth.action";
+import { toast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -35,8 +37,24 @@ const SignUp = () => {
   });
 
   async function SignUpHandler(data: SignUpSchemaType) {
-    console.log("Inside SignUpHandler");
-    console.log("data is ", data);
+    try {
+      const response = await signUpAction(data);
+      if (!response.status) {
+        toast({
+          title: response.message || "Something went wrong",
+        });
+      } else {
+        toast({
+          title: response.message || "Sign-up successful! Welcome to !",
+        });
+
+        router.push(APP_PATHS.WELCOME);
+      }
+    } catch {
+      toast({
+        title: "something went wrong",
+      });
+    }
   }
 
   return (
@@ -85,14 +103,6 @@ const SignUp = () => {
               </FormItem>
             )}
           />
-          <div className="flex justify-end">
-            <Link
-              href={APP_PATHS.FORGOT_PASSWORD}
-              className="text-xs text-muted-foreground font-medium hover:underline"
-            >
-              Forgot your password?
-            </Link>
-          </div>
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}

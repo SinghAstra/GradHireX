@@ -60,15 +60,15 @@ model User {
 // }
 
 
-// model VerificationToken {
-//   token      String
-//   identifier String
-//   createdAt  DateTime  @default(now())
-//   updatedAt  DateTime  @updatedAt
-//   type       TokenType
+model VerificationToken {
+  token      String
+  identifier String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  type       TokenType
 
-//   @@unique([token, identifier])
-// }
+  @@unique([token, identifier])
+}
 
 // model Job {
 //   id                 String          @id @default(cuid())
